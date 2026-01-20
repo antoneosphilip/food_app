@@ -6,6 +6,8 @@ import com.example.foodproj.data.auth.repo.AuthRepo;
 import com.example.foodproj.data.auth.datasource.AuthNetworkResponse;
 import com.example.foodproj.data.auth.repo.AuthRepoImpl;
 import com.example.foodproj.presentation.auth.view.AuthView;
+import com.example.foodproj.presentation.auth.view.LoginView;
+import com.example.foodproj.presentation.auth.view.SignUpView;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -26,13 +28,17 @@ public class AuthPresenterImpl implements AuthPresenter {
             @Override
             public void onSuccess(FirebaseUser user) {
                 view.hideLoading();
-                view.onLoginSuccess(user);
+                if (view instanceof LoginView) {
+                    ((LoginView) view).onLoginSuccess(user);
+                }
             }
 
             @Override
             public void onError(Exception e) {
                 view.hideLoading();
-                view.onLoginError(e.getMessage());
+                if (view instanceof LoginView) {
+                    ((LoginView) view).onLoginError(e.getMessage());
+                }
             }
         });
     }
@@ -44,13 +50,17 @@ public class AuthPresenterImpl implements AuthPresenter {
             @Override
             public void onSuccess(FirebaseUser user) {
                 view.hideLoading();
-                view.onSignUpSuccess(user);
+                if (view instanceof SignUpView) {
+                    ((SignUpView) view).onSignUpSuccess(user);
+                }
             }
 
             @Override
             public void onError(Exception e) {
                 view.hideLoading();
-                view.onSignUpError(e.getMessage());
+                if (view instanceof SignUpView) {
+                    ((SignUpView) view).onSignUpError(e.getMessage());
+                }
             }
         });
     }
@@ -68,13 +78,17 @@ public class AuthPresenterImpl implements AuthPresenter {
             @Override
             public void onSuccess(FirebaseUser user) {
                 view.hideLoading();
-                view.onLoginSuccess(user);
+                if (view instanceof LoginView) {
+                    ((LoginView) view).onLoginSuccess(user);
+                }
             }
 
             @Override
             public void onError(Exception e) {
                 view.hideLoading();
-                view.onLoginError(e.getMessage());
+                if (view instanceof LoginView) {
+                    ((LoginView) view).onLoginError(e.getMessage());
+                }
             }
         });
     }

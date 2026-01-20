@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -22,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
-public class LoginActivity extends AppCompatActivity implements AuthView {
+public class LoginActivity extends AppCompatActivity implements LoginView {
 
     private AuthPresenter presenter;
     private ProgressBar progressBar;
@@ -30,6 +31,7 @@ public class LoginActivity extends AppCompatActivity implements AuthView {
     private EditText etEmail ;
     private EditText etPassword ;
     private Button btnLogin;
+    private TextView signUp;
 
     private static final int RC_SIGN_IN = 9001;
 
@@ -43,6 +45,7 @@ public class LoginActivity extends AppCompatActivity implements AuthView {
         btnLogin=findViewById(R.id.btnLoginSubmit);
         etPassword= findViewById(R.id.etPassword);
         etEmail=findViewById(R.id.etEmail);
+        signUp=findViewById(R.id.tvSignUpRedirect);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.client_Id))
                 .requestEmail()
@@ -55,6 +58,10 @@ public class LoginActivity extends AppCompatActivity implements AuthView {
 
         btnGoogleLogin.setOnClickListener(v -> presenter.onGoogleSignIn());
         btnLogin.setOnClickListener(v -> presenter.onEmailSignIn(etEmail.getText().toString().trim(),etPassword.getText().toString().trim()));
+        signUp.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+            startActivity(intent);
+        });
 
     }
 
@@ -102,13 +109,5 @@ public class LoginActivity extends AppCompatActivity implements AuthView {
         Toast.makeText(this, "Login Error: " + error, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onSignUpSuccess(FirebaseUser user) {
-        Toast.makeText(this, "Account created: " + user.getEmail(), Toast.LENGTH_SHORT).show();
-    }
 
-    @Override
-    public void onSignUpError(String error) {
-        Toast.makeText(this, "SignUp Error: " + error, Toast.LENGTH_SHORT).show();
-    }
 }

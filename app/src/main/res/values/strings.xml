@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">foodProj</string>
+    <string name="client_Id">896451803797-q0hv9n0bl9t32g0g3hubian8ea23lc2r.apps.googleusercontent.com</string>
+    <string name="guest_mode_view_categories_search_and_meal_of_the_day_only">Guest mode: View categories, search, and meal of the day only</string>
+    <string name="continue_as_guest">Continue as Guest</string>
+    <string name="or">OR</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="your_email_com">your@email.com</string>
+    <string name="email">Email</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="plan_your_weekly_meals_with_ease">Plan your weekly meals with ease</string>
+</resources>

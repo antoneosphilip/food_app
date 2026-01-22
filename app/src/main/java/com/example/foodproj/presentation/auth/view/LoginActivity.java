@@ -57,13 +57,25 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         presenter = new AuthPresenterImpl( this,googleSignInClient);
 
         btnGoogleLogin.setOnClickListener(v -> presenter.onGoogleSignIn());
-        btnLogin.setOnClickListener(v -> presenter.onEmailSignIn(etEmail.getText().toString().trim(),etPassword.getText().toString().trim()));
+        btnLogin.setOnClickListener(v -> validateAndSignUp());
         signUp.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
         });
 
     }
+    private void validateAndSignUp() {
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+
+        if ( email.isEmpty() || password.isEmpty() ) {
+            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        presenter.onEmailSignIn(email, password);
+    }
+
 
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {

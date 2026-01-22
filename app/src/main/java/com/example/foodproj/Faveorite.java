@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link faveorite#newInstance} factory method to
+ * Use the {@link Faveorite#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class faveorite extends Fragment {
+public class Faveorite extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +24,7 @@ public class faveorite extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public faveorite() {
+    public Faveorite() {
         // Required empty public constructor
     }
 
@@ -34,11 +34,11 @@ public class faveorite extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment faveorite.
+     * @return A new instance of fragment Faveorite.
      */
     // TODO: Rename and change types and number of parameters
-    public static faveorite newInstance(String param1, String param2) {
-        faveorite fragment = new faveorite();
+    public static Faveorite newInstance(String param1, String param2) {
+        Faveorite fragment = new Faveorite();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

@@ -13,12 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.foodproj.R;
-import com.example.foodproj.data.auth.repo.AuthRepo;
-import com.example.foodproj.data.auth.repo.AuthRepoImpl;
 import com.example.foodproj.presentation.auth.presenter.AuthPresenter;
 import com.example.foodproj.presentation.auth.presenter.AuthPresenterImpl;
+import com.example.foodproj.presentation.home.view.HomeLayout;
 import com.google.android.gms.common.api.ApiException;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -114,6 +112,9 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @Override
     public void onLoginSuccess(FirebaseUser user) {
         Toast.makeText(this, "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(LoginActivity.this, HomeLayout.class);
+        startActivity(intent);
+
     }
 
     @Override

@@ -2,10 +2,11 @@ package com.example.foodproj.data.home.model;
 
 import com.example.foodproj.data.home.model.Ingredient;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Meal {
+public class Meal implements Serializable {
 
     private String idMeal;
     private String strMeal;

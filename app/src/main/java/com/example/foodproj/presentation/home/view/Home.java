@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +18,6 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.foodproj.R;
-import com.example.foodproj.data.home.datasource.MealResponse;
 import com.example.foodproj.data.home.model.Category;
 import com.example.foodproj.data.home.model.Meal;
 import com.example.foodproj.presentation.home.presenter.HomePresenter;
@@ -27,7 +25,7 @@ import com.example.foodproj.presentation.home.presenter.HomePresenterImpl;
 
 import java.util.List;
 
-public class Home extends Fragment implements HomeView {
+public class Home extends Fragment implements HomeView,MealOnClickListener {
 
     private HomePresenter homePresenter;
     private ImageView mealImage;
@@ -59,7 +57,9 @@ public class Home extends Fragment implements HomeView {
         categoryTag = view.findViewById(R.id.categoryTag);
         areaTag = view.findViewById(R.id.areaTag);
         refreshButton = view.findViewById(R.id.refreshButton);
-          categoriesGridView = view.findViewById(R.id.categoriesGridView);
+        categoriesGridView = view.findViewById(R.id.categoriesGridView);
+        mealImage.setOnClickListener(v -> mealClickListener());
+
     }
 
     @Override
@@ -76,7 +76,7 @@ public class Home extends Fragment implements HomeView {
     @Override
     public void categoryFetchedSuccessfully(List<Category> categories) {
         CategoryAdapter adapter =
-                new CategoryAdapter(getContext(), categories);
+                new CategoryAdapter(getContext(), categories,this);
         categoriesGridView.setAdapter(adapter);
     }
 
@@ -95,5 +95,23 @@ public class Home extends Fragment implements HomeView {
                     .load(meal.get(0).getStrMealThumb())
                     .centerCrop()
                     .into(mealImage);
+
+    }
+
+    @Override
+    public void mealClickListener() {
+        if (currentMeal == null || currentMeal.isEmpty()) return;
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("meal_key", currentMeal.get(0));
+
+        MealDetails fragment = new MealDetails();
+        fragment.setArguments(bundle);
+
+        getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

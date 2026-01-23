@@ -24,9 +24,12 @@ public class CategoryAdapter extends BaseAdapter {
     private Context context;
     private List<Category> categories;
 
-    public CategoryAdapter(Context context, List<Category> categories) {
+    private MealOnClickListener mealOnClickListener;
+
+    public CategoryAdapter(Context context, List<Category> categories,MealOnClickListener mealOnClickListener) {
         this.context = context;
         this.categories = categories;
+        this.mealOnClickListener=mealOnClickListener;
     }
 
     @Override

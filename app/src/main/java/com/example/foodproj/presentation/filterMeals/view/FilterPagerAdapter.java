@@ -1,4 +1,4 @@
-package com.example.foodproj.presentation.filterMeals;
+package com.example.foodproj.presentation.filterMeals.view;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

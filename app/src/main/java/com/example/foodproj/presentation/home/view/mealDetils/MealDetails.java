@@ -69,25 +69,20 @@ public class MealDetails extends Fragment {
     private void displayMealDetails() {
         if (meal == null) return;
 
-        // الاسم
         mealNameText.setText(meal.getStrMeal());
 
-        // الصورة
         Glide.with(requireContext())
                 .load(meal.getStrMealThumb())
                 .centerCrop()
                 .into(recipeImage);
 
-        // التصنيف والمنطقة
         chipVegetarian.setText(meal.getStrCategory());
         chipBritish.setText(meal.getStrArea());
 
-        // المكونات
         List<Ingredient> ingredients = meal.getIngredientsList();
         IngredientsAdapter adapter = new IngredientsAdapter(getContext(), ingredients);
         ingredientsGrid.setAdapter(adapter);
 
-        // التعليمات
         instructionText.setText(meal.getStrInstructions());
 
         if (meal.getStrYoutube() != null && !meal.getStrYoutube().isEmpty()) {

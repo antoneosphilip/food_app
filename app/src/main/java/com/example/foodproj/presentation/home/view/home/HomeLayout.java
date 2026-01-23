@@ -7,9 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.foodproj.Faveorite;
-import com.example.foodproj.Profile;
 import com.example.foodproj.R;
-import com.example.foodproj.presentation.filterMeals.FilterFragment;
+import com.example.foodproj.presentation.filterMeals.view.FilterFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeLayout extends AppCompatActivity {

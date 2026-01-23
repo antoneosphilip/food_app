@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.foodproj.Faveorite;
@@ -33,6 +34,7 @@ public class HomeLayout extends AppCompatActivity {
             } else if (item.getItemId() == R.id.nav_setting) {
                 selectedFragment = new Profile();
             }
+
 
             loadFragment(selectedFragment);
             return true;

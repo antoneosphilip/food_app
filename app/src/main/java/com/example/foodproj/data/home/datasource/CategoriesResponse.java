@@ -5,7 +5,10 @@ import com.example.foodproj.data.home.model.Meal;
 
 import java.util.List;
 
-public interface HomeNetworkResponse {
+public class CategoriesResponse {
+    private List<Category> categories;
 
-
+    public List<Category> getCategories() {
+        return categories;
+    }
 }

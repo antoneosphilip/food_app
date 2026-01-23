@@ -1,6 +1,9 @@
 package com.example.foodproj.presentation.home.view;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +19,13 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.foodproj.R;
+import com.example.foodproj.data.home.datasource.MealResponse;
+import com.example.foodproj.data.home.model.Category;
 import com.example.foodproj.data.home.model.Meal;
 import com.example.foodproj.presentation.home.presenter.HomePresenter;
 import com.example.foodproj.presentation.home.presenter.HomePresenterImpl;
+
+import java.util.List;
 
 public class Home extends Fragment implements HomeView {
 
@@ -29,18 +36,19 @@ public class Home extends Fragment implements HomeView {
     private TextView areaTag;
     private ImageView refreshButton;
     private GridView categoriesGridView;
-    private Meal currentMeal;
+    private List<Meal> currentMeal;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        initViews(view);
+          initViews(view);
           homePresenter = new HomePresenterImpl(this);
-        //  homePresenter.getMeals();
+          homePresenter.getMeals();
+          homePresenter.getCategories();
 
-      //  refreshButton.setOnClickListener(v -> homePresenter.getMeals());
+          refreshButton.setOnClickListener(v -> homePresenter.getMeals());
 
         return view;
     }
@@ -51,11 +59,11 @@ public class Home extends Fragment implements HomeView {
         categoryTag = view.findViewById(R.id.categoryTag);
         areaTag = view.findViewById(R.id.areaTag);
         refreshButton = view.findViewById(R.id.refreshButton);
-        //   categoriesGridView = view.findViewById(R.id.categoriesGridView);
+          categoriesGridView = view.findViewById(R.id.categoriesGridView);
     }
 
     @Override
-    public void mealFetchedSuccessfully(Meal meal) {
+    public void mealFetchedSuccessfully(List<Meal> meal) {
         this.currentMeal = meal;
         displayMealData(meal);
     }
@@ -65,14 +73,27 @@ public class Home extends Fragment implements HomeView {
         Toast.makeText(getContext(), "Failed to fetch meal", Toast.LENGTH_SHORT).show();
     }
 
-    private void displayMealData(Meal meal) {
-        mealTitle.setText(meal.getStrMeal());
-        categoryTag.setText(meal.getStrCategory());
-        areaTag.setText(meal.getStrArea());
+    @Override
+    public void categoryFetchedSuccessfully(List<Category> categories) {
+        CategoryAdapter adapter =
+                new CategoryAdapter(getContext(), categories);
+        categoriesGridView.setAdapter(adapter);
+    }
 
-        Glide.with(this)
-                .load(meal.getStrMealThumb())
-                .centerCrop()
-                .into(mealImage);
+    @Override
+    public void categoryFetchedFailure() {
+        Toast.makeText(getContext(), "Failed to fetch category", Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void displayMealData(List<Meal> meal) {
+        mealTitle.setText(meal.get(0).getStrMeal());
+        categoryTag.setText(meal.get(0).getStrCategory());
+        areaTag.setText(meal.get(0).getStrArea());
+        Log.i(TAG, "meeeeal"+meal.get(0).getStrMeal() );
+            Glide.with(requireContext())
+                    .load(meal.get(0).getStrMealThumb())
+                    .centerCrop()
+                    .into(mealImage);
     }
 }

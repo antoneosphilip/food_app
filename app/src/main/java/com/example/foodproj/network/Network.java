@@ -10,7 +10,7 @@ public class Network {
     private static Network instance=null;
     public Network(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("www.themealdb.com/api/json/v1/1/")
+                .baseUrl("https://www.themealdb.com/api/json/v1/1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

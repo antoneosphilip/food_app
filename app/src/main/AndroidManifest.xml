@@ -16,7 +16,7 @@
         android:theme="@style/Theme.FoodProj"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.home.view.HomeLayout"
+            android:name=".presentation.home.view.home.HomeLayout"
             android:exported="false" />
         <activity
             android:name=".presentation.auth.view.SignUpActivity"

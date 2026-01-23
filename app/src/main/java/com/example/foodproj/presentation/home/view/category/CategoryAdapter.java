@@ -1,4 +1,4 @@
-package com.example.foodproj.presentation.home.view;
+package com.example.foodproj.presentation.home.view.category;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,15 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.foodproj.R;
 import com.example.foodproj.data.home.model.Category;
-import com.example.foodproj.presentation.home.view.CategoryListener;
+import com.example.foodproj.presentation.home.view.mealDetils.MealOnClickListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends BaseAdapter {

@@ -1,16 +1,12 @@
 package com.example.foodproj.presentation.home.presenter;
 
-import android.content.Context;
-
 import com.example.foodproj.data.home.datasource.CategoryNetworkResponse;
-import com.example.foodproj.data.home.datasource.HomeNetworkResponse;
-import com.example.foodproj.data.home.datasource.MealResponse;
 import com.example.foodproj.data.home.datasource.MealsNetworkResponse;
 import com.example.foodproj.data.home.model.Category;
 import com.example.foodproj.data.home.model.Meal;
 import com.example.foodproj.data.home.repo.HomeRepo;
 import com.example.foodproj.data.home.repo.HomeRepoImpl;
-import com.example.foodproj.presentation.home.view.HomeView;
+import com.example.foodproj.presentation.home.view.home.HomeView;
 
 import java.util.List;
 

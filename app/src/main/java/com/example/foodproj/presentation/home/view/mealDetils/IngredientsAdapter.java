@@ -1,4 +1,4 @@
-package com.example.foodproj.presentation.home.view;
+package com.example.foodproj.presentation.home.view.mealDetils;
 
 import android.content.Context;
 import android.view.LayoutInflater;

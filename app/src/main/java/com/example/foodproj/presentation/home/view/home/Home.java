@@ -1,4 +1,4 @@
-package com.example.foodproj.presentation.home.view;
+package com.example.foodproj.presentation.home.view.home;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
@@ -22,10 +22,13 @@ import com.example.foodproj.data.home.model.Category;
 import com.example.foodproj.data.home.model.Meal;
 import com.example.foodproj.presentation.home.presenter.HomePresenter;
 import com.example.foodproj.presentation.home.presenter.HomePresenterImpl;
+import com.example.foodproj.presentation.home.view.mealDetils.MealDetails;
+import com.example.foodproj.presentation.home.view.mealDetils.MealOnClickListener;
+import com.example.foodproj.presentation.home.view.category.CategoryAdapter;
 
 import java.util.List;
 
-public class Home extends Fragment implements HomeView,MealOnClickListener {
+public class Home extends Fragment implements HomeView, MealOnClickListener {
 
     private HomePresenter homePresenter;
     private ImageView mealImage;
@@ -47,6 +50,7 @@ public class Home extends Fragment implements HomeView,MealOnClickListener {
           homePresenter.getCategories();
 
           refreshButton.setOnClickListener(v -> homePresenter.getMeals());
+          mealImage.setOnClickListener(v -> mealClickListener());
 
         return view;
     }
@@ -58,8 +62,6 @@ public class Home extends Fragment implements HomeView,MealOnClickListener {
         areaTag = view.findViewById(R.id.areaTag);
         refreshButton = view.findViewById(R.id.refreshButton);
         categoriesGridView = view.findViewById(R.id.categoriesGridView);
-        mealImage.setOnClickListener(v -> mealClickListener());
-
     }
 
     @Override

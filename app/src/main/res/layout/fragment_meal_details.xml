@@ -24,6 +24,7 @@
             android:contentDescription="Back" />
 
         <TextView
+            android:id="@+id/mealName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -95,7 +96,7 @@
             <GridView
                 android:id="@+id/ingredientsGrid"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
                 android:numColumns="2"
                 android:horizontalSpacing="8dp"
@@ -149,6 +150,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:layout_weight="1"
+                        android:layout_marginBottom="20dp"
                         android:text="Heat oven to 200C/180C fan/ gas 6. Cook the vegetables in a casserole dish for 15 mins. Tip in the beans and tomatoes, season, and cook for another 10-15 mins until piping hot. Heat the pouch in the microwave on High for 1 min and serve with the chilli."
                         android:textColor="#000000"
                         android:textSize="14sp" />
@@ -167,17 +169,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/instructionCard" />
 
-            <VideoView
-                android:id="@+id/videoView"
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/youtubePlayerView"
                 android:layout_width="0dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="#000000"
+
+                app:layout_constraintTop_toBottomOf="@id/videoTitle"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/videoTitle" />
+                app:layout_constraintEnd_toEndOf="parent"/>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

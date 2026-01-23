@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.foodproj.R;
 import com.example.foodproj.presentation.auth.presenter.AuthPresenter;
 import com.example.foodproj.presentation.auth.presenter.AuthPresenterImpl;
-import com.example.foodproj.presentation.home.view.HomeLayout;
+import com.example.foodproj.presentation.home.view.home.HomeLayout;
 import com.google.android.gms.common.api.ApiException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

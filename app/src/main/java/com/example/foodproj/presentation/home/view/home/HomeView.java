@@ -1,4 +1,4 @@
-package com.example.foodproj.presentation.home.view;
+package com.example.foodproj.presentation.home.view.home;
 
 import com.example.foodproj.data.home.datasource.MealResponse;
 import com.example.foodproj.data.home.model.Category;

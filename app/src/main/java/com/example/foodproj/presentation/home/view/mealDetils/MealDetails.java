@@ -1,15 +1,12 @@
-package com.example.foodproj.presentation.home.view;
+package com.example.foodproj.presentation.home.view.mealDetils;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import androidx.fragment.app.Fragment;
 
@@ -18,6 +15,9 @@ import com.example.foodproj.R;
 import com.example.foodproj.data.home.model.Ingredient;
 import com.example.foodproj.data.home.model.Meal;
 import com.google.android.material.chip.Chip;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class MealDetails extends Fragment {
     private Chip chipBritish;
     private GridView ingredientsGrid;
     private TextView instructionText;
-    private VideoView videoView;
+    private YouTubePlayerView youtubePlayerView;
     private Meal meal;
 
     @Override
@@ -46,13 +46,16 @@ public class MealDetails extends Fragment {
 
     private void initViews(View view) {
         backButton = view.findViewById(R.id.backButton);
-        mealNameText = view.findViewById(R.id.mealTitle);
+        mealNameText = view.findViewById(R.id.mealName);
         recipeImage = view.findViewById(R.id.recipeImage);
         chipVegetarian = view.findViewById(R.id.chipVegetarian);
         chipBritish = view.findViewById(R.id.chipBritish);
         ingredientsGrid = view.findViewById(R.id.ingredientsGrid);
         instructionText = view.findViewById(R.id.instructionText);
-        videoView = view.findViewById(R.id.videoView);
+        youtubePlayerView = view.findViewById(R.id.youtubePlayerView);
+
+        // ضروري تضيف ال lifecycle observer
+        getLifecycle().addObserver(youtubePlayerView);
 
         backButton.setOnClickListener(v -> requireActivity().onBackPressed());
     }
@@ -66,30 +69,36 @@ public class MealDetails extends Fragment {
     private void displayMealDetails() {
         if (meal == null) return;
 
+        // الاسم
         mealNameText.setText(meal.getStrMeal());
 
+        // الصورة
         Glide.with(requireContext())
                 .load(meal.getStrMealThumb())
                 .centerCrop()
                 .into(recipeImage);
 
+        // التصنيف والمنطقة
         chipVegetarian.setText(meal.getStrCategory());
         chipBritish.setText(meal.getStrArea());
 
+        // المكونات
         List<Ingredient> ingredients = meal.getIngredientsList();
         IngredientsAdapter adapter = new IngredientsAdapter(getContext(), ingredients);
         ingredientsGrid.setAdapter(adapter);
 
+        // التعليمات
         instructionText.setText(meal.getStrInstructions());
 
         if (meal.getStrYoutube() != null && !meal.getStrYoutube().isEmpty()) {
             String videoId = extractYoutubeVideoId(meal.getStrYoutube());
             if (videoId != null) {
-                String videoUrl = "https://www.youtube.com/watch?v=" + videoId;
-                videoView.setVideoURI(Uri.parse(videoUrl));
-                MediaController mediaController = new MediaController(requireContext());
-                mediaController.setAnchorView(videoView);
-                videoView.setMediaController(mediaController);
+                youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                    @Override
+                    public void onReady(YouTubePlayer youTubePlayer) {
+                        youTubePlayer.loadVideo(videoId, 0);
+                    }
+                });
             }
         }
     }

@@ -1,10 +1,9 @@
-package com.example.foodproj.presentation.home.view;
+package com.example.foodproj.presentation.home.view.home;
 
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.foodproj.Faveorite;

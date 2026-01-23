@@ -5,9 +5,9 @@ import com.example.foodproj.data.categories.model.CategoryMeals;
 import java.util.List;
 
 public class CategoriesMealsResponse {
-    private List<CategoryMeals> categoryMeals;
+    private List<CategoryMeals> meals;
 
     public List<CategoryMeals> getCategoriesMeals() {
-        return categoryMeals;
+        return meals;
     }
 }

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import com.example.foodproj.Faveorite;
 import com.example.foodproj.Profile;
 import com.example.foodproj.R;
+import com.example.foodproj.presentation.filterMeals.FilterFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeLayout extends AppCompatActivity {
@@ -30,10 +31,9 @@ public class HomeLayout extends AppCompatActivity {
                 selectedFragment = new Home();
             } else if (item.getItemId() == R.id.nav_favorites) {
                 selectedFragment = new Faveorite();
-            } else if (item.getItemId() == R.id.nav_setting) {
-                selectedFragment = new Profile();
+            } else if (item.getItemId() == R.id.nav_search) {
+                selectedFragment = new FilterFragment();
             }
-
 
             loadFragment(selectedFragment);
             return true;

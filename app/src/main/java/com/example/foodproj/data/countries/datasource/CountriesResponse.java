@@ -5,9 +5,9 @@ import com.example.foodproj.data.countries.model.CountriesMeals;
 import java.util.List;
 
 public class CountriesResponse {
-    private List<CountriesMeals> countriesMeals;
+    private List<CountriesMeals> meals;
 
     public List<CountriesMeals> getCountriesMeals() {
-        return countriesMeals;
+        return meals;
     }
 }

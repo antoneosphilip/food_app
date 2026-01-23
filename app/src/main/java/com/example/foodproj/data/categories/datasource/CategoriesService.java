@@ -4,6 +4,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface CategoriesService {
-    @GET("/list.php?c=list")
+    @GET("list.php?c=list")
     Call<CategoriesMealsResponse> getCountries();
 }

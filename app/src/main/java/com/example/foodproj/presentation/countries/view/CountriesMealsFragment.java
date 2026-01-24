@@ -62,7 +62,6 @@ public class CountriesMealsFragment extends Fragment implements CountriesMealsVi
         }
         countriesAdapter.notifyDataSetChanged();
     }
-
     @Override
     public void getCountriesMealsSucess(List<CountriesMeals> countriesResponses) {
         countriesList.clear();
@@ -80,7 +79,7 @@ public class CountriesMealsFragment extends Fragment implements CountriesMealsVi
     @Override
     public void countriesOnClickListener(CountriesMeals meals) {
         Bundle bundle = new Bundle();
-        bundle.putString("filter_type", "c");
+        bundle.putString("filter_type", "a");
         bundle.putString("filter_value", meals.getStrArea());
 
         MealsFilteredFragment fragment = new MealsFilteredFragment();

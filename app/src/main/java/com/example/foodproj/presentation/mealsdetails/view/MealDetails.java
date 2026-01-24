@@ -1,4 +1,4 @@
-package com.example.foodproj.presentation.home.view.mealDetils;
+package com.example.foodproj.presentation.mealsdetails.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,40 +6,50 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.foodproj.R;
 import com.example.foodproj.data.home.model.Ingredient;
 import com.example.foodproj.data.home.model.Meal;
+import com.example.foodproj.presentation.mealsdetails.presenter.MealsDetailsPresenter;
+import com.example.foodproj.presentation.mealsdetails.presenter.MealsDetailsPresenterImpl;
 import com.google.android.material.chip.Chip;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class MealDetails extends Fragment {
+public class MealDetails extends Fragment implements MealsDetailsView {
 
     private ImageView backButton;
     private TextView mealNameText;
     private ImageView recipeImage;
     private Chip chipVegetarian;
     private Chip chipBritish;
-    private GridView ingredientsGrid;
+    private RecyclerView ingredientsGrid;
     private TextView instructionText;
     private YouTubePlayerView youtubePlayerView;
+    private ProgressBar progressBar;
     private Meal meal;
+    private String mealId;
+    private MealsDetailsPresenter presenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_meal_details, container, false);
 
         initViews(view);
-        getMealData();
-        displayMealDetails();
+        getMealId();
+        loadMealDetails();
 
         return view;
     }
@@ -50,20 +60,45 @@ public class MealDetails extends Fragment {
         recipeImage = view.findViewById(R.id.recipeImage);
         chipVegetarian = view.findViewById(R.id.chipVegetarian);
         chipBritish = view.findViewById(R.id.chipBritish);
-        ingredientsGrid = view.findViewById(R.id.ingredientsGrid);
+        ingredientsGrid = view.findViewById(R.id.ingredientsRecyclerView);
         instructionText = view.findViewById(R.id.instructionText);
         youtubePlayerView = view.findViewById(R.id.youtubePlayerView);
+        progressBar = view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
 
-        // ضروري تضيف ال lifecycle observer
         getLifecycle().addObserver(youtubePlayerView);
 
         backButton.setOnClickListener(v -> requireActivity().onBackPressed());
     }
 
-    private void getMealData() {
+    private void getMealId() {
         if (getArguments() != null) {
-            meal = (Meal) getArguments().getSerializable("meal_key");
+            mealId = getArguments().getString("meal_id");
         }
+    }
+
+    private void loadMealDetails() {
+        presenter = new MealsDetailsPresenterImpl(this);
+
+        Map<String, String> filter = new HashMap<>();
+        filter.put("i", mealId);
+
+        presenter.getMealDetails(filter);
+    }
+
+    @Override
+    public void getMealsDetailsSuccess(List<Meal> meals) {
+        progressBar.setVisibility(View.GONE);
+        if (meals != null && !meals.isEmpty()) {
+            meal = meals.get(0);
+            displayMealDetails();
+        }
+    }
+
+    @Override
+    public void getMealsDetailsError() {
+        progressBar.setVisibility(View.GONE);
+        Toast.makeText(getContext(), "Failed to fetch meal details", Toast.LENGTH_SHORT).show();
     }
 
     private void displayMealDetails() {

@@ -4,6 +4,7 @@ import com.example.foodproj.data.categories.datasource.CategoriesService;
 import com.example.foodproj.data.countries.datasource.CountriesService;
 import com.example.foodproj.data.home.datasource.HomeServices;
 import com.example.foodproj.data.ingredient.datasource.IngredientService;
+import com.example.foodproj.data.mealdetails.datasource.MealDetailsService;
 import com.example.foodproj.data.mealsfilterd.datasource.MealsFilteredService;
 
 import retrofit2.Retrofit;
@@ -15,6 +16,8 @@ public class Network {
     public CategoriesService categoriesService;
     public IngredientService ingredientService;
     public MealsFilteredService mealsFilteredService;
+
+    public MealDetailsService mealDetailsService;
 
     private static Network instance=null;
     public Network(){
@@ -28,6 +31,7 @@ public class Network {
         categoriesService=retrofit.create(CategoriesService.class);
         ingredientService=retrofit.create(IngredientService.class);
         mealsFilteredService=retrofit.create(MealsFilteredService.class);
+        mealDetailsService=retrofit.create(MealDetailsService.class);
     }
     public static Network getInstance(){
         if(instance==null)

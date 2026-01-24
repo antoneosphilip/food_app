@@ -1,5 +1,9 @@
 package com.example.foodproj.data.mealsfilterd.datasource;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
+import android.util.Log;
+
 import com.example.foodproj.data.categories.datasource.CategoriesMealsResponse;
 import com.example.foodproj.data.mealsfilterd.model.MealsFiltered;
 import com.example.foodproj.network.Network;
@@ -23,7 +27,8 @@ public class MealsFilteredRemoteData {
         mealsFilteredService.getMealsByFilter(filters).enqueue(new Callback<MealsFilteredResponse>() {
             @Override
             public void onResponse(Call<MealsFilteredResponse> call, Response<MealsFilteredResponse> response) {
-                List<MealsFiltered> mealsFilteredList=response.body().getMeals();
+                Log.i(TAG, "respssssfff"+response.body());
+                List<MealsFiltered> mealsFilteredList = response.body() != null ? response.body().getMeals() : null;
                 mealsFilteredNetworkResponse.onMealsFilteredSuccess(mealsFilteredList);
             }
 

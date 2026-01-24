@@ -18,12 +18,13 @@ import com.example.foodproj.presentation.categoryMeals.presenter.CategoriesMeals
 import com.example.foodproj.presentation.categoryMeals.presenter.CategoriesMealsPresenterImpl;
 import com.example.foodproj.presentation.categoryMeals.view.CategoriesMealsAdapter;
 import com.example.foodproj.presentation.categoryMeals.view.CategoriesMealsView;
+import com.example.foodproj.presentation.filterMeals.view.MealsFilteredFragment;
 import com.example.foodproj.presentation.home.view.category.CategoryAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriesMeals extends Fragment implements CategoriesMealsView {
+public class CategoriesMeals extends Fragment implements CategoriesMealsView,CategoryOnClickListener {
 
     private RecyclerView categoriesRecyclerView;
     private CategoriesMealsAdapter categoriesAdapter;
@@ -41,7 +42,7 @@ public class CategoriesMeals extends Fragment implements CategoriesMealsView {
 
         categoriesList = new ArrayList<>();
         filteredList = new ArrayList<>();
-        categoriesAdapter = new CategoriesMealsAdapter(getContext(), filteredList);
+        categoriesAdapter = new CategoriesMealsAdapter(getContext(), filteredList,this);
         categoriesRecyclerView.setAdapter(categoriesAdapter);
 
         presenter = new CategoriesMealsPresenterImpl(this);
@@ -76,5 +77,23 @@ public class CategoriesMeals extends Fragment implements CategoriesMealsView {
     @Override
     public void getCategoryMealsError() {
         Toast.makeText(getContext(), "Failed to fetch categories", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void categoryOnClickListener(CategoryMeals categoriesMeals) {
+        Bundle bundle = new Bundle();
+        bundle.putString("filter_type", "c");
+        bundle.putString("filter_value", categoriesMeals.getStrCategory());
+
+        MealsFilteredFragment fragment = new MealsFilteredFragment();
+        fragment.setArguments(bundle);
+
+        requireActivity()
+                .getSupportFragmentManager()
+
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

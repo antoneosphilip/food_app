@@ -19,14 +19,14 @@ import com.example.foodproj.R;
 import com.example.foodproj.data.mealsfilterd.model.MealsFiltered;
 import com.example.foodproj.presentation.filterMeals.presenter.MealsFilteredPresenter;
 import com.example.foodproj.presentation.filterMeals.presenter.MealsFilteredPresenterImpl;
-import com.example.foodproj.presentation.filterMeals.view.MealsFilteredView;
+import com.example.foodproj.presentation.mealsdetails.view.MealDetails;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MealsFilteredFragment extends Fragment implements MealsFilteredView {
+public class MealsFilteredFragment extends Fragment implements MealsFilteredView,OnMealClickListener {
 
     private RecyclerView mealsRecyclerView;
     private ImageView backButton;
@@ -37,7 +37,6 @@ public class MealsFilteredFragment extends Fragment implements MealsFilteredView
     private String filterType;
     private String filterValue;
     private MealsFilteredPresenter presenter;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,6 +57,8 @@ public class MealsFilteredFragment extends Fragment implements MealsFilteredView
         backButton = view.findViewById(R.id.backButton);
         titleText = view.findViewById(R.id.titleText);
         progressBar = view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+
     }
 
     private void getArgumentsData() {
@@ -71,13 +72,11 @@ public class MealsFilteredFragment extends Fragment implements MealsFilteredView
     private void setupRecyclerView() {
         mealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mealsList = new ArrayList<>();
-        mealsAdapter = new MealsFilteredAdapter(getContext(), mealsList, meal -> {
-        });
+        mealsAdapter = new MealsFilteredAdapter(getContext(), mealsList, this);
         mealsRecyclerView.setAdapter(mealsAdapter);
     }
 
     private void loadMeals() {
-        progressBar.setVisibility(View.VISIBLE);
         presenter = new MealsFilteredPresenterImpl(this);
 
         Map<String, String> filter = new HashMap<>();
@@ -98,5 +97,23 @@ public class MealsFilteredFragment extends Fragment implements MealsFilteredView
     public void getMealsFilteredError() {
         progressBar.setVisibility(View.GONE);
         Toast.makeText(getContext(), "Failed to fetch meals", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onMealClick(MealsFiltered meal) {
+        Bundle bundle = new Bundle();
+        bundle.putString("meal_id", "i");
+        bundle.putString("meal_id",meal.getIdMeal());
+
+        MealDetails fragment = new MealDetails();
+        fragment.setArguments(bundle);
+
+        requireActivity()
+                .getSupportFragmentManager()
+
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

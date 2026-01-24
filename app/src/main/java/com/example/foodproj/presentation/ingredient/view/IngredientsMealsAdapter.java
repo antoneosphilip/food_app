@@ -21,16 +21,18 @@ public class IngredientsMealsAdapter extends RecyclerView.Adapter<IngredientsMea
 
     private Context context;
     private List<IngredientMeals> ingredients;
+    IngredientsOnClickListener ingredientsOnClickListener;
 
-    public IngredientsMealsAdapter(Context context, List<IngredientMeals> ingredients) {
+    public IngredientsMealsAdapter(Context context, List<IngredientMeals> ingredients,IngredientsOnClickListener ingredientsOnClickListener) {
         this.context = context;
         this.ingredients = ingredients;
+        this.ingredientsOnClickListener=ingredientsOnClickListener;
     }
 
     @NonNull
     @Override
     public IngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.ingredient_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.ingredient_card, parent, false);
         return new IngredientViewHolder(view);
     }
 
@@ -44,6 +46,7 @@ public class IngredientsMealsAdapter extends RecyclerView.Adapter<IngredientsMea
                 .load(imageUrl)
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(holder.ingredientImage);
+        holder.Bind(ingredient);
     }
 
     @Override
@@ -51,7 +54,7 @@ public class IngredientsMealsAdapter extends RecyclerView.Adapter<IngredientsMea
         return ingredients.size();
     }
 
-    static class IngredientViewHolder extends RecyclerView.ViewHolder {
+     class IngredientViewHolder extends RecyclerView.ViewHolder {
         ImageView ingredientImage;
         TextView ingredientName;
         CardView cardView;
@@ -61,6 +64,14 @@ public class IngredientsMealsAdapter extends RecyclerView.Adapter<IngredientsMea
             ingredientImage = itemView.findViewById(R.id.ingredientImage);
             ingredientName = itemView.findViewById(R.id.ingredientName);
             cardView = itemView.findViewById(R.id.ingredientCard);
+        }
+        void Bind(IngredientMeals ingredientMeals){
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ingredientsOnClickListener.ingredientsOnClickListener(ingredientMeals);
+                }
+            });
         }
     }
 }

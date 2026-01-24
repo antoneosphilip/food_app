@@ -47,12 +47,8 @@ public class MealsFilteredAdapter extends RecyclerView.Adapter<MealsFilteredAdap
                 .centerCrop()
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(holder.mealImage);
+        holder.Bind(meal);
 
-        holder.mealCard.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onMealClick(meal);
-            }
-        });
     }
 
     @Override
@@ -60,7 +56,7 @@ public class MealsFilteredAdapter extends RecyclerView.Adapter<MealsFilteredAdap
         return meals.size();
     }
 
-    static class MealViewHolder extends RecyclerView.ViewHolder {
+     class MealViewHolder extends RecyclerView.ViewHolder {
         ImageView mealImage;
         TextView mealName;
         CardView mealCard;
@@ -70,6 +66,14 @@ public class MealsFilteredAdapter extends RecyclerView.Adapter<MealsFilteredAdap
             mealImage = itemView.findViewById(R.id.mealImage);
             mealName = itemView.findViewById(R.id.mealName);
             mealCard = itemView.findViewById(R.id.mealCard);
+        }
+        void Bind(MealsFiltered mealsFiltered){
+           mealCard.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   listener.onMealClick(mealsFiltered);
+               }
+           });
         }
     }
 }

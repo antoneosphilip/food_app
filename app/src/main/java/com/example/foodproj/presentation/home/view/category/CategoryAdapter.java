@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.foodproj.R;
 import com.example.foodproj.data.home.model.Category;
-import com.example.foodproj.presentation.home.view.mealDetils.MealOnClickListener;
+import com.example.foodproj.presentation.mealsdetails.view.MealOnClickListener;
 
 import java.util.List;
 
@@ -20,12 +20,13 @@ public class CategoryAdapter extends BaseAdapter {
     private Context context;
     private List<Category> categories;
 
-    private MealOnClickListener mealOnClickListener;
 
-    public CategoryAdapter(Context context, List<Category> categories,MealOnClickListener mealOnClickListener) {
+    private CategoryListener categoryListener;
+
+    public CategoryAdapter(Context context, List<Category> categories,CategoryListener categoryListener) {
         this.context = context;
         this.categories = categories;
-        this.mealOnClickListener=mealOnClickListener;
+        this.categoryListener=categoryListener;
     }
 
     @Override
@@ -61,6 +62,12 @@ public class CategoryAdapter extends BaseAdapter {
         Glide.with(context)
                 .load(category.getStrCategoryThumb())
                 .into(image);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                categoryListener.onCategoryClick(category);
+            }
+        });
 
         return convertView;
     }

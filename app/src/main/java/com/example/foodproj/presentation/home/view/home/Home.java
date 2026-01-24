@@ -20,15 +20,17 @@ import com.bumptech.glide.Glide;
 import com.example.foodproj.R;
 import com.example.foodproj.data.home.model.Category;
 import com.example.foodproj.data.home.model.Meal;
+import com.example.foodproj.presentation.filterMeals.view.MealsFilteredFragment;
 import com.example.foodproj.presentation.home.presenter.HomePresenter;
 import com.example.foodproj.presentation.home.presenter.HomePresenterImpl;
-import com.example.foodproj.presentation.home.view.mealDetils.MealDetails;
-import com.example.foodproj.presentation.home.view.mealDetils.MealOnClickListener;
+import com.example.foodproj.presentation.home.view.category.CategoryListener;
+import com.example.foodproj.presentation.mealsdetails.view.MealDetails;
+import com.example.foodproj.presentation.mealsdetails.view.MealOnClickListener;
 import com.example.foodproj.presentation.home.view.category.CategoryAdapter;
 
 import java.util.List;
 
-public class Home extends Fragment implements HomeView, MealOnClickListener {
+public class Home extends Fragment implements HomeView, MealOnClickListener, CategoryListener {
 
     private HomePresenter homePresenter;
     private ImageView mealImage;
@@ -105,9 +107,26 @@ public class Home extends Fragment implements HomeView, MealOnClickListener {
         if (currentMeal == null || currentMeal.isEmpty()) return;
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable("meal_key", currentMeal.get(0));
+        bundle.putSerializable("meal_id", currentMeal.get(0).getIdMeal());
 
         MealDetails fragment = new MealDetails();
+        fragment.setArguments(bundle);
+
+        getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onCategoryClick(Category category) {
+
+        Bundle bundle = new Bundle();
+        bundle.putString("filter_type", "c");
+        bundle.putString("filter_value", category.getStrCategory());
+
+        MealsFilteredFragment fragment = new MealsFilteredFragment();
         fragment.setArguments(bundle);
 
         getParentFragmentManager()

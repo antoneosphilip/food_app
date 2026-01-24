@@ -22,7 +22,7 @@ public class MealsDetailsRemoteData {
     private final MealDetailsService mealDetailsService;
 
 
-    public MealsDetailsRemoteData(MealDetailsService mealDetailsService) {
+    public MealsDetailsRemoteData() {
         this.mealDetailsService = Network.getInstance().mealDetailsService;
     }
     public void getMealsDetails(MealsDetailsNetworkResponse mealsDetailsNetworkResponse, Map<String, String> filters) {

@@ -20,9 +20,12 @@ public class CategoriesMealsAdapter extends RecyclerView.Adapter<CategoriesMeals
     private Context context;
     private List<CategoryMeals> categories;
 
-    public CategoriesMealsAdapter(Context context, List<CategoryMeals> categories) {
+    private CategoryOnClickListener categoryOnClickListener;
+
+    public CategoriesMealsAdapter(Context context, List<CategoryMeals> categories,CategoryOnClickListener categoryOnClickListener) {
         this.context = context;
         this.categories = categories;
+        this.categoryOnClickListener=categoryOnClickListener;
     }
 
     @NonNull
@@ -38,6 +41,7 @@ public class CategoriesMealsAdapter extends RecyclerView.Adapter<CategoriesMeals
         if(category!=null) {
             holder.categoryName.setText(category.getStrCategory());
         }
+        holder.Bind(category);
     }
 
     @Override
@@ -45,7 +49,7 @@ public class CategoriesMealsAdapter extends RecyclerView.Adapter<CategoriesMeals
         return categories.size();
     }
 
-    static class CategoryViewHolder extends RecyclerView.ViewHolder {
+     class CategoryViewHolder extends RecyclerView.ViewHolder {
         TextView categoryName;
         CardView cardView;
 
@@ -53,6 +57,14 @@ public class CategoriesMealsAdapter extends RecyclerView.Adapter<CategoriesMeals
             super(itemView);
             categoryName = itemView.findViewById(R.id.categoryName);
             cardView = itemView.findViewById(R.id.categoryCard);
+        }
+        void Bind(CategoryMeals categoryMeals){
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    categoryOnClickListener.categoryOnClickListener(categoryMeals);
+                }
+            });
         }
     }
 }

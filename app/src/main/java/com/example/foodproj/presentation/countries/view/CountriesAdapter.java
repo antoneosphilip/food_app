@@ -19,10 +19,12 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.Coun
 
     private Context context;
     private List<CountriesMeals> countries;
+    private CountriesOnClickListener countriesOnClickListener;
 
-    public CountriesAdapter(Context context, List<CountriesMeals> countries) {
+    public CountriesAdapter(Context context, List<CountriesMeals> countries,CountriesOnClickListener countriesOnClickListener) {
         this.context = context;
         this.countries = countries;
+        this.countriesOnClickListener=countriesOnClickListener;
     }
 
     @NonNull
@@ -36,6 +38,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.Coun
     public void onBindViewHolder(@NonNull CountryViewHolder holder, int position) {
         CountriesMeals country = countries.get(position);
         holder.countryName.setText(country.getStrArea());
+        holder.Bind(country);
     }
 
     @Override
@@ -43,7 +46,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.Coun
         return countries.size();
     }
 
-    static class CountryViewHolder extends RecyclerView.ViewHolder {
+     class CountryViewHolder extends RecyclerView.ViewHolder {
         TextView countryName;
         CardView cardView;
 
@@ -51,6 +54,14 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.Coun
             super(itemView);
             countryName = itemView.findViewById(R.id.countryName);
             cardView = itemView.findViewById(R.id.countryCard);
+        }
+        public void Bind(CountriesMeals countriesMeals){
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    countriesOnClickListener.countriesOnClickListener(countriesMeals);
+                }
+            });
         }
     }
 }

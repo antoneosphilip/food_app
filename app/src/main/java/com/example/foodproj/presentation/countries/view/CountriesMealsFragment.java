@@ -17,11 +17,12 @@ import com.example.foodproj.data.countries.model.CountriesMeals;
 import com.example.foodproj.presentation.countries.presenter.CountriesMealsPresenterImpl;
 import com.example.foodproj.presentation.countries.presenter.CountriesPresenter;
 import com.example.foodproj.presentation.countries.view.CountriesMealsView;
+import com.example.foodproj.presentation.filterMeals.view.MealsFilteredFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CountriesMealsFragment extends Fragment implements CountriesMealsView {
+public class CountriesMealsFragment extends Fragment implements CountriesMealsView,CountriesOnClickListener {
 
     private RecyclerView countriesRecyclerView;
     private CountriesAdapter countriesAdapter;
@@ -39,7 +40,7 @@ public class CountriesMealsFragment extends Fragment implements CountriesMealsVi
 
         countriesList = new ArrayList<>();
         filteredList = new ArrayList<>();
-        countriesAdapter = new CountriesAdapter(getContext(), filteredList);
+        countriesAdapter = new CountriesAdapter(getContext(), filteredList,this);
         countriesRecyclerView.setAdapter(countriesAdapter);
 
         presenter = new CountriesMealsPresenterImpl(this);
@@ -74,5 +75,23 @@ public class CountriesMealsFragment extends Fragment implements CountriesMealsVi
     @Override
     public void getCountriesMealsError() {
         Toast.makeText(getContext(), "Failed to fetch countries", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void countriesOnClickListener(CountriesMeals meals) {
+        Bundle bundle = new Bundle();
+        bundle.putString("filter_type", "c");
+        bundle.putString("filter_value", meals.getStrArea());
+
+        MealsFilteredFragment fragment = new MealsFilteredFragment();
+        fragment.setArguments(bundle);
+
+        requireActivity()
+                .getSupportFragmentManager()
+
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

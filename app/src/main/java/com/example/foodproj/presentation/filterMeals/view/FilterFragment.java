@@ -15,6 +15,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.foodproj.R;
 
 import com.example.foodproj.presentation.categoryMeals.view.CategoriesMeals;
+import com.example.foodproj.presentation.countries.view.CountriesMealsFragment;
+import com.example.foodproj.presentation.ingredient.view.IngredientsFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -74,6 +76,11 @@ public class FilterFragment extends Fragment {
             if (fragment instanceof CategoriesMeals) {
                 ((CategoriesMeals) fragment).searchCategories(query);
 
+            }
+            else if (fragment instanceof CountriesMealsFragment) {
+                ((CountriesMealsFragment) fragment).searchCountries(query);
+            } else if (fragment instanceof IngredientsFragment) {
+                ((IngredientsFragment) fragment).searchIngredients(query);
             }
         }
     }

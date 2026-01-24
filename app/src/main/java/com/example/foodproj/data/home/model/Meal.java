@@ -1,13 +1,19 @@
 package com.example.foodproj.data.home.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.example.foodproj.data.home.model.Ingredient;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity(tableName = "meals")
 public class Meal implements Serializable {
-
+    @PrimaryKey
+    @NonNull
     private String idMeal;
     private String strMeal;
 

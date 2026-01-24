@@ -1,5 +1,10 @@
 package com.example.foodproj.presentation.mealsdetails.presenter;
 
+import android.content.Context;
+
+import com.example.foodproj.data.favorite.datasource.MealsLocalDataBase;
+import com.example.foodproj.data.favorite.repo.FavoriteRepo;
+import com.example.foodproj.data.favorite.repo.FavoriteRepoImpl;
 import com.example.foodproj.data.home.model.Meal;
 import com.example.foodproj.data.mealdetails.datasource.MealsDetailsNetworkResponse;
 import com.example.foodproj.data.mealdetails.repo.MealDetailsRepo;
@@ -12,9 +17,13 @@ import java.util.Map;
 public class MealsDetailsPresenterImpl implements MealsDetailsPresenter {
     private final MealDetailsRepo mealDetailsRepo;
     public final MealsDetailsView mealsDetailsView;
-    public MealsDetailsPresenterImpl(MealsDetailsView mealsDetailsView) {
+    private final FavoriteRepo favoriteRepo;
+
+
+    public MealsDetailsPresenterImpl(MealsDetailsView mealsDetailsView, Context context) {
         this.mealDetailsRepo = new MealDetailsRepoImpl();
         this.mealsDetailsView=mealsDetailsView;
+        this.favoriteRepo= new FavoriteRepoImpl(context);
     }
 
     @Override
@@ -31,4 +40,13 @@ public class MealsDetailsPresenterImpl implements MealsDetailsPresenter {
             }
         }, filters);
     }
+
+    @Override
+    public void insertMeal(Meal meal) {
+        favoriteRepo.InsertMeal(meal);
+        mealsDetailsView.insertMeal();
+
+    }
+
+
 }

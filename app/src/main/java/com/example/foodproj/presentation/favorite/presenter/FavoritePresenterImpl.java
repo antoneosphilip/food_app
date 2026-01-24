@@ -1,0 +1,39 @@
+package com.example.foodproj.presentation.favorite.presenter;
+
+import android.content.Context;
+
+import androidx.lifecycle.LiveData;
+
+import com.example.foodproj.data.favorite.repo.FavoriteRepo;
+import com.example.foodproj.data.favorite.repo.FavoriteRepoImpl;
+import com.example.foodproj.data.home.model.Meal;
+import com.example.foodproj.presentation.favorite.view.FavoriteView;
+
+import java.util.List;
+
+public class FavoritePresenterImpl implements FavoritePresenter{
+    private final FavoriteRepo favoriteRepo;
+    private final FavoriteView favoriteView;
+    public FavoritePresenterImpl(Context context,FavoriteView favoriteView) {
+        this.favoriteRepo = new FavoriteRepoImpl(context);
+        this.favoriteView=favoriteView;
+    }
+
+    @Override
+    public void InsertMeal(Meal meal) {
+        favoriteView.insertDataSuccess(meal);
+    }
+
+    @Override
+    public LiveData<List<Meal>> getMeals() {
+        favoriteView.getFavoriteDataSuccess();
+
+        return favoriteRepo.getMeals();
+    }
+
+    @Override
+    public void deleteMeal(Meal meal) {
+        favoriteView.deleteDataSuccess();
+        favoriteRepo.deleteMeal(meal);
+    }
+}

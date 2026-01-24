@@ -6,8 +6,8 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.example.foodproj.Faveorite;
 import com.example.foodproj.R;
+import com.example.foodproj.presentation.favorite.view.Favorite;
 import com.example.foodproj.presentation.filterMeals.view.FilterFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -29,7 +29,7 @@ public class HomeLayout extends AppCompatActivity {
             if (item.getItemId() == R.id.nav_home) {
                 selectedFragment = new Home();
             } else if (item.getItemId() == R.id.nav_favorites) {
-                selectedFragment = new Faveorite();
+                selectedFragment = new Favorite();
             } else if (item.getItemId() == R.id.nav_search) {
                 selectedFragment = new FilterFragment();
             }

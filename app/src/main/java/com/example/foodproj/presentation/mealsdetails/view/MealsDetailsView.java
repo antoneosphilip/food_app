@@ -7,5 +7,6 @@ import java.util.List;
 public interface MealsDetailsView {
     void getMealsDetailsSuccess(List<Meal> meals);
     void getMealsDetailsError();
+    void insertMeal();
 
 }

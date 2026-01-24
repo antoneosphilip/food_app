@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.example.foodproj.R;
 import com.example.foodproj.data.home.model.Ingredient;
 import com.example.foodproj.data.home.model.Meal;
+import com.example.foodproj.presentation.favorite.presenter.FavoritePresenter;
 import com.example.foodproj.presentation.mealsdetails.presenter.MealsDetailsPresenter;
 import com.example.foodproj.presentation.mealsdetails.presenter.MealsDetailsPresenterImpl;
 import com.google.android.material.chip.Chip;
@@ -43,6 +45,8 @@ public class MealDetails extends Fragment implements MealsDetailsView {
     private String mealId;
     private MealsDetailsPresenter presenter;
 
+
+    private Button favoriteButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_meal_details, container, false);
@@ -65,7 +69,13 @@ public class MealDetails extends Fragment implements MealsDetailsView {
         youtubePlayerView = view.findViewById(R.id.youtubePlayerView);
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
-
+        favoriteButton=view.findViewById(R.id.btnAddToFav);
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.insertMeal(meal);
+            }
+        });
         getLifecycle().addObserver(youtubePlayerView);
 
         backButton.setOnClickListener(v -> requireActivity().onBackPressed());
@@ -78,11 +88,10 @@ public class MealDetails extends Fragment implements MealsDetailsView {
     }
 
     private void loadMealDetails() {
-        presenter = new MealsDetailsPresenterImpl(this);
+        presenter = new MealsDetailsPresenterImpl(this,getContext());
 
         Map<String, String> filter = new HashMap<>();
         filter.put("i", mealId);
-
         presenter.getMealDetails(filter);
     }
 
@@ -99,6 +108,12 @@ public class MealDetails extends Fragment implements MealsDetailsView {
     public void getMealsDetailsError() {
         progressBar.setVisibility(View.GONE);
         Toast.makeText(getContext(), "Failed to fetch meal details", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void insertMeal() {
+        Toast.makeText(getContext(), "Inserted Meal to favorite", Toast.LENGTH_SHORT).show();
+
     }
 
     private void displayMealDetails() {

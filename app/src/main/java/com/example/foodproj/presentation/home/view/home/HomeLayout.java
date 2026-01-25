@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.foodproj.R;
+import com.example.foodproj.presentation.calendar.view.Calendar;
 import com.example.foodproj.presentation.favorite.view.Favorite;
 import com.example.foodproj.presentation.filterMeals.view.FilterFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -28,9 +29,13 @@ public class HomeLayout extends AppCompatActivity {
 
             if (item.getItemId() == R.id.nav_home) {
                 selectedFragment = new Home();
-            } else if (item.getItemId() == R.id.nav_favorites) {
+            } else if (item.getItemId() == R.id.nav_calendar) {
+                selectedFragment = new Calendar();
+            }
+            else if (item.getItemId() == R.id.nav_favorites) {
                 selectedFragment = new Favorite();
-            } else if (item.getItemId() == R.id.nav_search) {
+            }
+            else if (item.getItemId() == R.id.nav_search) {
                 selectedFragment = new FilterFragment();
             }
 

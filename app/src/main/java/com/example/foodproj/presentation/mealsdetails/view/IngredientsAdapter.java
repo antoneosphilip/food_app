@@ -25,7 +25,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         this.context = context;
         this.ingredients = ingredients;
     }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

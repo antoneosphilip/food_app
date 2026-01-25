@@ -35,7 +35,7 @@ public class MealPlanLocalDataBase {
             }
         }).start();
     }
-    public LiveData<List<MealPlan>> getProducts(){
-        return calendarDao.getMeals();
+    public LiveData<List<MealPlan>> getProducts(String date){
+        return calendarDao.getMeals(date);
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CalendarMealsPresenter
 {
-    LiveData<List<MealPlan>> getMeals();
+    LiveData<List<MealPlan>> getMeals(String date);
 
     void deleteMeal(MealPlan mealPlan);
 }

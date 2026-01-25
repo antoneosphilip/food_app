@@ -22,8 +22,8 @@ public class MealPlanRepoImpl implements MealPlanRepo {
     }
 
     @Override
-    public LiveData<List<MealPlan>> getMeals() {
-        return mealPlanLocalDataBase.getProducts();
+    public LiveData<List<MealPlan>> getMeals(String date) {
+        return mealPlanLocalDataBase.getProducts(date);
     }
 
     @Override

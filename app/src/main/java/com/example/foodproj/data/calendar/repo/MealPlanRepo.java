@@ -10,7 +10,7 @@ import java.util.List;
 public interface MealPlanRepo {
     public void InsertMeal(MealPlan mealPlan);
 
-    public LiveData<List<MealPlan>> getMeals();
+    public LiveData<List<MealPlan>> getMeals(String date);
 
     public void deleteMeal(MealPlan mealPlan);
 }

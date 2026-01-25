@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "meals")
+
 public class Meal implements Serializable {
     @PrimaryKey
     @NonNull

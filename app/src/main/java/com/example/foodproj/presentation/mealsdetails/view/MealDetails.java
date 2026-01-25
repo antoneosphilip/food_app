@@ -1,11 +1,10 @@
 package com.example.foodproj.presentation.mealsdetails.view;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,14 +17,15 @@ import com.bumptech.glide.Glide;
 import com.example.foodproj.R;
 import com.example.foodproj.data.home.model.Ingredient;
 import com.example.foodproj.data.home.model.Meal;
-import com.example.foodproj.presentation.favorite.presenter.FavoritePresenter;
 import com.example.foodproj.presentation.mealsdetails.presenter.MealsDetailsPresenter;
 import com.example.foodproj.presentation.mealsdetails.presenter.MealsDetailsPresenterImpl;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,12 +41,12 @@ public class MealDetails extends Fragment implements MealsDetailsView {
     private TextView instructionText;
     private YouTubePlayerView youtubePlayerView;
     private ProgressBar progressBar;
+    private MaterialButton favoriteButton;
+    private MaterialButton calendarButton;
     private Meal meal;
     private String mealId;
     private MealsDetailsPresenter presenter;
 
-
-    private Button favoriteButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_meal_details, container, false);
@@ -68,17 +68,40 @@ public class MealDetails extends Fragment implements MealsDetailsView {
         instructionText = view.findViewById(R.id.instructionText);
         youtubePlayerView = view.findViewById(R.id.youtubePlayerView);
         progressBar = view.findViewById(R.id.progressBar);
+        favoriteButton = view.findViewById(R.id.btnAddToFav);
+        calendarButton = view.findViewById(R.id.btnAddToCalendar);
+
         progressBar.setVisibility(View.VISIBLE);
-        favoriteButton=view.findViewById(R.id.btnAddToFav);
-        favoriteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
+        favoriteButton.setOnClickListener(v -> {
+            if (meal != null) {
                 presenter.insertMeal(meal);
             }
         });
+
+        calendarButton.setOnClickListener(v -> showDatePicker());
+
         getLifecycle().addObserver(youtubePlayerView);
 
         backButton.setOnClickListener(v -> requireActivity().onBackPressed());
+    }
+
+    private void showDatePicker() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                requireContext(),
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    String selectedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
+                    Toast.makeText(getContext(), "Meal scheduled for: " + selectedDate, Toast.LENGTH_SHORT).show();
+                },
+                year, month, day
+        );
+
+        datePickerDialog.show();
     }
 
     private void getMealId() {
@@ -88,7 +111,7 @@ public class MealDetails extends Fragment implements MealsDetailsView {
     }
 
     private void loadMealDetails() {
-        presenter = new MealsDetailsPresenterImpl(this,getContext());
+        presenter = new MealsDetailsPresenterImpl(this, getContext());
 
         Map<String, String> filter = new HashMap<>();
         filter.put("i", mealId);
@@ -112,8 +135,7 @@ public class MealDetails extends Fragment implements MealsDetailsView {
 
     @Override
     public void insertMeal() {
-        Toast.makeText(getContext(), "Inserted Meal to favorite", Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(getContext(), "Added to favorites", Toast.LENGTH_SHORT).show();
     }
 
     private void displayMealDetails() {

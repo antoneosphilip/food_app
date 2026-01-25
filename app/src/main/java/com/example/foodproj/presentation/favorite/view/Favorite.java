@@ -146,11 +146,10 @@ public class Favorite extends Fragment implements FavoriteView,FavoriteOnClickLi
 
     @Override
     public void onMealClick(Meal meal) {
-
     }
 
     @Override
     public void onDeleteClick(Meal meal) {
-
+        showDeleteConfirmationDialog(meal);
     }
 }

@@ -24,7 +24,6 @@ public class CalendarMealsPresenterImpl implements CalendarMealsPresenter{
 
     @Override
     public LiveData<List<MealPlan>> getMeals(String date) {
-        calendarMealsView.getCalendarDataSuccess();
         return mealPlanRepo.getMeals(date);
     }
 

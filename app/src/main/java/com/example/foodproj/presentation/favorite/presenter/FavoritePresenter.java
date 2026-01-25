@@ -7,9 +7,9 @@ import com.example.foodproj.data.home.model.Meal;
 import java.util.List;
 
 public interface FavoritePresenter {
-    public void InsertMeal(Meal meal);
+     void InsertMeal(Meal meal);
 
-    public LiveData<List<Meal>> getMeals();
+     LiveData<List<Meal>> getMeals();
 
-    public void deleteMeal(Meal meal);
+     void deleteMeal(Meal meal);
 }

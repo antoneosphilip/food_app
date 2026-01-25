@@ -9,4 +9,6 @@ public interface MealsDetailsView {
     void getMealsDetailsError();
     void insertMeal();
 
+    void insertMealPlan();
+
 }

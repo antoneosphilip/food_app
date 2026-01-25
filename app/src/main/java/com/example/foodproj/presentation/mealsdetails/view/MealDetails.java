@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.foodproj.R;
+import com.example.foodproj.data.calendar.model.MealPlan;
 import com.example.foodproj.data.home.model.Ingredient;
 import com.example.foodproj.data.home.model.Meal;
 import com.example.foodproj.presentation.mealsdetails.presenter.MealsDetailsPresenter;
@@ -25,9 +26,11 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class MealDetails extends Fragment implements MealsDetailsView {
@@ -95,13 +98,37 @@ public class MealDetails extends Fragment implements MealsDetailsView {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 requireContext(),
                 (view, selectedYear, selectedMonth, selectedDay) -> {
-                    String selectedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
-                    Toast.makeText(getContext(), "Meal scheduled for: " + selectedDate, Toast.LENGTH_SHORT).show();
+                    Calendar selectedCalendar = Calendar.getInstance();
+                    selectedCalendar.set(selectedYear, selectedMonth, selectedDay);
+
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                    String selectedDate = dateFormat.format(selectedCalendar.getTime());
+
+                    saveMealPlan(selectedDate, selectedCalendar.getTimeInMillis());
                 },
                 year, month, day
         );
 
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+
         datePickerDialog.show();
+    }
+
+    private void saveMealPlan(String date, long timestamp) {
+        if (meal != null) {
+            MealPlan mealPlan = new MealPlan(
+                    meal.getIdMeal(),
+                    meal.getStrMeal(),
+                    meal.getStrMealThumb(),
+                    meal.getStrCategory(),
+                    meal.getStrArea(),
+                    date,
+                    timestamp
+            );
+
+            presenter.insertMealPlan(mealPlan);
+            Toast.makeText(getContext(), "Meal scheduled for: " + date, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void getMealId() {
@@ -136,6 +163,12 @@ public class MealDetails extends Fragment implements MealsDetailsView {
     @Override
     public void insertMeal() {
         Toast.makeText(getContext(), "Added to favorites", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void insertMealPlan() {
+        Toast.makeText(getContext(), "Added to calendar", Toast.LENGTH_SHORT).show();
+
     }
 
     private void displayMealDetails() {

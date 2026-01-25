@@ -7,10 +7,17 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.foodproj.data.calendar.datasource.CalendarDao;
+import com.example.foodproj.data.calendar.model.MealPlan;
 import com.example.foodproj.data.favorite.datasource.MealDao;
 import com.example.foodproj.data.home.model.Meal;
 
-@Database(entities = {Meal.class},version = 1)
+@Database(
+        entities = {
+                Meal.class,
+                MealPlan.class
+        },
+        version = 1
+)
 public abstract class AppDataBase extends RoomDatabase {
     public abstract MealDao mealDao();
     public abstract CalendarDao calendarDao();

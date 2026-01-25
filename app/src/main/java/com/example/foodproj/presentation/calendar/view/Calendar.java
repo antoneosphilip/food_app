@@ -1,5 +1,6 @@
 package com.example.foodproj.presentation.calendar.view;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,10 +32,7 @@ import java.util.Locale;
 public class Calendar extends Fragment implements CalendarMealsView,OnCalendarMealClickListener {
 
     private CalendarView calendarView;
-    private TextView monthYearText;
     private TextView selectedDateText;
-    private ImageView previousMonthButton;
-        private ImageView nextMonthButton;
     private RecyclerView mealsRecyclerView;
     private LinearLayout emptyStateLayout;
     private ProgressBar progressBar;
@@ -50,11 +48,10 @@ public class Calendar extends Fragment implements CalendarMealsView,OnCalendarMe
 
         initViews(view);
         setupRecyclerView();
-       // loadAllMealPlans();
-
         return view;
     }
 
+    @SuppressLint("SetTextI18n")
     private void initViews(View view) {
         calendarView = view.findViewById(R.id.calendarView);
         selectedDateText = view.findViewById(R.id.selectedDateText);
@@ -70,7 +67,6 @@ public class Calendar extends Fragment implements CalendarMealsView,OnCalendarMe
             calendar.set(year, month, dayOfMonth);
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             selectedDate = dateFormat.format(calendar.getTime());
-
             selectedDateText.setText("Meals for " + selectedDate);
             loadMealsByDate(selectedDate);
         });
@@ -111,22 +107,9 @@ public class Calendar extends Fragment implements CalendarMealsView,OnCalendarMe
             emptyStateLayout.setVisibility(View.VISIBLE);
         }
     }
-
-
-    @Override
-    public void getCalendarDataSuccess() {
-
-
-    }
-
-    @Override
-    public void getCalendarDataError() {
-
-    }
-
     @Override
     public void deleteCalendarDataSuccess() {
-
+        Toast.makeText(getContext(),"delete meal successfully",Toast.LENGTH_SHORT).show();
     }
 
     @Override

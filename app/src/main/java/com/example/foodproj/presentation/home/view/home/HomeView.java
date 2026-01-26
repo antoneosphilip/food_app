@@ -11,4 +11,5 @@ public interface HomeView {
     void mealFetchedFailure();
     void categoryFetchedSuccessfully(List<Category> categories);
     void categoryFetchedFailure();
+
 }

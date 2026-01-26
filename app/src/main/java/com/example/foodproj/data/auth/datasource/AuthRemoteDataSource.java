@@ -7,7 +7,8 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class AuthRemoteDataSource {
+public class
+AuthRemoteDataSource {
     private final FirebaseAuth mAuth;
     private final GoogleSignInClient googleSignInClient;
 

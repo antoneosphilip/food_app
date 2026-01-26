@@ -2,6 +2,7 @@ package com.example.foodproj.presentation.home.view.home;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,9 @@ import com.bumptech.glide.Glide;
 import com.example.foodproj.R;
 import com.example.foodproj.data.home.model.Category;
 import com.example.foodproj.data.home.model.Meal;
+import com.example.foodproj.presentation.auth.presenter.AuthPresenter;
+import com.example.foodproj.presentation.auth.presenter.AuthPresenterImpl;
+import com.example.foodproj.presentation.auth.view.LoginActivity;
 import com.example.foodproj.presentation.filterMeals.view.MealsFilteredFragment;
 import com.example.foodproj.presentation.home.presenter.HomePresenter;
 import com.example.foodproj.presentation.home.presenter.HomePresenterImpl;
@@ -89,6 +93,7 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
         Toast.makeText(getContext(), "Failed to fetch category", Toast.LENGTH_SHORT).show();
 
     }
+
 
     private void displayMealData(List<Meal> meal) {
         mealTitle.setText(meal.get(0).getStrMeal());

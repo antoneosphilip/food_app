@@ -59,7 +59,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView {
         GoogleSignInClient googleSignInClient =
                 com.google.android.gms.auth.api.signin.GoogleSignIn.getClient(this, gso);
 
-        presenter = new AuthPresenterImpl(this, googleSignInClient);
+        presenter = new AuthPresenterImpl(this, googleSignInClient,getApplicationContext());
 
         btnSignUp.setOnClickListener(v -> validateAndSignUp());
         btnGoogleSignUp.setOnClickListener(v -> presenter.onGoogleSignIn());

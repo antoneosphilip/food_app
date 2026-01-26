@@ -1,12 +1,18 @@
 package com.example.foodproj.presentation.home.view.home;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.foodproj.R;
+import com.example.foodproj.presentation.auth.presenter.AuthPresenter;
+import com.example.foodproj.presentation.auth.presenter.AuthPresenterImpl;
+import com.example.foodproj.presentation.auth.view.LoginActivity;
 import com.example.foodproj.presentation.calendar.view.Calendar;
 import com.example.foodproj.presentation.favorite.view.Favorite;
 import com.example.foodproj.presentation.filterMeals.view.FilterFragment;
@@ -14,15 +20,26 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeLayout extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
-
+    TextView logOut;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home_layout);
         bottomNavigationView = findViewById(R.id.bottomNav);
+        logOut=findViewById(R.id.logoutButton);
         loadFragment(new Home());
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AuthPresenter authPresenter=new AuthPresenterImpl(null,null,getApplicationContext());
+                authPresenter.logOut();
+                Intent intent = new Intent(HomeLayout.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
 
+            }
+        });
         bottomNavigationView.setOnItemSelectedListener(item -> {
 
             Fragment selectedFragment = null;

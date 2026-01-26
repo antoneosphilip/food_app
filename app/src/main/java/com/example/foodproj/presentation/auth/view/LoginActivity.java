@@ -37,7 +37,6 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-
         progressBar = findViewById(R.id.progressBar);
         btnGoogleLogin = findViewById(R.id.btnGoogleLogin);
         btnLogin=findViewById(R.id.btnLoginSubmit);
@@ -52,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         GoogleSignInClient googleSignInClient = com.google.android.gms.auth.api.signin.GoogleSignIn.getClient(this, gso);
 
 
-        presenter = new AuthPresenterImpl( this,googleSignInClient);
+        presenter = new AuthPresenterImpl( this,googleSignInClient,getApplicationContext());
 
         btnGoogleLogin.setOnClickListener(v -> presenter.onGoogleSignIn());
         btnLogin.setOnClickListener(v -> validateAndSignUp());
@@ -113,6 +112,11 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     public void onLoginSuccess(FirebaseUser user) {
         Toast.makeText(this, "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(LoginActivity.this, HomeLayout.class);
+        user.getIdToken(true)
+                .addOnSuccessListener(result -> {
+                    String token = result.getToken();
+                    presenter.saveToken(token);
+                });
         startActivity(intent);
 
     }
@@ -121,6 +125,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     public void onLoginError(String error) {
         Toast.makeText(this, "Login Error: " + error, Toast.LENGTH_SHORT).show();
     }
+
 
 
 }

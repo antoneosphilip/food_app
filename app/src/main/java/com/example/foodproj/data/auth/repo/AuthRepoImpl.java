@@ -1,23 +1,29 @@
 package com.example.foodproj.data.auth.repo;
 
+import android.content.Context;
 import android.content.Intent;
 
 import com.example.foodproj.data.auth.datasource.AuthNetworkResponse;
 import com.example.foodproj.data.auth.datasource.AuthRemoteDataSource;
+import com.example.foodproj.prefs.UserPrefs;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
 public class AuthRepoImpl implements AuthRepo {
 
     private final AuthRemoteDataSource dataSource;
+    private final UserPrefs userPrefs;
 
-    public AuthRepoImpl(GoogleSignInClient googleSignInClient) {
+
+    public AuthRepoImpl(GoogleSignInClient googleSignInClient, Context context) {
         this.dataSource = new AuthRemoteDataSource(googleSignInClient);
+        this.userPrefs = new UserPrefs(context);
 
     }
 
     @Override
     public void signIn(String email, String password, AuthNetworkResponse callback) {
         dataSource.signInWithEmail(email, password, callback);
+
     }
 
     @Override
@@ -33,5 +39,25 @@ public class AuthRepoImpl implements AuthRepo {
     @Override
     public Intent getGoogleSignInIntent() {
         return dataSource.getGoogleSignInIntent();
+    }
+
+    @Override
+    public void saveToken(String token) {
+        userPrefs.saveToken(token);
+    }
+
+    @Override
+    public String getToken() {
+       return userPrefs.getToken();
+    }
+
+    @Override
+    public Boolean isLoggedIn() {
+        return userPrefs.getToken()!=null;
+    }
+
+    @Override
+    public void logOut() {
+        userPrefs.clear();
     }
 }

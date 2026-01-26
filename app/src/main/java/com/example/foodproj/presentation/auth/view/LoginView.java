@@ -9,4 +9,5 @@ public interface LoginView extends AuthView {
 
     void onLoginSuccess(FirebaseUser user);
     void onLoginError(String error);
+
 }

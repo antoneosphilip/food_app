@@ -1,5 +1,6 @@
 package com.example.foodproj.presentation.auth.presenter;
 
+import android.content.Context;
 import android.content.Intent;
 
 import com.example.foodproj.data.auth.repo.AuthRepo;
@@ -16,8 +17,8 @@ public class AuthPresenterImpl implements AuthPresenter {
     private final AuthRepo repository;
     private final AuthView view;
 
-    public AuthPresenterImpl(AuthView view, GoogleSignInClient googleSignInClient) {
-        this.repository = new AuthRepoImpl(googleSignInClient);
+    public AuthPresenterImpl(AuthView view, GoogleSignInClient googleSignInClient, Context context) {
+        this.repository = new AuthRepoImpl(googleSignInClient,context);
         this.view = view;
     }
 
@@ -31,6 +32,7 @@ public class AuthPresenterImpl implements AuthPresenter {
                 if (view instanceof LoginView) {
                     ((LoginView) view).onLoginSuccess(user);
                 }
+
             }
 
             @Override
@@ -91,5 +93,25 @@ public class AuthPresenterImpl implements AuthPresenter {
                 }
             }
         });
+    }
+
+    @Override
+    public void saveToken(String token) {
+        repository.saveToken(token);
+    }
+
+    @Override
+    public String getToken() {
+        return repository.getToken();
+    }
+
+    @Override
+    public Boolean isLoggedIn() {
+        return repository.isLoggedIn();
+    }
+
+    @Override
+    public void logOut() {
+        repository.logOut();
     }
 }

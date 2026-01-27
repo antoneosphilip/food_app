@@ -12,12 +12,5 @@ public interface AuthPresenter {
 
     void handleGoogleSignInResult(String idToken);
 
-    void saveToken(String token);
-
-    String getToken();
-    
-    Boolean isLoggedIn();
-
-    void logOut();
 
 }

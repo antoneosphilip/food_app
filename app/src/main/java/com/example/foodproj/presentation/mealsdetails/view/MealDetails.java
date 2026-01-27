@@ -18,6 +18,8 @@ import com.example.foodproj.R;
 import com.example.foodproj.data.calendar.model.MealPlan;
 import com.example.foodproj.data.home.model.Ingredient;
 import com.example.foodproj.data.home.model.Meal;
+import com.example.foodproj.helper.Helper;
+import com.example.foodproj.prefs.UserPrefs;
 import com.example.foodproj.presentation.mealsdetails.presenter.MealsDetailsPresenter;
 import com.example.foodproj.presentation.mealsdetails.presenter.MealsDetailsPresenterImpl;
 import com.google.android.material.button.MaterialButton;
@@ -76,13 +78,18 @@ public class MealDetails extends Fragment implements MealsDetailsView {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        favoriteButton.setOnClickListener(v -> {
-            if (meal != null) {
-                presenter.insertMeal(meal);
-            }
-        });
-
-        calendarButton.setOnClickListener(v -> showDatePicker());
+        if(UserPrefs.getToken()!=null) {
+            favoriteButton.setOnClickListener(v -> {
+                if (meal != null) {
+                    presenter.insertMeal(meal);
+                }
+            });
+            calendarButton.setOnClickListener(v -> showDatePicker());
+        }
+        else{
+            favoriteButton.setOnClickListener(v -> Helper.show(getContext()));
+            calendarButton.setOnClickListener(v -> Helper.show(getContext()));
+        }
 
         getLifecycle().addObserver(youtubePlayerView);
 
@@ -125,7 +132,6 @@ public class MealDetails extends Fragment implements MealsDetailsView {
                     date,
                     timestamp
             );
-
             presenter.insertMealPlan(mealPlan);
             Toast.makeText(getContext(), "Meal scheduled for: " + date, Toast.LENGTH_SHORT).show();
         }
@@ -168,7 +174,6 @@ public class MealDetails extends Fragment implements MealsDetailsView {
     @Override
     public void insertMealPlan() {
         Toast.makeText(getContext(), "Added to calendar", Toast.LENGTH_SHORT).show();
-
     }
 
     private void displayMealDetails() {

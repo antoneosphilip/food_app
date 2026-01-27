@@ -9,6 +9,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.foodproj.prefs.UserPrefs;
 import com.example.foodproj.presentation.auth.presenter.AuthPresenter;
 import com.example.foodproj.presentation.auth.presenter.AuthPresenterImpl;
 import com.example.foodproj.presentation.auth.view.LoginActivity;
@@ -28,10 +29,8 @@ public class MainActivity extends AppCompatActivity {
                 .requestIdToken(getString(R.string.client_Id))
                 .requestEmail()
                 .build();
-
-        GoogleSignInClient googleSignInClient = com.google.android.gms.auth.api.signin.GoogleSignIn.getClient(this, gso);
-        authPresenter=new AuthPresenterImpl(null,googleSignInClient,getApplicationContext());
-        Intent intent = new Intent(MainActivity.this, authPresenter.isLoggedIn()? HomeLayout.class: LoginActivity.class);
+        UserPrefs.init(getApplicationContext());
+        Intent intent = new Intent(MainActivity.this, UserPrefs.getToken()!=null? HomeLayout.class: LoginActivity.class);
         startActivity(intent);
         finish();
 

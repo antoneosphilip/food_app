@@ -46,10 +46,9 @@ public class MealsDetailsPresenterImpl implements MealsDetailsPresenter {
     }
 
     @Override
-    public void insertMeal(Meal meal) {
+    public void insertMeal(Meal meal){
         favoriteRepo.InsertMeal(meal);
         mealsDetailsView.insertMeal();
-
     }
 
     @Override

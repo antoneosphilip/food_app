@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.foodproj.R;
+import com.example.foodproj.prefs.UserPrefs;
 import com.example.foodproj.presentation.auth.presenter.AuthPresenter;
 import com.example.foodproj.presentation.auth.presenter.AuthPresenterImpl;
 import com.example.foodproj.presentation.home.view.home.HomeLayout;
@@ -31,6 +32,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     private Button btnLogin;
     private TextView signUp;
 
+    private Button guestButton;
+
     private static final int RC_SIGN_IN = 9001;
 
     @Override
@@ -43,6 +46,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         etPassword= findViewById(R.id.etPassword);
         etEmail=findViewById(R.id.etEmail);
         signUp=findViewById(R.id.tvSignUpRedirect);
+        guestButton=findViewById(R.id.btnGuest);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.client_Id))
                 .requestEmail()
@@ -59,7 +63,10 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
         });
-
+        guestButton.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, HomeLayout.class);
+            startActivity(intent);
+        });
     }
     private void validateAndSignUp() {
         String email = etEmail.getText().toString().trim();
@@ -115,7 +122,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         user.getIdToken(true)
                 .addOnSuccessListener(result -> {
                     String token = result.getToken();
-                    presenter.saveToken(token);
+                    UserPrefs.saveToken(token);
                 });
         startActivity(intent);
 

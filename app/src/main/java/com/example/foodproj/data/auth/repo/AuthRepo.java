@@ -10,12 +10,5 @@ public interface AuthRepo {
     void signInWithGoogle(String idToken, AuthNetworkResponse callback);
     Intent getGoogleSignInIntent();
 
-    void saveToken(String token);
-
-    String getToken();
-
-    Boolean isLoggedIn();
-
-    void logOut();
 
 }

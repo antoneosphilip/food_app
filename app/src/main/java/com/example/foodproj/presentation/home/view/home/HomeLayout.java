@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.foodproj.R;
+import com.example.foodproj.prefs.UserPrefs;
 import com.example.foodproj.presentation.auth.presenter.AuthPresenter;
 import com.example.foodproj.presentation.auth.presenter.AuthPresenterImpl;
 import com.example.foodproj.presentation.auth.view.LoginActivity;
@@ -32,8 +33,7 @@ public class HomeLayout extends AppCompatActivity {
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AuthPresenter authPresenter=new AuthPresenterImpl(null,null,getApplicationContext());
-                authPresenter.logOut();
+                UserPrefs.clear();
                 Intent intent = new Intent(HomeLayout.this, LoginActivity.class);
                 startActivity(intent);
                 finish();

@@ -95,23 +95,5 @@ public class AuthPresenterImpl implements AuthPresenter {
         });
     }
 
-    @Override
-    public void saveToken(String token) {
-        repository.saveToken(token);
-    }
 
-    @Override
-    public String getToken() {
-        return repository.getToken();
-    }
-
-    @Override
-    public Boolean isLoggedIn() {
-        return repository.isLoggedIn();
-    }
-
-    @Override
-    public void logOut() {
-        repository.logOut();
-    }
 }

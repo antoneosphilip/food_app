@@ -11,12 +11,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 public class AuthRepoImpl implements AuthRepo {
 
     private final AuthRemoteDataSource dataSource;
-    private final UserPrefs userPrefs;
 
 
     public AuthRepoImpl(GoogleSignInClient googleSignInClient, Context context) {
         this.dataSource = new AuthRemoteDataSource(googleSignInClient);
-        this.userPrefs = new UserPrefs(context);
 
     }
 
@@ -41,23 +39,5 @@ public class AuthRepoImpl implements AuthRepo {
         return dataSource.getGoogleSignInIntent();
     }
 
-    @Override
-    public void saveToken(String token) {
-        userPrefs.saveToken(token);
-    }
 
-    @Override
-    public String getToken() {
-       return userPrefs.getToken();
-    }
-
-    @Override
-    public Boolean isLoggedIn() {
-        return userPrefs.getToken()!=null;
-    }
-
-    @Override
-    public void logOut() {
-        userPrefs.clear();
-    }
 }

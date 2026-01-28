@@ -3,14 +3,21 @@ package com.example.foodproj.data.favorite.repo;
 import androidx.lifecycle.LiveData;
 
 import com.example.foodproj.data.home.model.Meal;
+import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
 public interface FavoriteRepo {
 
-    public void InsertMeal(Meal meal);
+     void InsertMeal(Meal meal);
 
-    public LiveData<List<Meal>> getMeals();
+     LiveData<List<Meal>> getMeals();
 
-    public void deleteMeal(Meal meal);
+     void deleteMeal(Meal meal);
+
+     void uploadData(Meal meal);
+
+     Task<List<Meal>> getRemoteFavorites();
+
+
 }

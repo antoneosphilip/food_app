@@ -57,5 +57,10 @@ public class MealsDetailsPresenterImpl implements MealsDetailsPresenter {
         mealsDetailsView.insertMealPlan();
     }
 
+    @Override
+    public void uploadMeal(Meal meal) {
+        favoriteRepo.uploadData(meal);
+    }
+
 
 }

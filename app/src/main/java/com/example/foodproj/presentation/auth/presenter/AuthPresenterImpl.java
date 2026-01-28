@@ -3,19 +3,26 @@ package com.example.foodproj.presentation.auth.presenter;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.foodproj.data.auth.datasource.LogOutNetworkResponse;
 import com.example.foodproj.data.auth.repo.AuthRepo;
 import com.example.foodproj.data.auth.datasource.AuthNetworkResponse;
 import com.example.foodproj.data.auth.repo.AuthRepoImpl;
+import com.example.foodproj.data.favorite.repo.FavoriteRepo;
+import com.example.foodproj.data.favorite.repo.FavoriteRepoImpl;
+import com.example.foodproj.data.home.model.Meal;
 import com.example.foodproj.presentation.auth.view.AuthView;
 import com.example.foodproj.presentation.auth.view.LoginView;
 import com.example.foodproj.presentation.auth.view.SignUpView;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.List;
+
 public class AuthPresenterImpl implements AuthPresenter {
 
     private final AuthRepo repository;
     private final AuthView view;
+
 
     public AuthPresenterImpl(AuthView view, GoogleSignInClient googleSignInClient, Context context) {
         this.repository = new AuthRepoImpl(googleSignInClient,context);
@@ -94,6 +101,8 @@ public class AuthPresenterImpl implements AuthPresenter {
             }
         });
     }
+
+
 
 
 }

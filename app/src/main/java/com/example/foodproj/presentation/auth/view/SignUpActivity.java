@@ -89,6 +89,8 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView {
         super.startActivityForResult(intent, requestCode);
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

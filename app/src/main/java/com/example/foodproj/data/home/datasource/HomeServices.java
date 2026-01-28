@@ -12,4 +12,6 @@ public interface HomeServices {
 
     @GET("categories.php")
     Call<CategoriesResponse> getCategories();
+
+
 }

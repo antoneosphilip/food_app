@@ -19,6 +19,8 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.foodproj.R;
+import com.example.foodproj.data.auth.repo.AuthRepo;
+import com.example.foodproj.data.auth.repo.AuthRepoImpl;
 import com.example.foodproj.data.home.model.Category;
 import com.example.foodproj.data.home.model.Meal;
 import com.example.foodproj.presentation.auth.presenter.AuthPresenter;
@@ -45,19 +47,21 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
     private GridView categoriesGridView;
     private List<Meal> currentMeal;
 
+    private  AuthRepo authRepo;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
           initViews(view);
-          homePresenter = new HomePresenterImpl(this);
+          homePresenter = new HomePresenterImpl(this,getContext());
           homePresenter.getMeals();
           homePresenter.getCategories();
 
           refreshButton.setOnClickListener(v -> homePresenter.getMeals());
           mealImage.setOnClickListener(v -> mealClickListener());
-
         return view;
     }
 
@@ -91,8 +95,8 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
     @Override
     public void categoryFetchedFailure() {
         Toast.makeText(getContext(), "Failed to fetch category", Toast.LENGTH_SHORT).show();
-
     }
+
 
 
     private void displayMealData(List<Meal> meal) {

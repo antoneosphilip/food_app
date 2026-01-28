@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.foodproj.R;
+import com.example.foodproj.data.home.model.Meal;
 import com.example.foodproj.prefs.UserPrefs;
 import com.example.foodproj.presentation.auth.presenter.AuthPresenter;
 import com.example.foodproj.presentation.auth.presenter.AuthPresenterImpl;
@@ -21,6 +22,8 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity implements LoginView {
 
@@ -85,6 +88,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     public void startActivityForResult(Intent intent, int requestCode) {
         super.startActivityForResult(intent, requestCode);
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

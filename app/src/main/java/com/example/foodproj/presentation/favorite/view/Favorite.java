@@ -34,6 +34,9 @@ public class Favorite extends Fragment implements FavoriteView,FavoriteOnClickLi
     private ProgressBar progressBar;
     private FavoritesAdapter adapter;
     private FavoritePresenter presenter;
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +55,10 @@ public class Favorite extends Fragment implements FavoriteView,FavoriteOnClickLi
 
         initViews(view);
         setupRecyclerView();
+        presenter.getRemoteFavorites();
+
         loadFavoriteMeals();
+
     }
 
     private void initViews(View view) {
@@ -60,6 +66,7 @@ public class Favorite extends Fragment implements FavoriteView,FavoriteOnClickLi
         titleText = view.findViewById(R.id.titleText);
         emptyStateLayout = view.findViewById(R.id.emptyStateLayout);
         progressBar = view.findViewById(R.id.progressBar);
+
     }
 
     private void setupRecyclerView() {
@@ -124,10 +131,7 @@ public class Favorite extends Fragment implements FavoriteView,FavoriteOnClickLi
         showEmptyState();
     }
 
-    @Override
-    public void insertDataSuccess(Meal meal) {
-        Toast.makeText(getContext(), meal.getStrMeal() + " added to favorites", Toast.LENGTH_SHORT).show();
-    }
+
 
     @Override
     public void insertDataError() {
@@ -142,6 +146,17 @@ public class Favorite extends Fragment implements FavoriteView,FavoriteOnClickLi
     @Override
     public void deleteDataError() {
         Toast.makeText(getContext(), "Error removing from favorites", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getFavoriteRemoteSuccess() {
+
+    }
+
+    @Override
+    public void getFavoriteRemoteError(String error) {
+        Toast.makeText(getContext(), "Error get favorites", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

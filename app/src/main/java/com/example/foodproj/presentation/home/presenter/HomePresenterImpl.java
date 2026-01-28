@@ -1,5 +1,11 @@
 package com.example.foodproj.presentation.home.presenter;
 
+import android.content.Context;
+
+import com.example.foodproj.data.auth.datasource.LogOutNetworkResponse;
+import com.example.foodproj.data.auth.repo.AuthRepo;
+import com.example.foodproj.data.auth.repo.AuthRepoImpl;
+import com.example.foodproj.data.favorite.repo.FavoriteRepoImpl;
 import com.example.foodproj.data.home.datasource.CategoryNetworkResponse;
 import com.example.foodproj.data.home.datasource.MealsNetworkResponse;
 import com.example.foodproj.data.home.model.Category;
@@ -13,9 +19,11 @@ import java.util.List;
 public class HomePresenterImpl implements HomePresenter{
     HomeRepo homeRepo;
     HomeView homeView;
-    public HomePresenterImpl(HomeView homeView){
+
+
+    public HomePresenterImpl(HomeView homeView, Context context){
       this.homeView=homeView;
-      this.homeRepo= new HomeRepoImpl();
+      this.homeRepo= new HomeRepoImpl(context);
     }
 
 
@@ -48,4 +56,6 @@ public class HomePresenterImpl implements HomePresenter{
             }
         });
     }
+
+
 }

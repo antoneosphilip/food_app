@@ -7,8 +7,11 @@ import java.util.List;
 public interface FavoriteView {
     void getFavoriteDataSuccess();
     void getDataError();
-    void insertDataSuccess(Meal meal);
     void insertDataError();
     void deleteDataSuccess();
     void deleteDataError();
+
+    void getFavoriteRemoteSuccess();
+    void getFavoriteRemoteError(String error);
+
 }

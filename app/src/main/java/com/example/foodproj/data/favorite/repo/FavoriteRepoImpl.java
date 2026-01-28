@@ -4,16 +4,20 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.foodproj.data.favorite.datasource.FirebaseRemoteDataSource;
 import com.example.foodproj.data.favorite.datasource.MealsLocalDataBase;
 import com.example.foodproj.data.home.model.Meal;
+import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
 public class FavoriteRepoImpl implements FavoriteRepo {
    final private MealsLocalDataBase mealsLocalDataBase;
 
+   final private FirebaseRemoteDataSource firebaseRemoteDataSource;
     public FavoriteRepoImpl(Context context) {
         this.mealsLocalDataBase = new MealsLocalDataBase(context);
+        this.firebaseRemoteDataSource=new FirebaseRemoteDataSource();
     }
 
     @Override
@@ -29,5 +33,15 @@ public class FavoriteRepoImpl implements FavoriteRepo {
     @Override
     public void deleteMeal(Meal meal) {
         mealsLocalDataBase.deleteProduct(meal);
+    }
+
+    @Override
+    public void uploadData(Meal meal) {
+        firebaseRemoteDataSource.uploadUserData(meal);
+    }
+
+    @Override
+    public Task<List<Meal>> getRemoteFavorites() {
+        return firebaseRemoteDataSource.getMeals();
     }
 }

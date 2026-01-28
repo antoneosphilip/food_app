@@ -12,4 +12,5 @@ public interface HomeView {
     void categoryFetchedSuccessfully(List<Category> categories);
     void categoryFetchedFailure();
 
+
 }

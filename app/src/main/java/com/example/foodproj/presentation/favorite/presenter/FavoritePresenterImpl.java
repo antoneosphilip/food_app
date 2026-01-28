@@ -8,6 +8,7 @@ import com.example.foodproj.data.favorite.repo.FavoriteRepo;
 import com.example.foodproj.data.favorite.repo.FavoriteRepoImpl;
 import com.example.foodproj.data.home.model.Meal;
 import com.example.foodproj.presentation.favorite.view.FavoriteView;
+import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class FavoritePresenterImpl implements FavoritePresenter{
 
     @Override
     public void InsertMeal(Meal meal) {
-        favoriteView.insertDataSuccess(meal);
+        favoriteRepo.InsertMeal(meal);
     }
 
     @Override
@@ -36,4 +37,26 @@ public class FavoritePresenterImpl implements FavoritePresenter{
         favoriteView.deleteDataSuccess();
         favoriteRepo.deleteMeal(meal);
     }
+
+    @Override
+    public void getRemoteFavorites() {
+        favoriteRepo.getRemoteFavorites()
+                .addOnSuccessListener(meals -> {
+
+                    if (meals != null && !meals.isEmpty()) {
+                        for (Meal meal : meals) {
+                            InsertMeal(meal);
+                        }
+                    }
+
+                    favoriteView.getFavoriteRemoteSuccess();
+
+                })
+                .addOnFailureListener(e ->
+                        favoriteView.getFavoriteRemoteError(e.getMessage())
+                );
+
+    }
+
+
 }

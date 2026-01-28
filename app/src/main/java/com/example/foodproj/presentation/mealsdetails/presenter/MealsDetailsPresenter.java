@@ -11,4 +11,6 @@ public interface MealsDetailsPresenter {
 
     void insertMealPlan(MealPlan mealPlan);
 
+    void uploadMeal(Meal meal);
+
 }

@@ -16,6 +16,6 @@ public class MealDetailsRepoImpl implements MealDetailsRepo{
     @Override
     public void getMealDetails(MealsDetailsNetworkResponse mealsDetailsNetworkResponse,Map<String, String> filters) {
         mealsDetailsRemoteData.getMealsDetails(mealsDetailsNetworkResponse,filters);
-
     }
+
 }

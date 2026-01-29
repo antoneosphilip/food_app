@@ -1,21 +1,31 @@
 package com.example.foodproj.presentation.auth.presenter;
 
+import android.content.Context;
 import android.content.Intent;
 
+import com.example.foodproj.data.auth.datasource.LogOutNetworkResponse;
 import com.example.foodproj.data.auth.repo.AuthRepo;
 import com.example.foodproj.data.auth.datasource.AuthNetworkResponse;
 import com.example.foodproj.data.auth.repo.AuthRepoImpl;
+import com.example.foodproj.data.favorite.repo.FavoriteRepo;
+import com.example.foodproj.data.favorite.repo.FavoriteRepoImpl;
+import com.example.foodproj.data.home.model.Meal;
 import com.example.foodproj.presentation.auth.view.AuthView;
+import com.example.foodproj.presentation.auth.view.LoginView;
+import com.example.foodproj.presentation.auth.view.SignUpView;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.List;
 
 public class AuthPresenterImpl implements AuthPresenter {
 
     private final AuthRepo repository;
     private final AuthView view;
 
-    public AuthPresenterImpl(AuthView view, GoogleSignInClient googleSignInClient) {
-        this.repository = new AuthRepoImpl(googleSignInClient);
+
+    public AuthPresenterImpl(AuthView view, GoogleSignInClient googleSignInClient, Context context) {
+        this.repository = new AuthRepoImpl(googleSignInClient,context);
         this.view = view;
     }
 
@@ -26,13 +36,18 @@ public class AuthPresenterImpl implements AuthPresenter {
             @Override
             public void onSuccess(FirebaseUser user) {
                 view.hideLoading();
-                view.onLoginSuccess(user);
+                if (view instanceof LoginView) {
+                    ((LoginView) view).onLoginSuccess(user);
+                }
+
             }
 
             @Override
             public void onError(Exception e) {
                 view.hideLoading();
-                view.onLoginError(e.getMessage());
+                if (view instanceof LoginView) {
+                    ((LoginView) view).onLoginError(e.getMessage());
+                }
             }
         });
     }
@@ -44,13 +59,17 @@ public class AuthPresenterImpl implements AuthPresenter {
             @Override
             public void onSuccess(FirebaseUser user) {
                 view.hideLoading();
-                view.onSignUpSuccess(user);
+                if (view instanceof SignUpView) {
+                    ((SignUpView) view).onSignUpSuccess(user);
+                }
             }
 
             @Override
             public void onError(Exception e) {
                 view.hideLoading();
-                view.onSignUpError(e.getMessage());
+                if (view instanceof SignUpView) {
+                    ((SignUpView) view).onSignUpError(e.getMessage());
+                }
             }
         });
     }
@@ -68,14 +87,22 @@ public class AuthPresenterImpl implements AuthPresenter {
             @Override
             public void onSuccess(FirebaseUser user) {
                 view.hideLoading();
-                view.onLoginSuccess(user);
+                if (view instanceof LoginView) {
+                    ((LoginView) view).onLoginSuccess(user);
+                }
             }
 
             @Override
             public void onError(Exception e) {
                 view.hideLoading();
-                view.onLoginError(e.getMessage());
+                if (view instanceof LoginView) {
+                    ((LoginView) view).onLoginError(e.getMessage());
+                }
             }
         });
     }
+
+
+
+
 }

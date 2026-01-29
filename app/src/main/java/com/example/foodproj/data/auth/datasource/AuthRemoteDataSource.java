@@ -1,19 +1,29 @@
 package com.example.foodproj.data.auth.datasource;
 
 import android.content.Intent;
+import android.service.autofill.UserData;
 
+import androidx.lifecycle.LiveData;
+
+import com.example.foodproj.data.home.model.Meal;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-public class AuthRemoteDataSource {
+import java.util.List;
+
+public class
+AuthRemoteDataSource {
     private final FirebaseAuth mAuth;
     private final GoogleSignInClient googleSignInClient;
+    private final FirebaseFirestore firestore;
 
     public AuthRemoteDataSource(GoogleSignInClient googleSignInClient) {
         this.mAuth = FirebaseAuth.getInstance();
         this.googleSignInClient = googleSignInClient;
+        firestore=FirebaseFirestore.getInstance();
     }
 
     public Intent getGoogleSignInIntent() {
@@ -50,4 +60,5 @@ public class AuthRemoteDataSource {
             }
         });
     }
+
 }

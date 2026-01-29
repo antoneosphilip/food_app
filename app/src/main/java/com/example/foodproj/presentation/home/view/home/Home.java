@@ -2,7 +2,6 @@ package com.example.foodproj.presentation.home.view.home;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,13 +18,9 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.foodproj.R;
-import com.example.foodproj.data.auth.repo.AuthRepo;
-import com.example.foodproj.data.auth.repo.AuthRepoImpl;
 import com.example.foodproj.data.home.model.Category;
 import com.example.foodproj.data.home.model.Meal;
-import com.example.foodproj.presentation.auth.presenter.AuthPresenter;
-import com.example.foodproj.presentation.auth.presenter.AuthPresenterImpl;
-import com.example.foodproj.presentation.auth.view.LoginActivity;
+import com.example.foodproj.network.NetworkMonitor;
 import com.example.foodproj.presentation.filterMeals.view.MealsFilteredFragment;
 import com.example.foodproj.presentation.home.presenter.HomePresenter;
 import com.example.foodproj.presentation.home.presenter.HomePresenterImpl;
@@ -47,21 +42,31 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
     private GridView categoriesGridView;
     private List<Meal> currentMeal;
 
-    private  AuthRepo authRepo;
+    private View noInternetLayout;
+    private View contentLayout;
 
+    private NetworkMonitor networkMonitor;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-          initViews(view);
-          homePresenter = new HomePresenterImpl(this,getContext());
-          homePresenter.getMeals();
-          homePresenter.getCategories();
+        initViews(view);
+        homePresenter = new HomePresenterImpl(this, getContext());
 
-          refreshButton.setOnClickListener(v -> homePresenter.getMeals());
-          mealImage.setOnClickListener(v -> mealClickListener());
+        setupNetworkMonitor();
+
+        refreshButton.setOnClickListener(v -> {
+            if (networkMonitor.isNetworkAvailable()) {
+                homePresenter.getMeals();
+            } else {
+                Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mealImage.setOnClickListener(v -> mealClickListener());
+
         return view;
     }
 
@@ -72,6 +77,44 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
         areaTag = view.findViewById(R.id.areaTag);
         refreshButton = view.findViewById(R.id.refreshButton);
         categoriesGridView = view.findViewById(R.id.categoriesGridView);
+        noInternetLayout = view.findViewById(R.id.noInternetLayout);
+        contentLayout = view.findViewById(R.id.contentLayout);
+    }
+
+    private void setupNetworkMonitor() {
+        networkMonitor = new NetworkMonitor(requireContext(), new NetworkMonitor.NetworkCallback() {
+            @Override
+            public void onNetworkAvailable() {
+                showContent();
+                loadData();
+            }
+
+            @Override
+            public void onNetworkUnavailable() {
+                showNoInternet();
+            }
+        });
+
+        networkMonitor.register();
+    }
+
+    private void loadData() {
+        homePresenter.getMeals();
+        homePresenter.getCategories();
+    }
+
+    private void showNoInternet() {
+        if (noInternetLayout != null && contentLayout != null) {
+            noInternetLayout.setVisibility(View.VISIBLE);
+            contentLayout.setVisibility(View.GONE);
+        }
+    }
+
+    private void showContent() {
+        if (noInternetLayout != null && contentLayout != null) {
+            noInternetLayout.setVisibility(View.GONE);
+            contentLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -87,8 +130,7 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
 
     @Override
     public void categoryFetchedSuccessfully(List<Category> categories) {
-        CategoryAdapter adapter =
-                new CategoryAdapter(getContext(), categories,this);
+        CategoryAdapter adapter = new CategoryAdapter(getContext(), categories, this);
         categoriesGridView.setAdapter(adapter);
     }
 
@@ -97,18 +139,15 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
         Toast.makeText(getContext(), "Failed to fetch category", Toast.LENGTH_SHORT).show();
     }
 
-
-
     private void displayMealData(List<Meal> meal) {
         mealTitle.setText(meal.get(0).getStrMeal());
         categoryTag.setText(meal.get(0).getStrCategory());
         areaTag.setText(meal.get(0).getStrArea());
-        Log.i(TAG, "meeeeal"+meal.get(0).getStrMeal() );
-            Glide.with(requireContext())
-                    .load(meal.get(0).getStrMealThumb())
-                    .centerCrop()
-                    .into(mealImage);
-
+        Log.i(TAG, "meeeeal" + meal.get(0).getStrMeal());
+        Glide.with(requireContext())
+                .load(meal.get(0).getStrMealThumb())
+                .centerCrop()
+                .into(mealImage);
     }
 
     @Override
@@ -130,7 +169,6 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
 
     @Override
     public void onCategoryClick(Category category) {
-
         Bundle bundle = new Bundle();
         bundle.putString("filter_type", "c");
         bundle.putString("filter_value", category.getStrCategory());
@@ -143,5 +181,13 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (networkMonitor != null) {
+            networkMonitor.unregister();
+        }
     }
 }

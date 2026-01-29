@@ -31,8 +31,9 @@ public class CalendarMealsPresenterImpl implements CalendarMealsPresenter{
     @Override
     public void deleteMeal(MealPlan mealPlan) {
         calendarMealsView.deleteCalendarDataSuccess();
-        mealPlanRepo.deleteMeal(mealPlan);
         deletePlanMeal(mealPlan.getMealId());
+
+        mealPlanRepo.deleteMeal(mealPlan);
     }
 
     @Override

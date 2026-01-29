@@ -11,13 +11,15 @@ import com.example.foodproj.db.AppDataBase;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+
 public class MealPlanLocalDataBase {
     public CalendarDao calendarDao;
     public MealPlanLocalDataBase(Context context){
         AppDataBase appDataBase=AppDataBase.getInstance(context);
         calendarDao=appDataBase.calendarDao();
     }
-    public void insertProduct(MealPlan mealPlan){
+    public Completable insertProduct(MealPlan mealPlan){
         new Thread(new Runnable() {
             @Override
             public void run() {

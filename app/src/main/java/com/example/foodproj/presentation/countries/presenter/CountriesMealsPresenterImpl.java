@@ -8,6 +8,9 @@ import com.example.foodproj.presentation.countries.view.CountriesMealsView;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class CountriesMealsPresenterImpl implements CountriesPresenter{
   private final CountriesMealsRepo countriesMealsRepo;
   private final CountriesMealsView countriesMealsView;
@@ -18,16 +21,11 @@ public class CountriesMealsPresenterImpl implements CountriesPresenter{
 
     @Override
     public void getCountriesMeals() {
-        countriesMealsRepo.getCountriesMeals(new CountriesNetworkResponse() {
-            @Override
-            public void onCountriesMealsSuccess(List<CountriesMeals> countriesResponses) {
-                countriesMealsView.getCountriesMealsSucess(countriesResponses);
-            }
-
-            @Override
-            public void onCountriesMealsError(String message) {
-                countriesMealsView.getCountriesMealsError();
-            }
-        });
+        countriesMealsRepo.getCountriesMeals().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        meals -> countriesMealsView.getCountriesMealsSucess(meals.getCountriesMeals()),
+                        throwable -> countriesMealsView.getCountriesMealsError()
+                );
     }
 }

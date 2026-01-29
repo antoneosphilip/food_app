@@ -1,8 +1,14 @@
 package com.example.foodproj.data.ingredient.repo;
 
 import com.example.foodproj.data.ingredient.datasource.IngredientService;
+import com.example.foodproj.data.ingredient.datasource.IngredientsMealResponse;
 import com.example.foodproj.data.ingredient.datasource.IngredientsNetworkResponse;
 import com.example.foodproj.data.ingredient.datasource.IngredientsRemoteData;
+import com.example.foodproj.data.ingredient.model.IngredientMeals;
+
+import java.util.List;
+
+import io.reactivex.rxjava3.core.Observable;
 
 public class IngredientRepoImpl implements IngredientRepo{
     private final IngredientsRemoteData ingredientsRemoteData;
@@ -12,7 +18,7 @@ public class IngredientRepoImpl implements IngredientRepo{
     }
 
     @Override
-    public void getIngredientMeals(IngredientsNetworkResponse ingredientsNetworkResponse) {
-        ingredientsRemoteData.getIngredientsMeals(ingredientsNetworkResponse);
+    public Observable<IngredientsMealResponse> getIngredientMeals() {
+        return ingredientsRemoteData.getIngredientsMeals();
     }
 }

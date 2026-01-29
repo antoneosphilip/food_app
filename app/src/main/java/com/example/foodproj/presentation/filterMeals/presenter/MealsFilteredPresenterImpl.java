@@ -9,6 +9,9 @@ import com.example.foodproj.presentation.filterMeals.view.MealsFilteredView;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class MealsFilteredPresenterImpl implements MealsFilteredPresenter{
    private final MealsFilteredRepo mealsFilteredRepo;
    private final MealsFilteredView mealsFilteredView;
@@ -20,16 +23,11 @@ public class MealsFilteredPresenterImpl implements MealsFilteredPresenter{
 
     @Override
     public void getMealsFiltered(Map<String, String> filter) {
-        mealsFilteredRepo.getMealsFiltered(filter, new MealsFilteredNetworkResponse() {
-            @Override
-            public void onMealsFilteredSuccess(List<MealsFiltered> mealsFiltereds) {
-                mealsFilteredView.getMealsFilteredSuccess(mealsFiltereds);
-            }
-
-            @Override
-            public void onMealsFilteredMealsError(String message) {
-                mealsFilteredView.getMealsFilteredError();
-            }
-        });
+        mealsFilteredRepo.getMealsFiltered(filter).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        meals -> mealsFilteredView.getMealsFilteredSuccess(meals.getMeals()),
+                        throwable -> mealsFilteredView.getMealsFilteredError()
+                );
     }
 }

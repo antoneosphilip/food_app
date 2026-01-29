@@ -10,6 +10,7 @@ import com.example.foodproj.network.Network;
 import java.io.IOException;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,24 +21,8 @@ public class CategoriesRemoteData {
     public CategoriesRemoteData() {
         this.categoriesService = Network.getInstance().categoriesService;
     }
-    public void getCategoriesMeals(CategoriesNetworkResponse categoriesNetworkResponse){
-        categoriesService.getCountries().enqueue(new Callback<CategoriesMealsResponse>() {
-            @Override
-            public void onResponse(Call<CategoriesMealsResponse> call, Response<CategoriesMealsResponse> response) {
-                List<CategoryMeals> categoryMeals=response.body().getCategoriesMeals();
-                categoriesNetworkResponse.onCategoriesMealsSuccess(categoryMeals);
-            }
-
-            @Override
-            public void onFailure(Call<CategoriesMealsResponse> call, Throwable t) {
-                if (t instanceof IOException) {
-                    categoriesNetworkResponse.onCategoriesMealsMealsError("error , check network");
-                } else {
-                    categoriesNetworkResponse.onCategoriesMealsMealsError("error , try later");
-
-                }
-            }
-        });
+    public Observable<CategoriesMealsResponse> getCategoriesMeals(){
+      return   categoriesService.getCountries();
     }
 
 }

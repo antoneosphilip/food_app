@@ -1,10 +1,18 @@
 package com.example.foodproj.data.home.repo;
 
 import com.example.foodproj.data.favorite.datasource.MealsLocalDataBase;
+import com.example.foodproj.data.home.datasource.CategoriesResponse;
 import com.example.foodproj.data.home.datasource.CategoryNetworkResponse;
+import com.example.foodproj.data.home.datasource.MealResponse;
 import com.example.foodproj.data.home.datasource.MealsNetworkResponse;
+import com.example.foodproj.data.home.model.Category;
+import com.example.foodproj.data.home.model.Meal;
+
+import java.util.List;
+
+import io.reactivex.rxjava3.core.Observable;
 
 public interface HomeRepo {
-    void getMeals(MealsNetworkResponse mealsNetworkResponse);
-    void getCategories(CategoryNetworkResponse categoryNetworkResponse);
+    Observable<MealResponse> getMeals();
+    Observable<CategoriesResponse> getCategories();
 }

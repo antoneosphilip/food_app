@@ -8,6 +8,9 @@ import com.example.foodproj.presentation.categoryMeals.view.CategoriesMealsView;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class CategoriesMealsPresenterImpl implements CategoriesMealsPresenter{
     private final CategoryMealsRepo categoryMealsRepo;
     private final CategoriesMealsView categoriesMealsView;
@@ -19,16 +22,11 @@ public class CategoriesMealsPresenterImpl implements CategoriesMealsPresenter{
 
     @Override
     public void getCategoriesMeals() {
-        categoryMealsRepo.getCategoriesMeals(new CategoriesNetworkResponse() {
-            @Override
-            public void onCategoriesMealsSuccess(List<CategoryMeals> categoryMeals) {
-                categoriesMealsView.getCategoryMealsSuccess(categoryMeals);
-            }
-
-            @Override
-            public void onCategoriesMealsMealsError(String message) {
-                categoriesMealsView.getCategoryMealsError();
-            }
-        });
+        categoryMealsRepo.getCategoriesMeals().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        meals -> categoriesMealsView.getCategoryMealsSuccess(meals.getCategoriesMeals()),
+                        throwable -> categoriesMealsView.getCategoryMealsError()
+                );;
     }
 }

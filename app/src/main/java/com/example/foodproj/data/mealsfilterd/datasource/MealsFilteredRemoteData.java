@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,24 +24,7 @@ public class MealsFilteredRemoteData {
         this.mealsFilteredService = Network.getInstance().mealsFilteredService;
     }
 
-    public void getMealsFiltered(MealsFilteredNetworkResponse mealsFilteredNetworkResponse, Map<String, String> filters){
-        mealsFilteredService.getMealsByFilter(filters).enqueue(new Callback<MealsFilteredResponse>() {
-            @Override
-            public void onResponse(Call<MealsFilteredResponse> call, Response<MealsFilteredResponse> response) {
-                Log.i(TAG, "respssssfff"+response.body());
-                List<MealsFiltered> mealsFilteredList = response.body() != null ? response.body().getMeals() : null;
-                mealsFilteredNetworkResponse.onMealsFilteredSuccess(mealsFilteredList);
-            }
-
-            @Override
-            public void onFailure(Call<MealsFilteredResponse> call, Throwable t) {
-                if (t instanceof IOException) {
-                    mealsFilteredNetworkResponse.onMealsFilteredMealsError("error , check network");
-                } else {
-                    mealsFilteredNetworkResponse.onMealsFilteredMealsError("error , try later");
-
-                }
-            }
-        });
+    public Observable<MealsFilteredResponse> getMealsFiltered(Map<String, String> filters){
+       return mealsFilteredService.getMealsByFilter(filters);
     }
 }

@@ -7,6 +7,7 @@ import com.example.foodproj.data.ingredient.datasource.IngredientService;
 import com.example.foodproj.data.mealdetails.datasource.MealDetailsService;
 import com.example.foodproj.data.mealsfilterd.datasource.MealsFilteredService;
 
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -24,6 +25,7 @@ public class Network {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://www.themealdb.com/api/json/v1/1/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
 
         homeServices=retrofit.create(HomeServices.class);

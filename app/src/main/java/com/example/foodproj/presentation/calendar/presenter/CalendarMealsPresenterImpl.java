@@ -32,4 +32,6 @@ public class CalendarMealsPresenterImpl implements CalendarMealsPresenter{
         calendarMealsView.deleteCalendarDataSuccess();
         mealPlanRepo.deleteMeal(mealPlan);
     }
+
+
 }

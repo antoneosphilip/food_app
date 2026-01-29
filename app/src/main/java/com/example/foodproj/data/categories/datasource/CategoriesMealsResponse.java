@@ -6,7 +6,6 @@ import java.util.List;
 
 public class CategoriesMealsResponse {
     private List<CategoryMeals> meals;
-
     public List<CategoryMeals> getCategoriesMeals() {
         return meals;
     }

@@ -82,7 +82,7 @@ public class MealDetails extends Fragment implements MealsDetailsView {
             favoriteButton.setOnClickListener(v -> {
                 if (meal != null) {
                     presenter.insertMeal(meal);
-                    presenter.uploadMeal(meal);
+                    presenter.uploadFavoriteMeal(meal);
                 }
             });
             calendarButton.setOnClickListener(v -> showDatePicker());
@@ -134,7 +134,8 @@ public class MealDetails extends Fragment implements MealsDetailsView {
                     timestamp
             );
             presenter.insertMealPlan(mealPlan);
-            presenter.uploadMeal(meal);
+            presenter.uploadPlansMeal(mealPlan);
+
             Toast.makeText(getContext(), "Meal scheduled for: " + date, Toast.LENGTH_SHORT).show();
         }
     }

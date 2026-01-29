@@ -15,4 +15,7 @@ public interface FavoritePresenter {
      void deleteMeal(Meal meal);
 
      void getRemoteFavorites();
+
+     void deleteFavoriteRemote(String id);
+
 }

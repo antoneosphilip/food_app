@@ -36,12 +36,18 @@ public class FavoriteRepoImpl implements FavoriteRepo {
     }
 
     @Override
-    public void uploadData(Meal meal) {
-        firebaseRemoteDataSource.uploadUserData(meal);
+    public void uploadFavoriteData(Meal meal) {
+        firebaseRemoteDataSource.uploadFavoriteData(meal);
     }
 
     @Override
     public Task<List<Meal>> getRemoteFavorites() {
-        return firebaseRemoteDataSource.getMeals();
+        return firebaseRemoteDataSource.getFavoriteMeals();
     }
+
+    @Override
+    public void deleteFavoriteRemote(String id) {
+        firebaseRemoteDataSource.deleteFavoriteMeal(id);
+    }
+
 }

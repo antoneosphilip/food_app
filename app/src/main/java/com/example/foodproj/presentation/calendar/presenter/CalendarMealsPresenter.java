@@ -12,4 +12,10 @@ public interface CalendarMealsPresenter
     LiveData<List<MealPlan>> getMeals(String date);
 
     void deleteMeal(MealPlan mealPlan);
+
+    void getRemoteCalendar();
+
+    void uploadRemoteCalendar(MealPlan mealPlan);
+
+    void deletePlanMeal(String id);
 }

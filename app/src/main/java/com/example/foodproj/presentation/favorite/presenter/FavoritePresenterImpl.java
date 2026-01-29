@@ -36,6 +36,7 @@ public class FavoritePresenterImpl implements FavoritePresenter{
     public void deleteMeal(Meal meal) {
         favoriteView.deleteDataSuccess();
         favoriteRepo.deleteMeal(meal);
+        deleteFavoriteRemote(meal.getIdMeal());
     }
 
     @Override
@@ -56,6 +57,11 @@ public class FavoritePresenterImpl implements FavoritePresenter{
                         favoriteView.getFavoriteRemoteError(e.getMessage())
                 );
 
+    }
+
+    @Override
+    public void deleteFavoriteRemote(String id) {
+        favoriteRepo.deleteFavoriteRemote(id);
     }
 
 

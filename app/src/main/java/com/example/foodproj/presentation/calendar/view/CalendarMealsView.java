@@ -4,4 +4,8 @@ import com.example.foodproj.data.home.model.Meal;
 
 public interface CalendarMealsView {
     void deleteCalendarDataSuccess();
+
+    void getRemoteCalendarSuccess();
+    void getRemoteCalendarError(String error);
+
 }

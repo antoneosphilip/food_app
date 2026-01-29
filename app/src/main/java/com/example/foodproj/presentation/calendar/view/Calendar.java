@@ -47,6 +47,7 @@ public class Calendar extends Fragment implements CalendarMealsView,OnCalendarMe
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
 
         initViews(view);
+        presenter.getRemoteCalendar();
         setupRecyclerView();
         return view;
     }
@@ -110,6 +111,18 @@ public class Calendar extends Fragment implements CalendarMealsView,OnCalendarMe
     @Override
     public void deleteCalendarDataSuccess() {
         Toast.makeText(getContext(),"delete meal successfully",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getRemoteCalendarSuccess() {
+        Toast.makeText(getContext(),"get meal successfully",Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void getRemoteCalendarError(String error) {
+        Toast.makeText(getContext(),"get meal error",Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

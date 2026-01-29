@@ -13,6 +13,7 @@ import com.example.foodproj.data.mealdetails.datasource.MealsDetailsNetworkRespo
 import com.example.foodproj.data.mealdetails.repo.MealDetailsRepo;
 import com.example.foodproj.data.mealdetails.repo.MealDetailsRepoImpl;
 import com.example.foodproj.presentation.mealsdetails.view.MealsDetailsView;
+import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 import java.util.Map;
@@ -58,9 +59,27 @@ public class MealsDetailsPresenterImpl implements MealsDetailsPresenter {
     }
 
     @Override
-    public void uploadMeal(Meal meal) {
-        favoriteRepo.uploadData(meal);
+    public void uploadFavoriteMeal(Meal meal) {
+        favoriteRepo.uploadFavoriteData(meal);
     }
+
+    @Override
+    public void uploadPlansMeal(MealPlan mealPlan) {
+        mealPlanRepo.uploadPlansData(mealPlan);
+
+    }
+
+    @Override
+    public Task<List<Meal>> getRemoteFavorites() {
+        return favoriteRepo.getRemoteFavorites();
+    }
+
+    @Override
+    public Task<List<MealPlan>> getRemotePlans() {
+        return mealPlanRepo.getRemotePlans();
+    }
+
+
 
 
 }

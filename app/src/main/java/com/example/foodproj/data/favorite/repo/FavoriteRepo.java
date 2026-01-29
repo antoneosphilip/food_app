@@ -15,9 +15,14 @@ public interface FavoriteRepo {
 
      void deleteMeal(Meal meal);
 
-     void uploadData(Meal meal);
+     void uploadFavoriteData(Meal meal);
 
      Task<List<Meal>> getRemoteFavorites();
+
+     void deleteFavoriteRemote(String id);
+
+
+
 
 
 }

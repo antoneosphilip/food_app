@@ -4,13 +4,21 @@ import androidx.lifecycle.LiveData;
 
 import com.example.foodproj.data.calendar.model.MealPlan;
 import com.example.foodproj.data.home.model.Meal;
+import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
 public interface MealPlanRepo {
-    public void InsertMeal(MealPlan mealPlan);
+     void InsertMeal(MealPlan mealPlan);
 
-    public LiveData<List<MealPlan>> getMeals(String date);
+     LiveData<List<MealPlan>> getMeals(String date);
 
-    public void deleteMeal(MealPlan mealPlan);
+     void deleteMeal(MealPlan mealPlan);
+
+
+    Task<List<MealPlan>> getRemotePlans();
+
+     void uploadPlansData(MealPlan mealPlan);
+
+     void deletePlanMeal(String id);
 }

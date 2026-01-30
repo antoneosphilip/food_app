@@ -9,31 +9,22 @@ import com.example.foodproj.db.AppDataBase;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+
 public class MealsLocalDataBase {
     public MealDao mealDao;
     public MealsLocalDataBase(Context context){
         AppDataBase appDataBase=AppDataBase.getInstance(context);
         mealDao=appDataBase.mealDao();
     }
-    public void insertProduct(Meal meal){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mealDao.InsertMeal(meal);
-
-            }
-        }).start();
+    public Completable insertProduct(Meal meal){
+        return mealDao.InsertMeal(meal);
     }
-    public void deleteProduct(Meal meal){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mealDao.deleteMeal(meal);
-
-            }
-        }).start();
+    public Completable deleteProduct(Meal meal){
+        return  mealDao.deleteMeal(meal);
     }
-    public LiveData<List<Meal>> getProducts(){
+    public Observable<List<Meal>> getProducts(){
         return mealDao.getMeals();
     }
 }

@@ -2,6 +2,7 @@ package com.example.foodproj.data.auth.datasource;
 
 import android.content.Intent;
 import android.service.autofill.UserData;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -14,12 +15,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-public class
-AuthRemoteDataSource {
+public class AuthRemoteDataSource {
     private final FirebaseAuth mAuth;
     private final GoogleSignInClient googleSignInClient;
     private final FirebaseFirestore firestore;
 
+    private static final String TAG = "AuthRemoteDataSource";
     public AuthRemoteDataSource(GoogleSignInClient googleSignInClient) {
         this.mAuth = FirebaseAuth.getInstance();
         this.googleSignInClient = googleSignInClient;
@@ -56,6 +57,7 @@ AuthRemoteDataSource {
             if (task.isSuccessful()) {
                 callback.onSuccess(mAuth.getCurrentUser());
             } else {
+                Log.i(TAG, "firebaseAuthWithGoogle: "+task.getException());
                 callback.onError(task.getException());
             }
         });

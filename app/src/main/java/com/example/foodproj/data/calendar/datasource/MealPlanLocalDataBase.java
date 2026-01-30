@@ -11,31 +11,24 @@ import com.example.foodproj.db.AppDataBase;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+
 public class MealPlanLocalDataBase {
     public CalendarDao calendarDao;
     public MealPlanLocalDataBase(Context context){
         AppDataBase appDataBase=AppDataBase.getInstance(context);
         calendarDao=appDataBase.calendarDao();
     }
-    public void insertProduct(MealPlan mealPlan){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                calendarDao.InsertMeal(mealPlan);
+    public Completable insertProduct(MealPlan mealPlan){
+       return calendarDao.InsertMeal(mealPlan);
 
-            }
-        }).start();
     }
-    public void deleteProduct(MealPlan mealPlan){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                calendarDao.deleteMeal(mealPlan);
+    public Completable deleteProduct(MealPlan mealPlan){
 
-            }
-        }).start();
+        return calendarDao.deleteMeal(mealPlan);
     }
-    public LiveData<List<MealPlan>> getProducts(String date){
+    public Observable<List<MealPlan>> getProducts(String date){
         return calendarDao.getMeals(date);
     }
 }

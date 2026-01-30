@@ -1,6 +1,7 @@
 package com.example.foodproj.presentation.favorite.presenter;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -12,9 +13,15 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class FavoritePresenterImpl implements FavoritePresenter{
     private final FavoriteRepo favoriteRepo;
     private final FavoriteView favoriteView;
+
+    private static final String TAG = "FavoritePresenterImpl";
     public FavoritePresenterImpl(Context context,FavoriteView favoriteView) {
         this.favoriteRepo = new FavoriteRepoImpl(context);
         this.favoriteView=favoriteView;
@@ -22,21 +29,35 @@ public class FavoritePresenterImpl implements FavoritePresenter{
 
     @Override
     public void InsertMeal(Meal meal) {
-        favoriteRepo.InsertMeal(meal);
+        favoriteRepo.InsertMeal(meal).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> {
+                            favoriteView.insertDataSuccess();
+                        }
+                );
     }
 
     @Override
-    public LiveData<List<Meal>> getMeals() {
-        favoriteView.getFavoriteDataSuccess();
-
-        return favoriteRepo.getMeals();
+    public void getMeals() {
+         favoriteRepo.getMeals().subscribeOn(Schedulers.io())
+                 .observeOn(AndroidSchedulers.mainThread())
+                 .subscribe(
+                         meals -> favoriteView.getFavoriteDataSuccess(meals),
+                         throwable -> favoriteView.getDataError()
+                 );
     }
 
     @Override
     public void deleteMeal(Meal meal) {
-        favoriteView.deleteDataSuccess();
-        favoriteRepo.deleteMeal(meal);
-        deleteFavoriteRemote(meal.getIdMeal());
+        favoriteRepo.deleteMeal(meal).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> {
+                            favoriteView.deleteDataSuccess();
+                            deleteFavoriteRemote(meal.getIdMeal());
+                        }
+                );;
     }
 
     @Override
@@ -46,11 +67,13 @@ public class FavoritePresenterImpl implements FavoritePresenter{
 
                     if (meals != null && !meals.isEmpty()) {
                         for (Meal meal : meals) {
+                            Log.i(TAG, "getRemoteFavorites: "+meal.getStrMeal());
                             InsertMeal(meal);
                         }
                     }
 
                     favoriteView.getFavoriteRemoteSuccess();
+
 
                 })
                 .addOnFailureListener(e ->

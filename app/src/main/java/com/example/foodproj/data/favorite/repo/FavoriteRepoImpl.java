@@ -11,6 +11,9 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+
 public class FavoriteRepoImpl implements FavoriteRepo {
    final private MealsLocalDataBase mealsLocalDataBase;
 
@@ -21,18 +24,18 @@ public class FavoriteRepoImpl implements FavoriteRepo {
     }
 
     @Override
-    public void InsertMeal(Meal meal) {
-        mealsLocalDataBase.insertProduct(meal);
+    public Completable InsertMeal(Meal meal) {
+        return mealsLocalDataBase.insertProduct(meal);
     }
 
     @Override
-    public LiveData<List<Meal>> getMeals() {
+    public Observable<List<Meal>> getMeals() {
         return mealsLocalDataBase.getProducts();
     }
 
     @Override
-    public void deleteMeal(Meal meal) {
-        mealsLocalDataBase.deleteProduct(meal);
+    public Completable deleteMeal(Meal meal) {
+       return mealsLocalDataBase.deleteProduct(meal);
     }
 
     @Override

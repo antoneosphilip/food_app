@@ -16,6 +16,9 @@ import com.example.foodproj.presentation.home.view.home.HomeView;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class HomePresenterImpl implements HomePresenter{
     HomeRepo homeRepo;
     HomeView homeView;
@@ -29,32 +32,22 @@ public class HomePresenterImpl implements HomePresenter{
 
     @Override
     public void getMeals() {
-        homeRepo.getMeals(new MealsNetworkResponse() {
-            @Override
-            public void onMealsSuccess(List<Meal> meals) {
-                homeView.mealFetchedSuccessfully(meals);
-            }
-
-            @Override
-            public void onMealsError(String message) {
-                homeView.mealFetchedFailure();
-            }
-        });
+        homeRepo.getMeals().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        meals -> homeView.mealFetchedSuccessfully(meals.getMeals()),
+                        throwable -> homeView.mealFetchedFailure()
+                );
     }
 
     @Override
     public void getCategories() {
-        homeRepo.getCategories(new CategoryNetworkResponse() {
-            @Override
-            public void onCategorySuccess(List<Category> categories) {
-                homeView.categoryFetchedSuccessfully(categories);
-            }
-
-            @Override
-            public void onCategoryError(String message) {
-                homeView.categoryFetchedFailure();
-            }
-        });
+        homeRepo.getCategories().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        meals -> homeView.categoryFetchedSuccessfully(meals.getCategories()),
+                        throwable -> homeView.mealFetchedFailure()
+                );
     }
 
 

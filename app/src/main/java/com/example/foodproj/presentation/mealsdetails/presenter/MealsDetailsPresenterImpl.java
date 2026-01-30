@@ -18,6 +18,9 @@ import com.google.android.gms.tasks.Task;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class MealsDetailsPresenterImpl implements MealsDetailsPresenter {
     private final MealDetailsRepo mealDetailsRepo;
     public final MealsDetailsView mealsDetailsView;
@@ -33,17 +36,12 @@ public class MealsDetailsPresenterImpl implements MealsDetailsPresenter {
 
     @Override
     public void getMealDetails( Map<String, String> filters) {
-        mealDetailsRepo.getMealDetails(new MealsDetailsNetworkResponse() {
-            @Override
-            public void onMealsDetailsSuccess(List<Meal> meals) {
-                mealsDetailsView.getMealsDetailsSuccess(meals);
-            }
-
-            @Override
-            public void onMealsDetailsError(String message) {
-                mealsDetailsView.getMealsDetailsError();
-            }
-        }, filters);
+        mealDetailsRepo.getMealDetails(filters).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        meals -> mealsDetailsView.getMealsDetailsSuccess(meals.getMeals()),
+                        throwable -> mealsDetailsView.getMealsDetailsError()
+                );
     }
 
     @Override
@@ -54,8 +52,11 @@ public class MealsDetailsPresenterImpl implements MealsDetailsPresenter {
 
     @Override
     public void insertMealPlan(MealPlan mealPlan) {
-        mealPlanRepo.InsertMeal(mealPlan);
-        mealsDetailsView.insertMealPlan();
+        mealPlanRepo.InsertMeal(mealPlan).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        ()-> mealsDetailsView.insertMealPlan()
+                );
     }
 
     @Override

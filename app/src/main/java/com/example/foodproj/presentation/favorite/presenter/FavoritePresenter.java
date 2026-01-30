@@ -7,10 +7,12 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
+
 public interface FavoritePresenter {
      void InsertMeal(Meal meal);
 
-     LiveData<List<Meal>> getMeals();
+     void getMeals();
 
      void deleteMeal(Meal meal);
 

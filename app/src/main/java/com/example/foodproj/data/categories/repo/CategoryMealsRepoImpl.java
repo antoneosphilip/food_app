@@ -4,6 +4,8 @@ import com.example.foodproj.data.categories.datasource.CategoriesMealsResponse;
 import com.example.foodproj.data.categories.datasource.CategoriesNetworkResponse;
 import com.example.foodproj.data.categories.datasource.CategoriesRemoteData;
 
+import io.reactivex.rxjava3.core.Observable;
+
 public class CategoryMealsRepoImpl implements CategoryMealsRepo{
    private final CategoriesRemoteData categoriesRemoteData;
 
@@ -12,7 +14,7 @@ public class CategoryMealsRepoImpl implements CategoryMealsRepo{
     }
 
     @Override
-    public void getCategoriesMeals(CategoriesNetworkResponse categoriesNetworkResponse) {
-        categoriesRemoteData.getCategoriesMeals(categoriesNetworkResponse);
+    public Observable<CategoriesMealsResponse> getCategoriesMeals() {
+        return categoriesRemoteData.getCategoriesMeals();
     }
 }

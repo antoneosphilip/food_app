@@ -11,12 +11,15 @@ import com.example.foodproj.data.home.model.Meal;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+
 @Dao
 public interface MealDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-     void InsertMeal(Meal meal);
+    Completable InsertMeal(Meal meal);
     @Query("SELECT * FROM meals")
-    LiveData<List<Meal>> getMeals();
+    Observable<List<Meal>> getMeals();
     @Delete
-    void deleteMeal(Meal meal);
+    Completable deleteMeal(Meal meal);
 }

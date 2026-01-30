@@ -13,13 +13,16 @@ import com.example.foodproj.data.home.model.Meal;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+
 @Dao
 public interface CalendarDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void InsertMeal(MealPlan mealPlan);
+    Completable InsertMeal(MealPlan mealPlan);
     @Query("SELECT * FROM meal_plans WHERE planDate = :date")
-    LiveData<List<MealPlan>> getMeals(@NonNull String date);
+    Observable<List<MealPlan>> getMeals(@NonNull String date);
 
     @Delete
-    void deleteMeal(MealPlan mealPlan);
+    Completable deleteMeal(MealPlan mealPlan);
 }

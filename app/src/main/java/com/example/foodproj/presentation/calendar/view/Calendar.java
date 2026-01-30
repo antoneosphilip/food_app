@@ -83,20 +83,7 @@ public class Calendar extends Fragment implements CalendarMealsView,OnCalendarMe
 
     private void loadMealsByDate(String date) {
         progressBar.setVisibility(View.VISIBLE);
-        presenter.getMeals(date).observe(getViewLifecycleOwner(), new Observer<List<MealPlan>>() {
-            @Override
-            public void onChanged(List<MealPlan> mealPlans) {
-                progressBar.setVisibility(View.GONE);
-                mealsList.clear();
-                if (mealPlans != null && !mealPlans.isEmpty()) {
-                    mealsList.addAll(mealPlans);
-                    updateUI(mealPlans.size());
-                } else {
-                    updateUI(0);
-                }
-                mealsAdapter.notifyDataSetChanged();
-            }
-        });
+        presenter.getMeals(date);
     }
 
     private void updateUI(int mealsCount) {
@@ -122,6 +109,24 @@ public class Calendar extends Fragment implements CalendarMealsView,OnCalendarMe
     @Override
     public void getRemoteCalendarError(String error) {
         Toast.makeText(getContext(),"get meal error",Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void getLocalCalendarSuccess(List<MealPlan> mealPlans) {
+        progressBar.setVisibility(View.GONE);
+        mealsList.clear();
+        if (mealPlans != null && !mealPlans.isEmpty()) {
+            mealsList.addAll(mealPlans);
+            updateUI(mealPlans.size());
+        } else {
+            updateUI(0);
+        }
+        mealsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getLocalCalendarError(String message) {
 
     }
 

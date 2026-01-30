@@ -42,7 +42,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         String imageUrl = "https://www.themealdb.com/images/ingredients/" + ingredient.getName() + ".png";
         Glide.with(context)
                 .load(imageUrl)
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.ic_empty_favorite)
                 .into(holder.ingredientImage);
     }
 
@@ -60,7 +60,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
             super(itemView);
             ingredientImage = itemView.findViewById(R.id.ingredientImage);
             ingredientName = itemView.findViewById(R.id.ingredientName);
-            ingredientQuantity = itemView.findViewById(R.id.ingredientQuantity);
+            ingredientQuantity = itemView.findViewById(R.id.ingredientMeasure);
         }
     }
 

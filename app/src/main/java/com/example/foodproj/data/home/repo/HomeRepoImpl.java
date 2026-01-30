@@ -2,10 +2,14 @@ package com.example.foodproj.data.home.repo;
 
 import android.content.Context;
 
-import com.example.foodproj.data.favorite.datasource.MealsLocalDataBase;
-import com.example.foodproj.data.home.datasource.CategoryNetworkResponse;
+import com.example.foodproj.data.home.datasource.CategoriesResponse;
 import com.example.foodproj.data.home.datasource.HomeRemoteData;
-import com.example.foodproj.data.home.datasource.MealsNetworkResponse;
+import com.example.foodproj.data.home.datasource.MealResponse;
+import com.example.foodproj.data.home.model.Meal;
+
+import java.util.List;
+
+import io.reactivex.rxjava3.core.Observable;
 
 public class HomeRepoImpl implements HomeRepo{
     private final HomeRemoteData homeRemoteData;
@@ -16,13 +20,13 @@ public class HomeRepoImpl implements HomeRepo{
     }
 
     @Override
-    public void getMeals(MealsNetworkResponse mealNetworkResponse) {
-        homeRemoteData.getMeals(mealNetworkResponse);
+    public Observable<MealResponse> getMeals() {
+        return homeRemoteData.getMeals();
     }
 
     @Override
-    public void getCategories(CategoryNetworkResponse categoryNetworkResponse) {
-        homeRemoteData.getCategories(categoryNetworkResponse);
+    public Observable<CategoriesResponse> getCategories() {
+       return homeRemoteData.getCategories();
     }
 
 }

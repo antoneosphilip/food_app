@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -29,6 +30,8 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -42,8 +45,8 @@ public class MealDetails extends Fragment implements MealsDetailsView {
     private ImageView recipeImage;
     private Chip chipVegetarian;
     private Chip chipBritish;
-    private RecyclerView ingredientsGrid;
-    private TextView instructionText;
+    private RecyclerView ingredientsRecyclerView;
+    private RecyclerView instructionsRecyclerView;
     private YouTubePlayerView youtubePlayerView;
     private ProgressBar progressBar;
     private MaterialButton favoriteButton;
@@ -69,14 +72,24 @@ public class MealDetails extends Fragment implements MealsDetailsView {
         recipeImage = view.findViewById(R.id.recipeImage);
         chipVegetarian = view.findViewById(R.id.chipVegetarian);
         chipBritish = view.findViewById(R.id.chipBritish);
-        ingredientsGrid = view.findViewById(R.id.ingredientsRecyclerView);
-        instructionText = view.findViewById(R.id.instructionText);
+        ingredientsRecyclerView = view.findViewById(R.id.ingredientsRecyclerView);
+        instructionsRecyclerView = view.findViewById(R.id.instructionsRecyclerView);
         youtubePlayerView = view.findViewById(R.id.youtubePlayerView);
         progressBar = view.findViewById(R.id.progressBar);
         favoriteButton = view.findViewById(R.id.btnAddToFav);
         calendarButton = view.findViewById(R.id.btnAddToCalendar);
 
         progressBar.setVisibility(View.VISIBLE);
+
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(
+                getContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+        );
+        ingredientsRecyclerView.setLayoutManager(horizontalLayoutManager);
+
+        LinearLayoutManager verticalLayoutManager = new LinearLayoutManager(getContext());
+        instructionsRecyclerView.setLayoutManager(verticalLayoutManager);
 
         if(UserPrefs.getToken()!=null) {
             favoriteButton.setOnClickListener(v -> {
@@ -187,6 +200,7 @@ public class MealDetails extends Fragment implements MealsDetailsView {
 
         Glide.with(requireContext())
                 .load(meal.getStrMealThumb())
+                .placeholder(R.drawable.ic_empty_favorite)
                 .centerCrop()
                 .into(recipeImage);
 
@@ -194,10 +208,12 @@ public class MealDetails extends Fragment implements MealsDetailsView {
         chipBritish.setText(meal.getStrArea());
 
         List<Ingredient> ingredients = meal.getIngredientsList();
-        IngredientsAdapter adapter = new IngredientsAdapter(getContext(), ingredients);
-        ingredientsGrid.setAdapter(adapter);
+        IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(getContext(), ingredients);
+        ingredientsRecyclerView.setAdapter(ingredientsAdapter);
 
-        instructionText.setText(meal.getStrInstructions());
+        List<String> instructionsList = parseInstructions(meal.getStrInstructions());
+        InstructionsAdapter instructionsAdapter = new InstructionsAdapter(getContext(), instructionsList);
+        instructionsRecyclerView.setAdapter(instructionsAdapter);
 
         if (meal.getStrYoutube() != null && !meal.getStrYoutube().isEmpty()) {
             String videoId = extractYoutubeVideoId(meal.getStrYoutube());
@@ -210,6 +226,26 @@ public class MealDetails extends Fragment implements MealsDetailsView {
                 });
             }
         }
+    }
+
+    private List<String> parseInstructions(String instructions) {
+        if (instructions == null || instructions.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        String[] steps = instructions.split("\\r?\\n|(?<=\\.)\\s+(?=[A-Z])|(?<=\\d\\.)\\s+");
+
+        List<String> instructionsList = new ArrayList<>();
+        for (String step : steps) {
+            String trimmedStep = step.trim();
+            trimmedStep = trimmedStep.replaceFirst("^\\d+\\.?\\s*", "");
+
+            if (!trimmedStep.isEmpty() && trimmedStep.length() > 10) {
+                instructionsList.add(trimmedStep);
+            }
+        }
+
+        return instructionsList;
     }
 
     private String extractYoutubeVideoId(String youtubeUrl) {

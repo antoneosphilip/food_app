@@ -8,12 +8,15 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+
 public interface MealPlanRepo {
-     void InsertMeal(MealPlan mealPlan);
+    Completable InsertMeal(MealPlan mealPlan);
 
-     LiveData<List<MealPlan>> getMeals(String date);
+     Observable<List<MealPlan>> getMeals(String date);
 
-     void deleteMeal(MealPlan mealPlan);
+     Completable deleteMeal(MealPlan mealPlan);
 
 
     Task<List<MealPlan>> getRemotePlans();

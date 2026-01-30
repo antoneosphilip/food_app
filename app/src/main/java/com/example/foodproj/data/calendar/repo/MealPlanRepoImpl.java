@@ -12,6 +12,9 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+
 public class MealPlanRepoImpl implements MealPlanRepo {
    private final MealPlanLocalDataBase mealPlanLocalDataBase;
     final private FirebaseRemoteDataSource firebaseRemoteDataSource;
@@ -21,18 +24,18 @@ public class MealPlanRepoImpl implements MealPlanRepo {
     }
 
     @Override
-    public void InsertMeal(MealPlan mealPlan) {
-        mealPlanLocalDataBase.insertProduct(mealPlan);
+    public Completable InsertMeal(MealPlan mealPlan) {
+       return mealPlanLocalDataBase.insertProduct(mealPlan);
     }
 
     @Override
-    public LiveData<List<MealPlan>> getMeals(String date) {
+    public Observable<List<MealPlan>> getMeals(String date) {
         return mealPlanLocalDataBase.getProducts(date);
     }
 
     @Override
-    public void deleteMeal(MealPlan mealPlan) {
-        mealPlanLocalDataBase.deleteProduct(mealPlan);
+    public Completable deleteMeal(MealPlan mealPlan) {
+       return mealPlanLocalDataBase.deleteProduct(mealPlan);
     }
 
     @Override

@@ -47,7 +47,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
         Glide.with(context)
                 .load(meal.getStrMealThumb())
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.ic_empty_favorite)
                 .into(holder.mealImage);
 
         holder.itemView.setOnClickListener(v -> {

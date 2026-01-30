@@ -40,7 +40,8 @@ public class HomeLayout extends AppCompatActivity {
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //authPresenter.logOut();
+               // authPresenter.logOut();
+
                 UserPrefs.clear();
 
                 Intent intent = new Intent(HomeLayout.this, LoginActivity.class);

@@ -4,8 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.example.foodproj.presentation.categoryMeals.view.CategoriesMeals;
 import com.example.foodproj.presentation.countries.view.CountriesMealsFragment;
 import com.example.foodproj.presentation.ingredient.view.IngredientsFragment;
 import com.example.foodproj.presentation.search.presenter.NameSearch;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -25,7 +27,7 @@ public class FilterFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private EditText searchEditText;
-    private Button searchButton;
+    private MaterialButton searchButton;
     private FilterPagerAdapter pagerAdapter;
 
     @Nullable
@@ -35,8 +37,7 @@ public class FilterFragment extends Fragment {
 
         initViews(view);
         setupViewPager();
-
-        searchButton.setOnClickListener(v -> performSearch());
+        setupSearchListeners();
 
         return view;
     }
@@ -51,6 +52,9 @@ public class FilterFragment extends Fragment {
     private void setupViewPager() {
         pagerAdapter = new FilterPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
+
+        // Set offscreen page limit to keep all fragments in memory
+        viewPager.setOffscreenPageLimit(3);
 
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             switch (position) {
@@ -68,6 +72,18 @@ public class FilterFragment extends Fragment {
                     break;
             }
         }).attach();
+    }
+
+    private void setupSearchListeners() {
+        searchButton.setOnClickListener(v -> performSearch());
+
+        searchEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                performSearch();
+                return true;
+            }
+            return false;
+        });
     }
 
     private void performSearch() {

@@ -21,7 +21,7 @@ public class CategoriesRemoteData {
     public CategoriesRemoteData() {
         this.categoriesService = Network.getInstance().categoriesService;
     }
-    public Observable<CategoriesMealsResponse> getCategoriesMeals(){
+    public Observable<CategoriesResponse> getCategoriesMeals(){
       return   categoriesService.getCountries();
     }
 

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodproj.R;
 import com.example.foodproj.data.categories.model.CategoryMeals;
+import com.example.foodproj.data.home.model.Category;
 import com.example.foodproj.presentation.categoryMeals.presenter.CategoriesMealsPresenter;
 import com.example.foodproj.presentation.categoryMeals.presenter.CategoriesMealsPresenterImpl;
 import com.example.foodproj.presentation.categoryMeals.view.CategoriesMealsAdapter;
@@ -28,8 +29,8 @@ public class CategoriesMeals extends Fragment implements CategoriesMealsView,Cat
 
     private RecyclerView categoriesRecyclerView;
     private CategoriesMealsAdapter categoriesAdapter;
-    private List<CategoryMeals> categoriesList;
-    private List<CategoryMeals> filteredList;
+    private List<Category> categoriesList;
+    private List<Category> filteredList;
     private CategoriesMealsPresenter presenter;
 
     @Nullable
@@ -56,7 +57,7 @@ public class CategoriesMeals extends Fragment implements CategoriesMealsView,Cat
         if (query.isEmpty()) {
             filteredList.addAll(categoriesList);
         } else {
-            for (CategoryMeals category : categoriesList) {
+            for (Category category : categoriesList) {
                 if (category.getStrCategory().toLowerCase().contains(query.toLowerCase())) {
                     filteredList.add(category);
                 }
@@ -66,7 +67,7 @@ public class CategoriesMeals extends Fragment implements CategoriesMealsView,Cat
     }
 
     @Override
-    public void getCategoryMealsSuccess(List<CategoryMeals> categoryMeals) {
+    public void getCategoryMealsSuccess(List<Category> categoryMeals) {
         categoriesList.clear();
         categoriesList.addAll(categoryMeals);
         filteredList.clear();
@@ -80,7 +81,7 @@ public class CategoriesMeals extends Fragment implements CategoriesMealsView,Cat
     }
 
     @Override
-    public void categoryOnClickListener(CategoryMeals categoriesMeals) {
+    public void categoryOnClickListener(Category categoriesMeals) {
         Bundle bundle = new Bundle();
         bundle.putString("filter_type", "c");
         bundle.putString("filter_value", categoriesMeals.getStrCategory());

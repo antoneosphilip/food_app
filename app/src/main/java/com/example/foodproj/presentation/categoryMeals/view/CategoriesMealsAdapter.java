@@ -4,28 +4,29 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.foodproj.R;
-import com.example.foodproj.data.categories.model.CategoryMeals;
+import com.example.foodproj.data.home.model.Category;
 
 import java.util.List;
 
 public class CategoriesMealsAdapter extends RecyclerView.Adapter<CategoriesMealsAdapter.CategoryViewHolder> {
 
     private Context context;
-    private List<CategoryMeals> categories;
-
+    private List<Category> categories;
     private CategoryOnClickListener categoryOnClickListener;
 
-    public CategoriesMealsAdapter(Context context, List<CategoryMeals> categories,CategoryOnClickListener categoryOnClickListener) {
+    public CategoriesMealsAdapter(Context context, List<Category> categories, CategoryOnClickListener categoryOnClickListener) {
         this.context = context;
         this.categories = categories;
-        this.categoryOnClickListener=categoryOnClickListener;
+        this.categoryOnClickListener = categoryOnClickListener;
     }
 
     @NonNull
@@ -37,34 +38,38 @@ public class CategoriesMealsAdapter extends RecyclerView.Adapter<CategoriesMeals
 
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
-        CategoryMeals category = categories.get(position);
-        if(category!=null) {
+        Category category = categories.get(position);
+        if (category != null) {
             holder.categoryName.setText(category.getStrCategory());
+
+            Glide.with(context)
+                    .load(category.getStrCategoryThumb())
+                    .placeholder(R.drawable.ic_empty_favorite)
+                    .centerCrop()
+                    .into(holder.categoryImage);
         }
-        holder.Bind(category);
+        holder.bind(category);
     }
 
     @Override
     public int getItemCount() {
-        return categories.size();
+        return categories != null ? categories.size() : 0;
     }
 
-     class CategoryViewHolder extends RecyclerView.ViewHolder {
+    class CategoryViewHolder extends RecyclerView.ViewHolder {
+        ImageView categoryImage;
         TextView categoryName;
         CardView cardView;
 
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
+            categoryImage = itemView.findViewById(R.id.categoryImage);
             categoryName = itemView.findViewById(R.id.categoryName);
             cardView = itemView.findViewById(R.id.categoryCard);
         }
-        void Bind(CategoryMeals categoryMeals){
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    categoryOnClickListener.categoryOnClickListener(categoryMeals);
-                }
-            });
+
+        void bind(Category category) {
+            cardView.setOnClickListener(v -> categoryOnClickListener.categoryOnClickListener(category));
         }
     }
 }

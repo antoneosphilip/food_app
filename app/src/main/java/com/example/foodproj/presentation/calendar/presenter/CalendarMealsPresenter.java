@@ -7,9 +7,11 @@ import com.example.foodproj.data.home.model.Meal;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
+
 public interface CalendarMealsPresenter
 {
-    LiveData<List<MealPlan>> getMeals(String date);
+    void getMeals(String date);
 
     void deleteMeal(MealPlan mealPlan);
 

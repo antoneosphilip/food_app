@@ -124,10 +124,11 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     public void onLoginSuccess(FirebaseUser user) {
         Toast.makeText(this, "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(LoginActivity.this, HomeLayout.class);
+        UserPrefs.saveToken(user.getUid());
+
         user.getIdToken(true)
                 .addOnSuccessListener(result -> {
                     String token = result.getToken();
-                    UserPrefs.saveToken(token);
                 });
         startActivity(intent);
 

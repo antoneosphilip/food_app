@@ -52,8 +52,11 @@ public class MealsDetailsPresenterImpl implements MealsDetailsPresenter {
 
     @Override
     public void insertMealPlan(MealPlan mealPlan) {
-        mealPlanRepo.InsertMeal(mealPlan);
-        mealsDetailsView.insertMealPlan();
+        mealPlanRepo.InsertMeal(mealPlan).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        ()-> mealsDetailsView.insertMealPlan()
+                );
     }
 
     @Override

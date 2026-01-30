@@ -5,9 +5,11 @@ import com.example.foodproj.data.home.model.Meal;
 import java.util.List;
 
 public interface FavoriteView {
-    void getFavoriteDataSuccess();
+    void getFavoriteDataSuccess(List<Meal> meals);
     void getDataError();
     void insertDataError();
+    void insertDataSuccess();
+
     void deleteDataSuccess();
     void deleteDataError();
 

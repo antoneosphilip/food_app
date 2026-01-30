@@ -12,6 +12,11 @@ import com.example.foodproj.presentation.calendar.view.CalendarMealsView;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class CalendarMealsPresenterImpl implements CalendarMealsPresenter{
     private final MealPlanRepo mealPlanRepo;
     private final CalendarMealsView calendarMealsView;
@@ -24,16 +29,26 @@ public class CalendarMealsPresenterImpl implements CalendarMealsPresenter{
 
 
     @Override
-    public LiveData<List<MealPlan>> getMeals(String date) {
-        return mealPlanRepo.getMeals(date);
+    public void getMeals(String date) {
+         mealPlanRepo.getMeals(date).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        meals -> calendarMealsView.getLocalCalendarSuccess(meals),
+                        throwable -> calendarMealsView.getRemoteCalendarError(throwable.getMessage())
+                );
     }
 
     @Override
     public void deleteMeal(MealPlan mealPlan) {
         calendarMealsView.deleteCalendarDataSuccess();
-        deletePlanMeal(mealPlan.getMealId());
+        mealPlanRepo.deleteMeal(mealPlan).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> deletePlanMeal(mealPlan.getMealId())
+                );
 
-        mealPlanRepo.deleteMeal(mealPlan);
+
+
     }
 
     @Override

@@ -7,13 +7,16 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+
 public interface FavoriteRepo {
 
-     void InsertMeal(Meal meal);
+     Completable InsertMeal(Meal meal);
 
-     LiveData<List<Meal>> getMeals();
+     Observable<List<Meal>> getMeals();
 
-     void deleteMeal(Meal meal);
+     Completable deleteMeal(Meal meal);
 
      void uploadFavoriteData(Meal meal);
 

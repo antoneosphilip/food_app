@@ -77,20 +77,7 @@ public class Favorite extends Fragment implements FavoriteView,FavoriteOnClickLi
 
     private void loadFavoriteMeals() {
         progressBar.setVisibility(View.VISIBLE);
-
-        presenter.getMeals().observe(getViewLifecycleOwner(), new Observer<List<Meal>>() {
-            @Override
-            public void onChanged(List<Meal> meals) {
-                progressBar.setVisibility(View.GONE);
-                if (meals != null && !meals.isEmpty()) {
-                    adapter.updateMeals(meals);
-                    updateTitle(meals.size());
-                    showContent();
-                } else {
-                    showEmptyState();
-                }
-            }
-        });
+        presenter.getMeals();
     }
 
     private void updateTitle(int count) {
@@ -121,8 +108,15 @@ public class Favorite extends Fragment implements FavoriteView,FavoriteOnClickLi
     }
 
     @Override
-    public void getFavoriteDataSuccess() {
-
+    public void getFavoriteDataSuccess(List<Meal> meals) {
+        progressBar.setVisibility(View.GONE);
+        if (meals != null && !meals.isEmpty()) {
+            adapter.updateMeals(meals);
+            updateTitle(meals.size());
+            showContent();
+        } else {
+            showEmptyState();
+        }
     }
 
     @Override
@@ -136,6 +130,10 @@ public class Favorite extends Fragment implements FavoriteView,FavoriteOnClickLi
     @Override
     public void insertDataError() {
         Toast.makeText(getContext(), "Error adding to favorites", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void insertDataSuccess() {
     }
 
     @Override

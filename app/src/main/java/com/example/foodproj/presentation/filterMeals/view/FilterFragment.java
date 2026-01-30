@@ -13,10 +13,10 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.foodproj.R;
-
 import com.example.foodproj.presentation.categoryMeals.view.CategoriesMeals;
 import com.example.foodproj.presentation.countries.view.CountriesMealsFragment;
 import com.example.foodproj.presentation.ingredient.view.IngredientsFragment;
+import com.example.foodproj.presentation.search.presenter.NameSearch;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -55,12 +55,15 @@ public class FilterFragment extends Fragment {
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             switch (position) {
                 case 0:
-                    tab.setText("Categories");
+                    tab.setText("Name");
                     break;
                 case 1:
-                    tab.setText("Countries");
+                    tab.setText("Categories");
                     break;
                 case 2:
+                    tab.setText("Countries");
+                    break;
+                case 3:
                     tab.setText("Ingredient");
                     break;
             }
@@ -73,13 +76,16 @@ public class FilterFragment extends Fragment {
             int currentPosition = viewPager.getCurrentItem();
             Fragment fragment = getChildFragmentManager().findFragmentByTag("f" + currentPosition);
 
-            if (fragment instanceof CategoriesMeals) {
+            if (fragment instanceof NameSearch) {
+                ((NameSearch) fragment).searchMeals(query);
+            }
+            else if (fragment instanceof CategoriesMeals) {
                 ((CategoriesMeals) fragment).searchCategories(query);
-
             }
             else if (fragment instanceof CountriesMealsFragment) {
                 ((CountriesMealsFragment) fragment).searchCountries(query);
-            } else if (fragment instanceof IngredientsFragment) {
+            }
+            else if (fragment instanceof IngredientsFragment) {
                 ((IngredientsFragment) fragment).searchIngredients(query);
             }
         }

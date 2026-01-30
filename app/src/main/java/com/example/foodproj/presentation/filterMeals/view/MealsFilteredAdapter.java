@@ -45,7 +45,7 @@ public class MealsFilteredAdapter extends RecyclerView.Adapter<MealsFilteredAdap
         Glide.with(context)
                 .load(meal.getStrMealThumb())
                 .centerCrop()
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.ic_empty_favorite)
                 .into(holder.mealImage);
         holder.Bind(meal);
 

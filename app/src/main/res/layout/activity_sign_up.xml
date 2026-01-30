@@ -4,30 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="#FFFFFF">
+    android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp">
+        android:paddingHorizontal="24dp"
+        android:paddingBottom="32dp">
 
         <View
             android:id="@+id/logoCircle"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="40dp"
-            android:background="#FF5722"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="56dp"
+            android:background="@drawable/bg_logo_circle"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/logoIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="🍴"
-            android:textSize="24sp"
+            android:textSize="32sp"
             app:layout_constraintTop_toTopOf="@id/logoCircle"
             app:layout_constraintBottom_toBottomOf="@id/logoCircle"
             app:layout_constraintStart_toStartOf="@id/logoCircle"
@@ -39,9 +39,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/create_account"
-            android:textSize="28sp"
+            android:textSize="26sp"
             android:textStyle="bold"
-            android:textColor="#2C3E50"
+            android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@id/logoCircle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -53,8 +53,7 @@
             android:layout_marginTop="32dp"
             android:text="@string/full_name"
             android:textStyle="bold"
-            android:textSize="14sp"
-            android:textColor="#2C3E50"
+            android:textColor="@color/text_primary"
             app:layout_constraintTop_toBottomOf="@id/tvTitle"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -66,9 +65,9 @@
             android:background="#F8F9FA"
             android:hint="@string/full_name"
             android:padding="12dp"
-            android:textSize="16sp"
-            android:textColor="#2C3E50"
+            android:textColor="@color/text_primary"
             android:textColorHint="#BDC3C7"
+            android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@id/tvNameLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -77,11 +76,10 @@
             android:id="@+id/tvEmailLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:text="@string/email"
             android:textStyle="bold"
-            android:textSize="14sp"
-            android:textColor="#2C3E50"
+            android:textColor="@color/text_primary"
             app:layout_constraintTop_toBottomOf="@id/etName"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -94,9 +92,9 @@
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:padding="12dp"
-            android:textSize="16sp"
-            android:textColor="#2C3E50"
+            android:textColor="@color/text_primary"
             android:textColorHint="#BDC3C7"
+            android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@id/tvEmailLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -105,11 +103,10 @@
             android:id="@+id/tvPasswordLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:text="@string/password"
             android:textStyle="bold"
-            android:textSize="14sp"
-            android:textColor="#2C3E50"
+            android:textColor="@color/text_primary"
             app:layout_constraintTop_toBottomOf="@id/etEmail"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -122,23 +119,21 @@
             android:hint="••••••••"
             android:inputType="textPassword"
             android:padding="12dp"
-            android:textSize="16sp"
-            android:textColor="#2C3E50"
+            android:textColor="@color/text_primary"
             android:textColorHint="#BDC3C7"
+            android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@id/tvPasswordLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Confirm Password -->
         <TextView
             android:id="@+id/tvConfirmPasswordLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:text="@string/confirm_password"
             android:textStyle="bold"
-            android:textSize="14sp"
-            android:textColor="#2C3E50"
+            android:textColor="@color/text_primary"
             app:layout_constraintTop_toBottomOf="@id/etPassword"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -151,9 +146,9 @@
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
             android:padding="12dp"
-            android:textSize="16sp"
-            android:textColor="#2C3E50"
+            android:textColor="@color/text_primary"
             android:textColorHint="#BDC3C7"
+            android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@id/tvConfirmPasswordLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -161,15 +156,13 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSignUpSubmit"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:background="#1A1A1A"
+            android:layout_height="56dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/bg_button_main"
             android:text="@string/sign_up"
             android:textAllCaps="false"
             android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="#FFFFFF"
-            android:padding="16dp"
+            android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/etConfirmPassword"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -179,10 +172,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Already have an account? Login"
-            android:textSize="14sp"
+            android:text="@string/already_have_account_login"
             android:textStyle="bold"
-            android:textColor="#2C3E50"
+            android:textColor="@color/primary"
             app:layout_constraintTop_toBottomOf="@id/btnSignUpSubmit"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -190,24 +182,22 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnGoogleSignUp"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_marginTop="24dp"
-            android:background="#FFFFFF"
+            android:background="@drawable/bg_button_outline"
             android:drawableStart="@drawable/google"
             android:drawablePadding="12dp"
             android:text="@string/continue_with_google"
             android:textAllCaps="false"
-            android:textSize="16sp"
-            android:textColor="#2C3E50"
-            android:padding="16dp"
+            android:textColor="@color/text_primary"
             app:layout_constraintTop_toBottomOf="@id/tvLoginRedirect"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <ProgressBar
             android:id="@+id/progressBar"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

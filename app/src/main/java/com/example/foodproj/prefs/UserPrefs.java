@@ -8,7 +8,9 @@ import android.content.SharedPreferences;
     private static final String PREF_NAME = "user_prefs";
     private static final String KEY_TOKEN = "token";
 
-    private static SharedPreferences prefs;
+     private static final String KEY_Name= "name";
+
+     private static SharedPreferences prefs;
 
      public static void init(Context context) {
          if (prefs == null) {
@@ -21,11 +23,20 @@ import android.content.SharedPreferences;
             prefs.edit().putString(KEY_TOKEN, token).apply();
     }
 
-    public static String getToken() {
+     public static void saveName(String name) {
+         prefs.edit().putString(KEY_Name, name).apply();
+     }
+
+
+     public static String getToken() {
         return prefs.getString(KEY_TOKEN, null);
     }
 
-    public static void clear() {
+     public static String getName() {
+         return prefs.getString(KEY_Name, null);
+     }
+
+     public static void clear() {
         prefs.edit().clear().apply();
     }
 }

@@ -6,6 +6,7 @@ import com.example.foodproj.data.home.datasource.HomeServices;
 import com.example.foodproj.data.ingredient.datasource.IngredientService;
 import com.example.foodproj.data.mealdetails.datasource.MealDetailsService;
 import com.example.foodproj.data.mealsfilterd.datasource.MealsFilteredService;
+import com.example.foodproj.data.search.datasource.SearchService;
 
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
 import retrofit2.Retrofit;
@@ -17,6 +18,7 @@ public class Network {
     public CategoriesService categoriesService;
     public IngredientService ingredientService;
     public MealsFilteredService mealsFilteredService;
+    public SearchService searchService;
 
     public MealDetailsService mealDetailsService;
 
@@ -34,6 +36,7 @@ public class Network {
         ingredientService=retrofit.create(IngredientService.class);
         mealsFilteredService=retrofit.create(MealsFilteredService.class);
         mealDetailsService=retrofit.create(MealDetailsService.class);
+        searchService=retrofit.create(SearchService.class);
     }
     public static Network getInstance(){
         if(instance==null)

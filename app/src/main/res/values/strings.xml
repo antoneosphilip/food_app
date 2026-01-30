@@ -15,7 +15,42 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="full_name">Full Name</string>
     <string name="you_don_t_have_an_account_sign_up">You don’t have an account? Sign up</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_to_favorites">Add to Favorites</string>
+    <string name="food_planner">Food Planner</string>
+    <string name="already_have_account_login">Already have an account? Login</string>
+
+    <string name="hello_blank_fragment">hello</string>
+    <string name="guest_mode">Guest Mode</string>
+    <string name="logout">Logout</string>
+    <string name="welcome_user">Welcome, User</string>
+    <string name="meal_of_the_day">Meal of the Day</string>
+    <string name="meal_of_the_day_subtitle">Get inspired for your next meal</string>
+    <string name="categories">Categories</string>
+    <string name="no_internet">No Internet Connection</string>
+    <string name="check_connection">Please check your connection</string>
+    <string name="meals_saved">0 meals saved</string>
+    <string name="no_favorites">No favorites</string>
+    <string name="no_favorite_meals_yet">You haven\'t saved any meals yet</string>
+    <string name="meal_image">Meal Image</string>
+    <string name="category">Dessert</string>
+    <string name="sample_meal">Dulce de Leche</string>
+    <string name="sample_country">Argentinian</string>
+    <string name="no_date_selected">No date selected</string>
+    <string name="no_meals_planned">No meals planned for this date</string>
+    <string name="empty">Empty</string>
+    <string name="delete">Delete</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
+    <string name="video_tutorial">Video Tutorial</string>
+    <string name="add_to_calendar">Add to Calendar</string>
+    <string name="ingredient_image">Ingredient Image</string>
+    <string name="onions">Onions</string>
+    <string name="_2_chopped">2 chopped</string>
+    <string name="back">Back</string>
+    <string name="vegetarian_chilli">Vegetarian Chilli</string>
+    <string name="recipe_image">Recipe Image</string>
+    <string name="vegetarian">Vegetarian</string>
+    <string name="british">British</string>
+
+
 </resources>

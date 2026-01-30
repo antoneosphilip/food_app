@@ -21,6 +21,7 @@ import com.example.foodproj.R;
 import com.example.foodproj.data.home.model.Category;
 import com.example.foodproj.data.home.model.Meal;
 import com.example.foodproj.network.NetworkMonitor;
+import com.example.foodproj.prefs.UserPrefs;
 import com.example.foodproj.presentation.filterMeals.view.MealsFilteredFragment;
 import com.example.foodproj.presentation.home.presenter.HomePresenter;
 import com.example.foodproj.presentation.home.presenter.HomePresenterImpl;
@@ -46,6 +47,8 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
     private View contentLayout;
 
     private NetworkMonitor networkMonitor;
+
+    private TextView name;
 
     @Nullable
     @Override
@@ -79,6 +82,7 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
         categoriesGridView = view.findViewById(R.id.categoriesGridView);
         noInternetLayout = view.findViewById(R.id.noInternetLayout);
         contentLayout = view.findViewById(R.id.contentLayout);
+        name=view.findViewById(R.id.welcomeText);
     }
 
     private void setupNetworkMonitor() {
@@ -146,8 +150,10 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
         Log.i(TAG, "meeeeal" + meal.get(0).getStrMeal());
         Glide.with(requireContext())
                 .load(meal.get(0).getStrMealThumb())
+                .placeholder(R.drawable.ic_empty_favorite)
                 .centerCrop()
                 .into(mealImage);
+        name.setText("Welcome , "+ UserPrefs.getName());
     }
 
     @Override

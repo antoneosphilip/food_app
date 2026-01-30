@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         Toast.makeText(this, "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(LoginActivity.this, HomeLayout.class);
         UserPrefs.saveToken(user.getUid());
-
+        UserPrefs.saveName(user.getDisplayName());
         user.getIdToken(true)
                 .addOnSuccessListener(result -> {
                     String token = result.getToken();

@@ -46,7 +46,7 @@ public class CalendarMealAdapter extends RecyclerView.Adapter<CalendarMealAdapte
         Glide.with(context)
                 .load(mealPlan.getMealThumb())
                 .centerCrop()
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.ic_empty_favorite)
                 .into(holder.mealImage);
 
         holder.deleteButton.setOnClickListener(v -> {

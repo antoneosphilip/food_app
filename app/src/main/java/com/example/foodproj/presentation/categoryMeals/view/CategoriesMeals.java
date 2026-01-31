@@ -13,14 +13,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodproj.R;
-import com.example.foodproj.data.categories.model.CategoryMeals;
-import com.example.foodproj.data.home.model.Category;
+import com.example.foodproj.data.categories.model.Category;
 import com.example.foodproj.presentation.categoryMeals.presenter.CategoriesMealsPresenter;
 import com.example.foodproj.presentation.categoryMeals.presenter.CategoriesMealsPresenterImpl;
 import com.example.foodproj.presentation.categoryMeals.view.CategoriesMealsAdapter;
 import com.example.foodproj.presentation.categoryMeals.view.CategoriesMealsView;
 import com.example.foodproj.presentation.filterMeals.view.MealsFilteredFragment;
-import com.example.foodproj.presentation.home.view.category.CategoryAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +74,7 @@ public class CategoriesMeals extends Fragment implements CategoriesMealsView,Cat
     }
 
     @Override
-    public void getCategoryMealsError() {
+    public void getCategoryMealsError(String message) {
         Toast.makeText(getContext(), "Failed to fetch categories", Toast.LENGTH_SHORT).show();
     }
 

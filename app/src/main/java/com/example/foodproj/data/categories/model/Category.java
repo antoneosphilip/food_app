@@ -1,4 +1,4 @@
-package com.example.foodproj.data.home.model;
+package com.example.foodproj.data.categories.model;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,9 +1,6 @@
 package com.example.foodproj.data.ingredient.datasource;
 
-import com.example.foodproj.data.categories.datasource.CategoriesMealsResponse;
-import com.example.foodproj.data.categories.datasource.CategoriesNetworkResponse;
-import com.example.foodproj.data.categories.model.CategoryMeals;
-import com.example.foodproj.data.ingredient.model.IngredientMeals;
+
 import com.example.foodproj.network.Network;
 
 import java.io.IOException;

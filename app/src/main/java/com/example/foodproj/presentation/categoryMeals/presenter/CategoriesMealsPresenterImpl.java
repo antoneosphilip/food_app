@@ -1,7 +1,5 @@
 package com.example.foodproj.presentation.categoryMeals.presenter;
 
-import com.example.foodproj.data.categories.datasource.CategoriesNetworkResponse;
-import com.example.foodproj.data.categories.model.CategoryMeals;
 import com.example.foodproj.data.categories.repo.CategoryMealsRepo;
 import com.example.foodproj.data.categories.repo.CategoryMealsRepoImpl;
 import com.example.foodproj.presentation.categoryMeals.view.CategoriesMealsView;
@@ -26,7 +24,7 @@ public class CategoriesMealsPresenterImpl implements CategoriesMealsPresenter{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         meals -> categoriesMealsView.getCategoryMealsSuccess(meals.getCategories()),
-                        throwable -> categoriesMealsView.getCategoryMealsError()
+                        throwable -> categoriesMealsView.getCategoryMealsError(throwable.getMessage())
                 );;
     }
 }

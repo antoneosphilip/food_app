@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,24 +14,26 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.foodproj.R;
-import com.example.foodproj.data.home.model.Category;
+import com.example.foodproj.data.categories.model.Category;
 import com.example.foodproj.data.home.model.Meal;
 import com.example.foodproj.network.NetworkMonitor;
 import com.example.foodproj.prefs.UserPrefs;
+import com.example.foodproj.presentation.categoryMeals.view.CategoriesMealsAdapter;
+import com.example.foodproj.presentation.categoryMeals.view.CategoryOnClickListener;
 import com.example.foodproj.presentation.filterMeals.view.MealsFilteredFragment;
 import com.example.foodproj.presentation.home.presenter.HomePresenter;
 import com.example.foodproj.presentation.home.presenter.HomePresenterImpl;
-import com.example.foodproj.presentation.home.view.category.CategoryListener;
 import com.example.foodproj.presentation.mealsdetails.view.MealDetails;
 import com.example.foodproj.presentation.mealsdetails.view.MealOnClickListener;
-import com.example.foodproj.presentation.home.view.category.CategoryAdapter;
 
 import java.util.List;
 
-public class Home extends Fragment implements HomeView, MealOnClickListener, CategoryListener {
+public class Home extends Fragment implements HomeView, MealOnClickListener, CategoryOnClickListener {
 
     private HomePresenter homePresenter;
     private ImageView mealImage;
@@ -40,14 +41,11 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
     private TextView categoryTag;
     private TextView areaTag;
     private ImageView refreshButton;
-    private GridView categoriesGridView;
+    private RecyclerView categoriesRecyclerView;
     private List<Meal> currentMeal;
-
     private View noInternetLayout;
     private View contentLayout;
-
     private NetworkMonitor networkMonitor;
-
     private TextView name;
 
     @Nullable
@@ -58,11 +56,14 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
         initViews(view);
         homePresenter = new HomePresenterImpl(this, getContext());
 
+        categoriesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
         setupNetworkMonitor();
 
         refreshButton.setOnClickListener(v -> {
             if (networkMonitor.isNetworkAvailable()) {
                 homePresenter.getMeals();
+                homePresenter.getCategories();
             } else {
                 Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_SHORT).show();
             }
@@ -79,10 +80,10 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
         categoryTag = view.findViewById(R.id.categoryTag);
         areaTag = view.findViewById(R.id.areaTag);
         refreshButton = view.findViewById(R.id.refreshButton);
-        categoriesGridView = view.findViewById(R.id.categoriesGridView);
+        categoriesRecyclerView = view.findViewById(R.id.categoriesRecyclerView);
         noInternetLayout = view.findViewById(R.id.noInternetLayout);
         contentLayout = view.findViewById(R.id.contentLayout);
-        name=view.findViewById(R.id.welcomeText);
+        name = view.findViewById(R.id.welcomeText);
     }
 
     private void setupNetworkMonitor() {
@@ -92,6 +93,7 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
                 showContent();
                 loadData();
             }
+
             @Override
             public void onNetworkUnavailable() {
                 showNoInternet();
@@ -133,8 +135,8 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
 
     @Override
     public void categoryFetchedSuccessfully(List<Category> categories) {
-        CategoryAdapter adapter = new CategoryAdapter(getContext(), categories, this);
-        categoriesGridView.setAdapter(adapter);
+        CategoriesMealsAdapter adapter = new CategoriesMealsAdapter(getContext(), categories, this);
+        categoriesRecyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -147,12 +149,14 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
         categoryTag.setText(meal.get(0).getStrCategory());
         areaTag.setText(meal.get(0).getStrArea());
         Log.i(TAG, "meeeeal" + meal.get(0).getStrMeal());
+
         Glide.with(requireContext())
                 .load(meal.get(0).getStrMealThumb())
                 .placeholder(R.drawable.ic_empty_favorite)
                 .centerCrop()
                 .into(mealImage);
-        name.setText("Welcome , "+ UserPrefs.getName());
+
+        name.setText("Welcome , " + UserPrefs.getName());
     }
 
     @Override
@@ -173,10 +177,18 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
     }
 
     @Override
-    public void onCategoryClick(Category category) {
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (networkMonitor != null) {
+            networkMonitor.unregister();
+        }
+    }
+
+    @Override
+    public void categoryOnClickListener(Category categoriesMeals) {
         Bundle bundle = new Bundle();
         bundle.putString("filter_type", "c");
-        bundle.putString("filter_value", category.getStrCategory());
+        bundle.putString("filter_value", categoriesMeals.getStrCategory());
 
         MealsFilteredFragment fragment = new MealsFilteredFragment();
         fragment.setArguments(bundle);
@@ -186,13 +198,5 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (networkMonitor != null) {
-            networkMonitor.unregister();
-        }
     }
 }

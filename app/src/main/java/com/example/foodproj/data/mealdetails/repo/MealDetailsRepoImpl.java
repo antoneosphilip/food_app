@@ -1,8 +1,6 @@
 package com.example.foodproj.data.mealdetails.repo;
 
-import com.example.foodproj.data.home.datasource.HomeRemoteData;
 import com.example.foodproj.data.home.datasource.MealResponse;
-import com.example.foodproj.data.mealdetails.datasource.MealsDetailsNetworkResponse;
 import com.example.foodproj.data.mealdetails.datasource.MealsDetailsRemoteData;
 
 import java.util.Map;

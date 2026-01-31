@@ -1,6 +1,5 @@
 package com.example.foodproj.data.mealsfilterd.repo;
 
-import com.example.foodproj.data.mealsfilterd.datasource.MealsFilteredNetworkResponse;
 import com.example.foodproj.data.mealsfilterd.datasource.MealsFilteredRemoteData;
 import com.example.foodproj.data.mealsfilterd.datasource.MealsFilteredResponse;
 

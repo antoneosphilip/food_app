@@ -32,7 +32,6 @@ public class MealPlanLocalDataBase {
         return calendarDao.getMeals(date);
     }
     public Completable deleteAllMeals(){
-
         return calendarDao.deleteAllMeals();
     }
 }

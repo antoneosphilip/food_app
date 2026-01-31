@@ -123,7 +123,6 @@ public class Favorite extends Fragment implements FavoriteView, FavoriteOnClickL
     @Override
     public void getFavoriteRemoteSuccess() {
 
-        Toast.makeText(getContext(), " getting favorites", Toast.LENGTH_SHORT).show();
 
     }
 

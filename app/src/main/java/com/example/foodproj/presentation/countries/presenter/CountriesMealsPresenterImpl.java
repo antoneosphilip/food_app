@@ -1,12 +1,8 @@
 package com.example.foodproj.presentation.countries.presenter;
 
-import com.example.foodproj.data.countries.datasource.CountriesNetworkResponse;
-import com.example.foodproj.data.countries.model.CountriesMeals;
 import com.example.foodproj.data.countries.repo.CountriesMealsRepo;
 import com.example.foodproj.data.countries.repo.CountriesRepoImpl;
 import com.example.foodproj.presentation.countries.view.CountriesMealsView;
-
-import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;

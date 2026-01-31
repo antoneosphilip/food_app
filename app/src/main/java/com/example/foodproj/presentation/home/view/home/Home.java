@@ -92,7 +92,6 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
                 showContent();
                 loadData();
             }
-
             @Override
             public void onNetworkUnavailable() {
                 showNoInternet();

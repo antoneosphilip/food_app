@@ -20,4 +20,7 @@ public interface FavoritePresenter {
 
      void deleteFavoriteRemote(String id);
 
+     void deleteAllFavorites();
+
+
 }

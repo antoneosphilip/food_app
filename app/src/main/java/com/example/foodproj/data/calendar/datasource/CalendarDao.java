@@ -25,4 +25,7 @@ public interface CalendarDao {
 
     @Delete
     Completable deleteMeal(MealPlan mealPlan);
+
+    @Query("DELETE FROM meal_plans")
+    Completable deleteAllMeals();
 }

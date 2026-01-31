@@ -37,24 +37,32 @@ public class Calendar extends Fragment implements CalendarMealsView, OnCalendarM
     private RecyclerView mealsRecyclerView;
     private LinearLayout emptyStateLayout;
     private ProgressBar progressBar;
+
     private CalendarMealAdapter mealsAdapter;
     private List<MealPlan> mealsList;
+
     private CalendarMealsPresenter presenter;
     private String selectedDate = "";
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_calendar, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_calendar, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         initViews(view);
         setupRecyclerView();
 
+        presenter = new CalendarMealsPresenterImpl(requireContext(), this);
+
         if (presenter != null) {
             presenter.getRemoteCalendar();
         }
-
-        return view;
     }
 
     @SuppressLint("SetTextI18n")
@@ -65,22 +73,24 @@ public class Calendar extends Fragment implements CalendarMealsView, OnCalendarM
         emptyStateLayout = view.findViewById(R.id.emptyStateLayout);
         progressBar = view.findViewById(R.id.progressBar);
 
-        presenter = new CalendarMealsPresenterImpl(getContext(), this);
-
         calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
             java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.set(year, month, dayOfMonth);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+            SimpleDateFormat dateFormat =
+                    new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
             selectedDate = dateFormat.format(calendar.getTime());
             selectedDateText.setText("Meals for " + selectedDate);
+
             loadMealsByDate(selectedDate);
         });
     }
 
     private void setupRecyclerView() {
-        mealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mealsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         mealsList = new ArrayList<>();
-        mealsAdapter = new CalendarMealAdapter(getContext(), mealsList, this);
+        mealsAdapter = new CalendarMealAdapter(requireContext(), mealsList, this);
         mealsRecyclerView.setAdapter(mealsAdapter);
     }
 
@@ -118,12 +128,11 @@ public class Calendar extends Fragment implements CalendarMealsView, OnCalendarM
 
     @Override
     public void getRemoteCalendarSuccess() {
-        showToast("Get meal successfully");
     }
 
     @Override
     public void getRemoteCalendarError(String error) {
-        showToast("Get meal error");
+        Log.i(TAG, "getRemoteCalendarError: " + error);
     }
 
     @Override

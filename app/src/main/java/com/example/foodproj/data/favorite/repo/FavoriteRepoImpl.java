@@ -53,4 +53,10 @@ public class FavoriteRepoImpl implements FavoriteRepo {
         firebaseRemoteDataSource.deleteFavoriteMeal(id);
     }
 
+    @Override
+    public Completable deleteAllFavorite() {
+        return mealsLocalDataBase.deleteAllFavorites();
+    }
+
+
 }

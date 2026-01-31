@@ -87,5 +87,16 @@ public class FavoritePresenterImpl implements FavoritePresenter{
         favoriteRepo.deleteFavoriteRemote(id);
     }
 
+    @Override
+    public void deleteAllFavorites() {
+        favoriteRepo.deleteAllFavorite().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> {
+
+                        }
+                );
+    }
+
 
 }

@@ -55,6 +55,7 @@ public class Favorite extends Fragment implements FavoriteView, FavoriteOnClickL
 
         progressBar.setVisibility(View.VISIBLE);
         presenter.getMeals();
+        presenter.getRemoteFavorites();
     }
 
     private void updateTitle(int count) {
@@ -120,7 +121,11 @@ public class Favorite extends Fragment implements FavoriteView, FavoriteOnClickL
     }
 
     @Override
-    public void getFavoriteRemoteSuccess() {}
+    public void getFavoriteRemoteSuccess() {
+
+        Toast.makeText(getContext(), " getting favorites", Toast.LENGTH_SHORT).show();
+
+    }
 
     @Override
     public void getFavoriteRemoteError(String error) {

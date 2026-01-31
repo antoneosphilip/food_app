@@ -7,6 +7,7 @@ import com.example.foodproj.data.home.model.Meal;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 
 public interface CalendarMealsPresenter
@@ -20,4 +21,7 @@ public interface CalendarMealsPresenter
     void uploadRemoteCalendar(MealPlan mealPlan);
 
     void deletePlanMeal(String id);
+
+    void deleteAllPlans();
+
 }

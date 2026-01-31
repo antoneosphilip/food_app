@@ -7,10 +7,10 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "meal_plans")
 public class MealPlan {
 
-    @PrimaryKey(autoGenerate = true)
     private int id;
 
     @NonNull
+    @PrimaryKey
     private String mealId;
 
     private String mealName;
@@ -33,6 +33,9 @@ public class MealPlan {
         this.planDate = planDate;
         this.timestamp = timestamp;
     }
+    public MealPlan() {
+    }
+
 
     public int getId() {
         return id;

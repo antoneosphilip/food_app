@@ -17,20 +17,19 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class CalendarMealsPresenterImpl implements CalendarMealsPresenter{
+public class CalendarMealsPresenterImpl implements CalendarMealsPresenter {
     private final MealPlanRepo mealPlanRepo;
     private final CalendarMealsView calendarMealsView;
 
-    public CalendarMealsPresenterImpl(Context context,CalendarMealsView calendarMealsView) {
+    public CalendarMealsPresenterImpl(Context context, CalendarMealsView calendarMealsView) {
         this.mealPlanRepo = new MealPlanRepoImpl(context);
-        this.calendarMealsView=calendarMealsView;
+        this.calendarMealsView = calendarMealsView;
     }
-
 
 
     @Override
     public void getMeals(String date) {
-         mealPlanRepo.getMeals(date).subscribeOn(Schedulers.io())
+        mealPlanRepo.getMeals(date).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         meals -> calendarMealsView.getLocalCalendarSuccess(meals),
@@ -48,7 +47,6 @@ public class CalendarMealsPresenterImpl implements CalendarMealsPresenter{
                 );
 
 
-
     }
 
     @Override
@@ -59,7 +57,8 @@ public class CalendarMealsPresenterImpl implements CalendarMealsPresenter{
 
                     if (plans != null && !plans.isEmpty()) {
                         for (MealPlan plan : plans) {
-                            mealPlanRepo.InsertMeal(plan);
+                            mealPlanRepo.InsertMeal(plan).subscribeOn(Schedulers.io())
+                                    .subscribe();
                         }
                     }
 
@@ -79,5 +78,15 @@ public class CalendarMealsPresenterImpl implements CalendarMealsPresenter{
     @Override
     public void deletePlanMeal(String id) {
         mealPlanRepo.deletePlanMeal(id);
+    }
+
+    @Override
+    public void deleteAllPlans() {
+        mealPlanRepo.deleteAllPlans().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+
+                );
+
     }
 }

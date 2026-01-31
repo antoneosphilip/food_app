@@ -24,6 +24,7 @@ public interface FavoriteRepo {
 
      void deleteFavoriteRemote(String id);
 
+     Completable deleteAllFavorite();
 
 
 

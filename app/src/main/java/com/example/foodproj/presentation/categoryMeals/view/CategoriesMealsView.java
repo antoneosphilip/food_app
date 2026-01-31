@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface CategoriesMealsView {
     void getCategoryMealsSuccess(List<Category> categoryMeals);
-    void getCategoryMealsError();
+    void getCategoryMealsError(String message);
 
 }

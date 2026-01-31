@@ -76,7 +76,7 @@ public class CategoriesMeals extends Fragment implements CategoriesMealsView,Cat
     }
 
     @Override
-    public void getCategoryMealsError() {
+    public void getCategoryMealsError(String message) {
         Toast.makeText(getContext(), "Failed to fetch categories", Toast.LENGTH_SHORT).show();
     }
 

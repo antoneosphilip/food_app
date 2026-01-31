@@ -26,7 +26,7 @@ public class CategoriesMealsPresenterImpl implements CategoriesMealsPresenter{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         meals -> categoriesMealsView.getCategoryMealsSuccess(meals.getCategories()),
-                        throwable -> categoriesMealsView.getCategoryMealsError()
+                        throwable -> categoriesMealsView.getCategoryMealsError(throwable.getMessage())
                 );;
     }
 }

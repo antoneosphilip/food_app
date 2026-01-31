@@ -17,6 +17,7 @@ import com.example.foodproj.data.home.model.Meal;
 import com.example.foodproj.data.search.datasource.SearchResponse;
 import com.example.foodproj.presentation.filterMeals.view.MealsFilteredFragment;
 
+import com.example.foodproj.presentation.mealsdetails.view.MealDetails;
 import com.example.foodproj.presentation.search.presenter.SearchMealsAdapter;
 import com.example.foodproj.presentation.search.presenter.SearchPresenter;
 import com.example.foodproj.presentation.search.view.SearchMealView;
@@ -66,19 +67,6 @@ public class NameSearch extends Fragment implements SearchMealView, SearchOnClic
         }
     }
 
-    public void filterLocalMeals(String query) {
-        filteredList.clear();
-        if (query.isEmpty()) {
-            filteredList.addAll(mealsList);
-        } else {
-            for (Meal meal : mealsList) {
-                if (meal.getStrMeal().toLowerCase().contains(query.toLowerCase())) {
-                    filteredList.add(meal);
-                }
-            }
-        }
-        searchAdapter.notifyDataSetChanged();
-    }
 
 
     @Override
@@ -104,7 +92,7 @@ public class NameSearch extends Fragment implements SearchMealView, SearchOnClic
         Bundle bundle = new Bundle();
         bundle.putString("meal_id", meal.getIdMeal());
 
-        MealsFilteredFragment fragment = new MealsFilteredFragment();
+        MealDetails fragment = new MealDetails();
         fragment.setArguments(bundle);
 
         requireActivity()

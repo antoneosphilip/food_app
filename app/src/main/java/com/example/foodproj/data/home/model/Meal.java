@@ -17,6 +17,7 @@ public class Meal implements Serializable {
     @NonNull
     private String idMeal;
     private String strMeal;
+    public Meal(){}
 
     public String getIdMeal() {
         return idMeal;

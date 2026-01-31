@@ -53,5 +53,9 @@ public class MealPlanRepoImpl implements MealPlanRepo {
         firebaseRemoteDataSource.deleteCalendarMeal(id);
     }
 
+    @Override
+    public Completable deleteAllPlans() {
+      return   mealPlanLocalDataBase.deleteAllMeals();
+    }
 
 }

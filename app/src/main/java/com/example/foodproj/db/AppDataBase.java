@@ -16,7 +16,7 @@ import com.example.foodproj.data.home.model.Meal;
                 Meal.class,
                 MealPlan.class
         },
-        version = 1
+        version = 8
 )
 public abstract class AppDataBase extends RoomDatabase {
     public abstract MealDao mealDao();

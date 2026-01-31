@@ -31,4 +31,8 @@ public class MealPlanLocalDataBase {
     public Observable<List<MealPlan>> getProducts(String date){
         return calendarDao.getMeals(date);
     }
+    public Completable deleteAllMeals(){
+
+        return calendarDao.deleteAllMeals();
+    }
 }

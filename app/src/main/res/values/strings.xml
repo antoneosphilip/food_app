@@ -51,6 +51,10 @@
     <string name="recipe_image">Recipe Image</string>
     <string name="vegetarian">Vegetarian</string>
     <string name="british">British</string>
+    <string name="country_flag">Country Flag</string>
+    <string name="country">Country</string>
+    <string name="category_image">Category Image</string>
+    <string name="meal_name">Meal Name</string>
 
 
 </resources>

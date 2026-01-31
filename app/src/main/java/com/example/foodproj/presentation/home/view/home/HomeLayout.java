@@ -16,7 +16,11 @@ import com.example.foodproj.prefs.UserPrefs;
 import com.example.foodproj.presentation.auth.presenter.AuthPresenter;
 import com.example.foodproj.presentation.auth.presenter.AuthPresenterImpl;
 import com.example.foodproj.presentation.auth.view.LoginActivity;
+import com.example.foodproj.presentation.calendar.presenter.CalendarMealsPresenter;
+import com.example.foodproj.presentation.calendar.presenter.CalendarMealsPresenterImpl;
 import com.example.foodproj.presentation.calendar.view.Calendar;
+import com.example.foodproj.presentation.favorite.presenter.FavoritePresenter;
+import com.example.foodproj.presentation.favorite.presenter.FavoritePresenterImpl;
 import com.example.foodproj.presentation.favorite.view.Favorite;
 import com.example.foodproj.presentation.filterMeals.view.FilterFragment;
 import com.example.foodproj.presentation.home.presenter.HomePresenter;
@@ -26,7 +30,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class HomeLayout extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     TextView logOut;
-    HomePresenter homePresenter;
+
+    FavoritePresenter favoritePresenter;
+
+    CalendarMealsPresenter calendarMealsPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,13 +41,15 @@ public class HomeLayout extends AppCompatActivity {
         setContentView(R.layout.activity_home_layout);
         bottomNavigationView = findViewById(R.id.bottomNav);
         logOut=findViewById(R.id.logoutButton);
-        AuthPresenter authPresenter=new AuthPresenterImpl(null,null,getApplicationContext());
         loadFragment(new Home());
-
+        favoritePresenter= new FavoritePresenterImpl(getApplicationContext(),null);
+        calendarMealsPresenter=new CalendarMealsPresenterImpl(getApplicationContext(),null);
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //authPresenter.logOut();
+               // authPresenter.logOut();
+                favoritePresenter.deleteAllFavorites();
+                calendarMealsPresenter.deleteAllPlans();
                 UserPrefs.clear();
 
                 Intent intent = new Intent(HomeLayout.this, LoginActivity.class);

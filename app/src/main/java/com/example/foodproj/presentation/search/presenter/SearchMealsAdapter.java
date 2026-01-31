@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.foodproj.R;
 import com.example.foodproj.data.home.model.Meal;
-import com.example.foodproj.data.search.datasource.SearchResponse;
 import com.example.foodproj.presentation.search.view.SearchOnClickListener;
 
 import java.util.List;
@@ -47,35 +46,31 @@ public class SearchMealsAdapter extends RecyclerView.Adapter<SearchMealsAdapter.
             Glide.with(context)
                     .load(meal.getStrMealThumb())
                     .placeholder(R.drawable.ic_empty_favorite)
+                    .centerCrop()
                     .into(holder.mealImage);
         }
-        holder.Bind(meal);
+        holder.bind(meal);
     }
 
     @Override
     public int getItemCount() {
-        return meals.size();
+        return meals != null ? meals.size() : 0;
     }
 
     class SearchViewHolder extends RecyclerView.ViewHolder {
-        TextView mealName;
         ImageView mealImage;
+        TextView mealName;
         CardView cardView;
 
         public SearchViewHolder(@NonNull View itemView) {
             super(itemView);
-            mealName = itemView.findViewById(R.id.mealName);
             mealImage = itemView.findViewById(R.id.mealImage);
+            mealName = itemView.findViewById(R.id.mealName);
             cardView = itemView.findViewById(R.id.searchNameCard);
         }
 
-        void Bind(Meal meal) {
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    searchOnClickListener.searchOnClickListener(meal);
-                }
-            });
+        void bind(Meal meal) {
+            cardView.setOnClickListener(v -> searchOnClickListener.searchOnClickListener(meal));
         }
     }
 }

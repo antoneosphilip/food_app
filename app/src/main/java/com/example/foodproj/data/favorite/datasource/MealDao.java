@@ -22,4 +22,6 @@ public interface MealDao {
     Observable<List<Meal>> getMeals();
     @Delete
     Completable deleteMeal(Meal meal);
+    @Query("DELETE FROM meals")
+    Completable deleteAllMeals();
 }

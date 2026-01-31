@@ -27,4 +27,8 @@ public class MealsLocalDataBase {
     public Observable<List<Meal>> getProducts(){
         return mealDao.getMeals();
     }
+
+    public Completable deleteAllFavorites(){
+        return mealDao.deleteAllMeals();
+    }
 }

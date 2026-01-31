@@ -24,4 +24,7 @@ public interface MealPlanRepo {
      void uploadPlansData(MealPlan mealPlan);
 
      void deletePlanMeal(String id);
+
+    Completable deleteAllPlans();
+
 }

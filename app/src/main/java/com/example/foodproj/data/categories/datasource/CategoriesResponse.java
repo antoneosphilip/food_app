@@ -1,7 +1,6 @@
-package com.example.foodproj.data.home.datasource;
+package com.example.foodproj.data.categories.datasource;
 
-import com.example.foodproj.data.home.model.Category;
-import com.example.foodproj.data.home.model.Meal;
+import com.example.foodproj.data.categories.model.Category;
 
 import java.util.List;
 

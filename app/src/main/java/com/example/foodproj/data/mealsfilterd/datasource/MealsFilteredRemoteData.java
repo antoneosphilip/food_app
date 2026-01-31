@@ -1,11 +1,6 @@
 package com.example.foodproj.data.mealsfilterd.datasource;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
-import android.util.Log;
-
-import com.example.foodproj.data.categories.datasource.CategoriesMealsResponse;
-import com.example.foodproj.data.mealsfilterd.model.MealsFiltered;
 import com.example.foodproj.network.Network;
 
 import java.io.IOException;

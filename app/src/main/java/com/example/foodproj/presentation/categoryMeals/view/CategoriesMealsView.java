@@ -1,7 +1,8 @@
 package com.example.foodproj.presentation.categoryMeals.view;
 
-import com.example.foodproj.data.categories.model.CategoryMeals;
-import com.example.foodproj.data.home.model.Category;
+
+
+import com.example.foodproj.data.categories.model.Category;
 
 import java.util.List;
 

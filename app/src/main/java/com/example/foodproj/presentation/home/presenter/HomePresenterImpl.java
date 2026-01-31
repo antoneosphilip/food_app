@@ -5,11 +5,9 @@ import android.content.Context;
 import com.example.foodproj.data.auth.datasource.LogOutNetworkResponse;
 import com.example.foodproj.data.auth.repo.AuthRepo;
 import com.example.foodproj.data.auth.repo.AuthRepoImpl;
-import com.example.foodproj.data.favorite.repo.FavoriteRepoImpl;
-import com.example.foodproj.data.home.datasource.CategoryNetworkResponse;
-import com.example.foodproj.data.home.datasource.MealsNetworkResponse;
-import com.example.foodproj.data.home.model.Category;
-import com.example.foodproj.data.home.model.Meal;
+import com.example.foodproj.data.categories.repo.CategoryMealsRepo;
+import com.example.foodproj.data.categories.repo.CategoryMealsRepoImpl;
+
 import com.example.foodproj.data.home.repo.HomeRepo;
 import com.example.foodproj.data.home.repo.HomeRepoImpl;
 import com.example.foodproj.presentation.home.view.home.HomeView;
@@ -23,10 +21,12 @@ public class HomePresenterImpl implements HomePresenter{
     HomeRepo homeRepo;
     HomeView homeView;
 
+    CategoryMealsRepo categoryMealsRepo;
 
     public HomePresenterImpl(HomeView homeView, Context context){
       this.homeView=homeView;
       this.homeRepo= new HomeRepoImpl(context);
+      this.categoryMealsRepo=new CategoryMealsRepoImpl();
     }
 
 
@@ -42,7 +42,7 @@ public class HomePresenterImpl implements HomePresenter{
 
     @Override
     public void getCategories() {
-        homeRepo.getCategories().subscribeOn(Schedulers.io())
+        categoryMealsRepo.getCategoriesMeals().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         meals -> homeView.categoryFetchedSuccessfully(meals.getCategories()),

@@ -16,8 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.foodproj.R;
 import com.example.foodproj.data.home.model.Meal;
+import com.example.foodproj.network.NetworkMonitor;
 import com.example.foodproj.presentation.favorite.presenter.FavoritePresenter;
 import com.example.foodproj.presentation.favorite.presenter.FavoritePresenterImpl;
+import com.example.foodproj.presentation.mealsdetails.view.MealDetails;
+
 import java.util.List;
 
 public class Favorite extends Fragment implements FavoriteView, FavoriteOnClickListener {
@@ -28,6 +31,7 @@ public class Favorite extends Fragment implements FavoriteView, FavoriteOnClickL
     private ProgressBar progressBar;
     private FavoritesAdapter adapter;
     private FavoritePresenter presenter;
+    private NetworkMonitor networkMonitor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,9 +50,9 @@ public class Favorite extends Fragment implements FavoriteView, FavoriteOnClickL
         super.onViewCreated(view, savedInstanceState);
         favoritesRecyclerView = view.findViewById(R.id.favoritesRecyclerView);
         titleText = view.findViewById(R.id.titleText);
+        setupNetworkMonitor();
         emptyStateLayout = view.findViewById(R.id.emptyStateLayout);
         progressBar = view.findViewById(R.id.progressBar);
-
         adapter = new FavoritesAdapter(getContext(), this);
         favoritesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         favoritesRecyclerView.setAdapter(adapter);
@@ -61,6 +65,21 @@ public class Favorite extends Fragment implements FavoriteView, FavoriteOnClickL
     private void updateTitle(int count) {
         String text = count + " meal" + (count > 1 ? "s" : "") + " saved";
         titleText.setText(text);
+    }
+    private void setupNetworkMonitor() {
+        networkMonitor = new NetworkMonitor(requireContext(), new NetworkMonitor.NetworkCallback() {
+            @Override
+            public void onNetworkAvailable() {
+
+            }
+
+            @Override
+            public void onNetworkUnavailable() {
+
+            }
+        });
+
+        networkMonitor.register();
     }
 
     private void showContent() {
@@ -123,8 +142,6 @@ public class Favorite extends Fragment implements FavoriteView, FavoriteOnClickL
     @Override
     public void getFavoriteRemoteSuccess() {
 
-        Toast.makeText(getContext(), " getting favorites", Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
@@ -133,7 +150,23 @@ public class Favorite extends Fragment implements FavoriteView, FavoriteOnClickL
     }
 
     @Override
-    public void onMealClick(Meal meal) {}
+    public void onMealClick(Meal meal) {
+        if (networkMonitor.isNetworkAvailable()) {
+            Bundle bundle = new Bundle();
+            bundle.putString("meal_id", meal.getIdMeal());
+
+            MealDetails fragment = new MealDetails();
+            fragment.setArguments(bundle);
+
+            requireActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+
+    }
 
     @Override
     public void onDeleteClick(Meal meal) {

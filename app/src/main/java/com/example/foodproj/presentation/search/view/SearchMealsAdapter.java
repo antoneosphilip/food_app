@@ -1,4 +1,4 @@
-package com.example.foodproj.presentation.search.presenter;
+package com.example.foodproj.presentation.search.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.foodproj.R;
 import com.example.foodproj.data.home.model.Meal;
-import com.example.foodproj.presentation.search.view.SearchOnClickListener;
 
 import java.util.List;
 

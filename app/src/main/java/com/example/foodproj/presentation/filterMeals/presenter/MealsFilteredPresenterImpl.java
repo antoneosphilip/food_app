@@ -1,6 +1,5 @@
 package com.example.foodproj.presentation.filterMeals.presenter;
 
-import com.example.foodproj.data.mealsfilterd.datasource.MealsFilteredNetworkResponse;
 import com.example.foodproj.data.mealsfilterd.model.MealsFiltered;
 import com.example.foodproj.data.mealsfilterd.repo.MealsFilteredRepo;
 import com.example.foodproj.data.mealsfilterd.repo.MealsFilteredRepoImpl;

@@ -156,7 +156,13 @@ public class Home extends Fragment implements HomeView, MealOnClickListener, Cat
                 .centerCrop()
                 .into(mealImage);
 
-        name.setText("Welcome , " + UserPrefs.getName());
+        if(UserPrefs.getName()==null){
+            name.setText("Welcome back ");
+
+        }
+        else {
+            name.setText("Welcome , " + UserPrefs.getName());
+        }
     }
 
     @Override

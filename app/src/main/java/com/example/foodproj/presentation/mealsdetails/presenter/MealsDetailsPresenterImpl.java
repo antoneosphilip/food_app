@@ -9,7 +9,6 @@ import com.example.foodproj.data.favorite.datasource.MealsLocalDataBase;
 import com.example.foodproj.data.favorite.repo.FavoriteRepo;
 import com.example.foodproj.data.favorite.repo.FavoriteRepoImpl;
 import com.example.foodproj.data.home.model.Meal;
-import com.example.foodproj.data.mealdetails.datasource.MealsDetailsNetworkResponse;
 import com.example.foodproj.data.mealdetails.repo.MealDetailsRepo;
 import com.example.foodproj.data.mealdetails.repo.MealDetailsRepoImpl;
 import com.example.foodproj.presentation.mealsdetails.view.MealsDetailsView;

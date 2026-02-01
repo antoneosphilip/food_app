@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.example.foodproj.presentation.categoryMeals.view.CategoriesMeals;
 import com.example.foodproj.presentation.countries.view.CountriesMealsFragment;
 import com.example.foodproj.presentation.ingredient.view.IngredientsFragment;
-import com.example.foodproj.presentation.search.presenter.NameSearch;
+import com.example.foodproj.presentation.search.view.NameSearch;
 
 
 public class FilterPagerAdapter extends FragmentStateAdapter {

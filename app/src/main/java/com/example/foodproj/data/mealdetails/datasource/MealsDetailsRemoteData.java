@@ -24,7 +24,5 @@ public class MealsDetailsRemoteData {
     }
     public Observable<MealResponse> getMealsDetails(Map<String, String> filters) {
       return   mealDetailsService.getMealsByFilter(filters);
-
-
     }
 }

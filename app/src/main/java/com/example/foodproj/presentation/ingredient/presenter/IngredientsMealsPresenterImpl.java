@@ -1,8 +1,6 @@
 
 package com.example.foodproj.presentation.ingredient.presenter;
 
-import com.example.foodproj.data.ingredient.datasource.IngredientsNetworkResponse;
-import com.example.foodproj.data.ingredient.model.IngredientMeals;
 import com.example.foodproj.data.ingredient.repo.IngredientRepo;
 import com.example.foodproj.data.ingredient.repo.IngredientRepoImpl;
 import com.example.foodproj.presentation.ingredient.view.IngredientsMealsView;

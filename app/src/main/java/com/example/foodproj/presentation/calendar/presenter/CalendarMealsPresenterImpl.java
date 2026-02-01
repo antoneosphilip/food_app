@@ -39,11 +39,14 @@ public class CalendarMealsPresenterImpl implements CalendarMealsPresenter {
 
     @Override
     public void deleteMeal(MealPlan mealPlan) {
-        calendarMealsView.deleteCalendarDataSuccess();
         mealPlanRepo.deleteMeal(mealPlan).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        () -> deletePlanMeal(mealPlan.getMealId())
+                        () -> {
+                            deletePlanMeal(mealPlan.getMealId());
+                            calendarMealsView.deleteCalendarDataSuccess();
+
+                        }
                 );
 
 
@@ -85,7 +88,6 @@ public class CalendarMealsPresenterImpl implements CalendarMealsPresenter {
         mealPlanRepo.deleteAllPlans().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-
                 );
 
     }

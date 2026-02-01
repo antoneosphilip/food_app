@@ -1,5 +1,7 @@
 package com.example.foodproj.presentation.home.view.home;
 
+import static java.security.AccessController.getContext;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.example.foodproj.R;
 import com.example.foodproj.data.auth.repo.AuthRepo;
 import com.example.foodproj.data.auth.repo.AuthRepoImpl;
+import com.example.foodproj.helper.Helper;
 import com.example.foodproj.prefs.UserPrefs;
 import com.example.foodproj.presentation.auth.presenter.AuthPresenter;
 import com.example.foodproj.presentation.auth.presenter.AuthPresenterImpl;
@@ -63,12 +66,28 @@ public class HomeLayout extends AppCompatActivity {
 
             if (item.getItemId() == R.id.nav_home) {
                 selectedFragment = new Home();
-            } else if (item.getItemId() == R.id.nav_calendar) {
+            }
+
+            else if (item.getItemId() == R.id.nav_calendar) {
+
+                if (UserPrefs.getToken()==null) {
+                    Helper.show(HomeLayout.this);
+                    return false;
+                }
+
                 selectedFragment = new Calendar();
             }
+
             else if (item.getItemId() == R.id.nav_favorites) {
+
+                if (UserPrefs.getToken()==null) {
+                    Helper.show(HomeLayout.this);
+                    return false;
+                }
+
                 selectedFragment = new Favorite();
             }
+
             else if (item.getItemId() == R.id.nav_search) {
                 selectedFragment = new FilterFragment();
             }

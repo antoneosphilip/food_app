@@ -1,4 +1,4 @@
-package com.example.foodproj.presentation.search.presenter;
+package com.example.foodproj.presentation.search.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,14 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodproj.R;
 import com.example.foodproj.data.home.model.Meal;
-import com.example.foodproj.data.search.datasource.SearchResponse;
-import com.example.foodproj.presentation.filterMeals.view.MealsFilteredFragment;
 
 import com.example.foodproj.presentation.mealsdetails.view.MealDetails;
-import com.example.foodproj.presentation.search.presenter.SearchMealsAdapter;
+import com.example.foodproj.presentation.search.presenter.SearchNamePresenterImpl;
 import com.example.foodproj.presentation.search.presenter.SearchPresenter;
-import com.example.foodproj.presentation.search.view.SearchMealView;
-import com.example.foodproj.presentation.search.view.SearchOnClickListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;

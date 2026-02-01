@@ -184,6 +184,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:visibility="gone"
+            android:indeterminateTint="@color/primary"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

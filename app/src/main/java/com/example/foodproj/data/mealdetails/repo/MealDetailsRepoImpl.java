@@ -6,6 +6,7 @@ import com.example.foodproj.data.mealdetails.datasource.MealsDetailsRemoteData;
 import java.util.Map;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class MealDetailsRepoImpl implements MealDetailsRepo{
     private final MealsDetailsRemoteData mealsDetailsRemoteData;
@@ -15,7 +16,7 @@ public class MealDetailsRepoImpl implements MealDetailsRepo{
     }
 
     @Override
-    public Observable<MealResponse> getMealDetails( Map<String, String> filters) {
+    public Single<MealResponse> getMealDetails(Map<String, String> filters) {
       return  mealsDetailsRemoteData.getMealsDetails(filters);
     }
 

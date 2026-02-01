@@ -25,6 +25,6 @@ public class CategoriesMealsPresenterImpl implements CategoriesMealsPresenter{
                 .subscribe(
                         meals -> categoriesMealsView.getCategoryMealsSuccess(meals.getCategories()),
                         throwable -> categoriesMealsView.getCategoryMealsError(throwable.getMessage())
-                );;
+                );
     }
 }

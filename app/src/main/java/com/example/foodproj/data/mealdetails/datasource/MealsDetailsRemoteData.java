@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 
 public class MealsDetailsRemoteData {
@@ -22,7 +23,7 @@ public class MealsDetailsRemoteData {
     public MealsDetailsRemoteData() {
         this.mealDetailsService = Network.getInstance().mealDetailsService;
     }
-    public Observable<MealResponse> getMealsDetails(Map<String, String> filters) {
+    public Single<MealResponse> getMealsDetails(Map<String, String> filters) {
       return   mealDetailsService.getMealsByFilter(filters);
     }
 }

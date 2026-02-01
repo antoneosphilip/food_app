@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -16,7 +17,7 @@ public class CountriesRemoteData {
     public CountriesRemoteData(){
         countriesServices= Network.getInstance().countriesServices;
     }
-    public Observable<CountriesResponse> getCountriesMeals(){
+    public Single<CountriesResponse> getCountriesMeals(){
        return countriesServices.getCountries();
     }
 }

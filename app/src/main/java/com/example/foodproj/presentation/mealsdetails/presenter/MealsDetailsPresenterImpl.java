@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MealsDetailsPresenterImpl implements MealsDetailsPresenter {
@@ -74,7 +75,7 @@ public class MealsDetailsPresenterImpl implements MealsDetailsPresenter {
     }
 
     @Override
-    public Task<List<Meal>> getRemoteFavorites() {
+    public Observable<List<Meal>> getRemoteFavorites() {
         return favoriteRepo.getRemoteFavorites();
     }
 

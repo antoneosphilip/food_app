@@ -63,23 +63,22 @@ public class FavoritePresenterImpl implements FavoritePresenter{
     @Override
     public void getRemoteFavorites() {
         favoriteRepo.getRemoteFavorites()
-                .addOnSuccessListener(meals -> {
-
-                    if (meals != null && !meals.isEmpty()) {
-                        for (Meal meal : meals) {
-                            Log.i(TAG, "getRemoteFavorites: "+meal.getStrMeal());
-                            InsertMeal(meal);
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        meals -> {
+                            if (meals != null && !meals.isEmpty()) {
+                                for (Meal meal : meals) {
+                                    Log.i(TAG, "getRemoteFavorites: " + meal.getStrMeal());
+                                    InsertMeal(meal);
+                                }
+                            }
+                            favoriteView.getFavoriteRemoteSuccess();
+                        },
+                        error -> {
+                            favoriteView.getFavoriteRemoteError(error.getMessage());
                         }
-                    }
-
-                    favoriteView.getFavoriteRemoteSuccess();
-
-
-                })
-                .addOnFailureListener(e ->
-                        favoriteView.getFavoriteRemoteError(e.getMessage())
                 );
-
     }
 
     @Override

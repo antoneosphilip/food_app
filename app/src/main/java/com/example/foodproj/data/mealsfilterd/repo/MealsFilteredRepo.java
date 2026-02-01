@@ -5,7 +5,8 @@ import com.example.foodproj.data.mealsfilterd.datasource.MealsFilteredResponse;
 import java.util.Map;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public interface MealsFilteredRepo {
-    Observable<MealsFilteredResponse> getMealsFiltered(Map<String, String> filter);
+    Single<MealsFilteredResponse> getMealsFiltered(Map<String, String> filter);
 }

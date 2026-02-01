@@ -7,6 +7,7 @@ import com.example.foodproj.data.search.datasource.SearchResponse;
 import java.util.Map;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class SearchRepoImpl implements SearchRepo{
     final private SearchRemoteData searchRemoteData;
@@ -16,7 +17,7 @@ public class SearchRepoImpl implements SearchRepo{
     }
 
     @Override
-    public Observable<SearchResponse> getSearchedMeals(Map<String, String> filter) {
+    public Single<SearchResponse> getSearchedMeals(Map<String, String> filter) {
         return searchRemoteData.getMealsSearched(filter);
     }
 }

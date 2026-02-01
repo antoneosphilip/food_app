@@ -4,6 +4,7 @@ import com.example.foodproj.data.countries.datasource.CountriesRemoteData;
 import com.example.foodproj.data.countries.datasource.CountriesResponse;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class CountriesRepoImpl implements CountriesMealsRepo{
     private final CountriesRemoteData countriesRemoteData;
@@ -13,7 +14,7 @@ public class CountriesRepoImpl implements CountriesMealsRepo{
     }
 
     @Override
-    public Observable<CountriesResponse> getCountriesMeals() {
+    public Single<CountriesResponse> getCountriesMeals() {
        return countriesRemoteData.getCountriesMeals();
     }
 }

@@ -7,6 +7,7 @@ import com.example.foodproj.network.Network;
 import java.util.Map;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class SearchRemoteData {
     private final SearchService searchService;
@@ -15,7 +16,7 @@ public class SearchRemoteData {
         this.searchService = Network.getInstance().searchService;
     }
 
-    public Observable<SearchResponse> getMealsSearched(Map<String, String> filters){
+    public Single<SearchResponse> getMealsSearched(Map<String, String> filters){
         return searchService.getMealsByFilter(filters);
     }
 }

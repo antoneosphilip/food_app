@@ -5,6 +5,7 @@ import com.example.foodproj.data.ingredient.datasource.IngredientsRemoteData;
 
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class IngredientRepoImpl implements IngredientRepo{
     private final IngredientsRemoteData ingredientsRemoteData;
@@ -14,7 +15,7 @@ public class IngredientRepoImpl implements IngredientRepo{
     }
 
     @Override
-    public Observable<IngredientsMealResponse> getIngredientMeals() {
+    public Single<IngredientsMealResponse> getIngredientMeals() {
         return ingredientsRemoteData.getIngredientsMeals();
     }
 }

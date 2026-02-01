@@ -44,7 +44,7 @@ public class FavoriteRepoImpl implements FavoriteRepo {
     }
 
     @Override
-    public Task<List<Meal>> getRemoteFavorites() {
+    public Observable<List<Meal>> getRemoteFavorites() {
         return firebaseRemoteDataSource.getFavoriteMeals();
     }
 

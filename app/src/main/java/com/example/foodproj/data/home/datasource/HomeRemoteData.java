@@ -7,13 +7,14 @@ import java.io.IOException;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class HomeRemoteData{
     private HomeServices homeServices;
     public HomeRemoteData(){
         homeServices= Network.getInstance().homeServices;
     }
-    public Observable<MealResponse> getMeals() {
+    public Single<MealResponse> getMeals() {
        return homeServices.getRandomMealData();
     }
 

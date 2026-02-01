@@ -8,7 +8,7 @@ import retrofit2.http.GET;
 
 public interface HomeServices {
     @GET("random.php")
-    Observable<MealResponse> getRandomMealData();
+    Single<MealResponse> getRandomMealData();
 
 
 }

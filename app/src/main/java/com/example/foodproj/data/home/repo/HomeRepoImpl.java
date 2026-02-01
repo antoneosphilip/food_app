@@ -11,6 +11,7 @@ import com.example.foodproj.data.home.model.Meal;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class HomeRepoImpl implements HomeRepo{
     private final HomeRemoteData homeRemoteData;
@@ -23,12 +24,12 @@ public class HomeRepoImpl implements HomeRepo{
     }
 
     @Override
-    public Observable<MealResponse> getMeals() {
+    public Single<MealResponse> getMeals() {
         return homeRemoteData.getMeals();
     }
 
     @Override
-    public Observable<CategoriesResponse> getCategories() {
+    public Single<CategoriesResponse> getCategories() {
        return categoriesRemoteData.getCategoriesMeals();
     }
 

@@ -8,8 +8,9 @@ import com.example.foodproj.data.home.model.Meal;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public interface HomeRepo {
-    Observable<MealResponse> getMeals();
-    Observable<CategoriesResponse> getCategories();
+    Single<MealResponse> getMeals();
+    Single<CategoriesResponse> getCategories();
 }

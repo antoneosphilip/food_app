@@ -7,6 +7,8 @@ import com.google.android.gms.tasks.Task;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.rxjava3.core.Observable;
+
 public interface MealsDetailsPresenter {
     void getMealDetails( Map<String, String> filters);
     void insertMeal(Meal meal);
@@ -17,7 +19,7 @@ public interface MealsDetailsPresenter {
 
     void uploadPlansMeal(MealPlan mealPlan);
 
-     Task<List<Meal>> getRemoteFavorites();
+     Observable<List<Meal>> getRemoteFavorites();
 
      Task<List<MealPlan>> getRemotePlans();
 

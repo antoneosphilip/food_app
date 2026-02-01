@@ -20,7 +20,7 @@ public interface FavoriteRepo {
 
      void uploadFavoriteData(Meal meal);
 
-     Task<List<Meal>> getRemoteFavorites();
+     Observable<List<Meal>> getRemoteFavorites();
 
      void deleteFavoriteRemote(String id);
 

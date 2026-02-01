@@ -11,6 +11,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
+
 public class FirebaseRemoteDataSource {
 
     private final FirebaseAuth mAuth;
@@ -44,15 +46,27 @@ public class FirebaseRemoteDataSource {
                 .set(mealPlan);
     }
 
-    public Task<List<Meal>> getFavoriteMeals() {
-
-
-        return firestore.collection("users")
-                .document(token)
-                .collection("meals")
-                .get()
-                .continueWith(task -> task.getResult().toObjects(Meal.class));
+    public Observable<List<Meal>> getFavoriteMeals() {
+        return Observable.create(emitter -> {
+            firestore.collection("users")
+                    .document(token)
+                    .collection("meals")
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        if (!emitter.isDisposed()) {
+                            List<Meal> meals = queryDocumentSnapshots.toObjects(Meal.class);
+                            emitter.onNext(meals);
+                            emitter.onComplete();
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        if (!emitter.isDisposed()) {
+                            emitter.onError(e);
+                        }
+                    });
+        });
     }
+
 
     public Task<List<MealPlan>> getCalendarMeals() {
 

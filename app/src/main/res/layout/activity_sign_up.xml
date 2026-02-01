@@ -12,26 +12,17 @@
         android:paddingHorizontal="24dp"
         android:paddingBottom="32dp">
 
-        <View
-            android:id="@+id/logoCircle"
+        <ImageView
+            android:id="@+id/logoImage"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_marginTop="56dp"
-            android:background="@drawable/bg_logo_circle"
+            android:contentDescription="App Logo"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_splash_logo"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/logoIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="🍴"
-            android:textSize="32sp"
-            app:layout_constraintTop_toTopOf="@id/logoCircle"
-            app:layout_constraintBottom_toBottomOf="@id/logoCircle"
-            app:layout_constraintStart_toStartOf="@id/logoCircle"
-            app:layout_constraintEnd_toEndOf="@id/logoCircle" />
 
         <TextView
             android:id="@+id/tvTitle"
@@ -42,7 +33,7 @@
             android:textSize="26sp"
             android:textStyle="bold"
             android:textColor="@color/black"
-            app:layout_constraintTop_toBottomOf="@id/logoCircle"
+            app:layout_constraintTop_toBottomOf="@id/logoImage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

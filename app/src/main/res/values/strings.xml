@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">foodProj</string>
+    <string name="app_name">sofra</string>
     <string name="client_Id">896451803797-q0hv9n0bl9t32g0g3hubian8ea23lc2r.apps.googleusercontent.com</string>
     <string name="guest_mode_view_categories_search_and_meal_of_the_day_only">Guest mode: View categories, search, and meal of the day only</string>
     <string name="continue_as_guest">Continue as Guest</string>

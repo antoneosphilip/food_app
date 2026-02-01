@@ -37,20 +37,31 @@ public class HomeLayout extends AppCompatActivity {
     FavoritePresenter favoritePresenter;
 
     CalendarMealsPresenter calendarMealsPresenter;
+
+    TextView mode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home_layout);
         bottomNavigationView = findViewById(R.id.bottomNav);
+        mode=findViewById(R.id.mode);
+
         logOut=findViewById(R.id.logoutButton);
         loadFragment(new Home());
         favoritePresenter= new FavoritePresenterImpl(getApplicationContext(),null);
         calendarMealsPresenter=new CalendarMealsPresenterImpl(getApplicationContext(),null);
+
+        if(UserPrefs.getToken()==null){
+            mode.setText("Guest Mode");
+        }
+        else{
+            mode.setText("Logged In");
+        }
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // authPresenter.logOut();
+                //authPresenter.logOut();
                 favoritePresenter.deleteAllFavorites();
                 calendarMealsPresenter.deleteAllPlans();
                 UserPrefs.clear();

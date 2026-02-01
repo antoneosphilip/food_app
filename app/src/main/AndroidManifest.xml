@@ -15,6 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodProj"
         tools:targetApi="31">
+        <activity
+            android:name=".splash"
+            android:exported="false" />
+
         <receiver
             android:name=".network.NetworkChangeReceiver"
             android:enabled="true"
@@ -23,8 +27,12 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
         <activity
             android:name=".presentation.home.view.home.HomeLayout"
+            android:exported="false" />
+        <activity
+            android:name=".SplashActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.auth.view.SignUpActivity"

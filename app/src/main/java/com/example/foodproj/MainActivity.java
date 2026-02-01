@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         UserPrefs.init(getApplicationContext());
-        Intent intent = new Intent(MainActivity.this, UserPrefs.getToken()!=null? HomeLayout.class: LoginActivity.class);
+        Intent intent = new Intent(MainActivity.this, SplashActivity.class);
         startActivity(intent);
         finish();
 

@@ -45,13 +45,12 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            
             <ImageView
                 android:layout_width="40dp"
-                android:background="@drawable/bg_logo_circle"
                 android:layout_height="40dp"
-                android:padding="8dp"/>
-
+                android:contentDescription="App Logo"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_splash_logo" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -69,6 +68,7 @@
                     android:textStyle="bold"/>
 
                 <TextView
+                    android:id="@+id/mode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/guest_mode"
